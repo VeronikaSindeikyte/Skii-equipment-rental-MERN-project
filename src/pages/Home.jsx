@@ -43,6 +43,9 @@ const Home = () => {
     return (
         <div className="home">
             <div className="iranga">
+            <h2>Visos Įrangos Sąrašas:</h2>
+            <p>Pasirinkite norimą slidinėjimo įrangą ir išsinuomuokite puikioms ir ekstremalioms atostogoms!</p>
+                <div className="all-iranga-list">
                 {irangos && irangos.length > 0 ? (
                     irangos.map((iranga) => (
                         <IrangaDetails key={iranga._id} iranga={iranga} />
@@ -50,8 +53,9 @@ const Home = () => {
                 ) : (
                     <p>Įranga neprieinama.</p>
                 )}
+                </div>
             </div>
-            {user.role === 'admin' && <IrangaForm />}
+            
         </div>
     );
 };

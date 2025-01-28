@@ -6,30 +6,40 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
+import IrangaForm from './components/AddIrangaForm';
+import ChangeIrangaForm from './components/ChangeIrangaForm';
 
 function App() {
-  const { user } = useAuthContext()
+  const { user } = useAuthContext();
 
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar />
-      <div className='pages'>
-        <Routes>
+        <div className="pages">
+          <Routes>
             <Route
-              path='/'
+              path="/"
               element={user ? <Home /> : <Navigate to="/login" />}
             />
             <Route
-            path='/login'
-            element={!user ? <Login /> : <Navigate to='/' />}
+              path="/login"
+              element={!user ? <Login /> : <Navigate to="/" />}
             />
             <Route
-            path='/signup'
-            element={!user ? <Signup /> : <Navigate to='/' />}
+              path="/signup"
+              element={!user ? <Signup /> : <Navigate to="/" />}
             />
-        </Routes>
-      </div>
+            <Route
+              path="/create"
+              element={user?.role === 'admin' ? <IrangaForm /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/update/:id"
+              element={user?.role === 'admin' ? <ChangeIrangaForm /> : <Navigate to="/" />}
+            />
+          </Routes>
+        </div>
       </BrowserRouter>
     </div>
   );

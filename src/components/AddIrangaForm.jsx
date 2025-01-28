@@ -62,7 +62,6 @@ const IrangaForm = () => {
             setAvailable(true);
             setError(null);
 
-            // Add the new equipment to the top of the list
             dispatch({ type: 'CREATE_IRANGA', payload: json });
         }
     };
@@ -128,28 +127,35 @@ const IrangaForm = () => {
                     <option value="refurbished">Atnaujinta</option>
                 </select>
 
-                <label>Ar prieinama?</label>
-                <input
-                    type="checkbox"
-                    onChange={(e) => setAvailable(e.target.checked)}
-                    checked={available}
-                />
+                <div className="checkbox-container">
+                    <label className="checkbox-label">Ar įranga laisva nuomai?</label>
+                    
+                    <label className="radio-label">
+                        <input
+                            type="radio"
+                            name="availability"
+                            value="true"
+                            checked={available === true}
+                            onChange={() => setAvailable(true)}
+                        />
+                        Taip
+                    </label>
 
+                    <label className="radio-label">
+                        <input
+                            type="radio"
+                            name="availability"
+                            value="false"
+                            checked={available === false}
+                            onChange={() => setAvailable(false)}
+                        />
+                        Ne
+                    </label>
+                </div>
                 <button>Pridėti įrangą</button>
 
                 {error && <div className="error">{error}</div>}
             </form>
-
-            <div className="iranga-list">
-                <h3>Įrangos sąrašas</h3>
-                {irangos && irangos.length > 0 ? (
-                    irangos.map((iranga) => (
-                        <IrangaDetails key={iranga._id} iranga={iranga} />
-                    ))
-                ) : (
-                    <p>Įranga neprieinama.</p>
-                )}
-            </div>
         </div>
     );
 };

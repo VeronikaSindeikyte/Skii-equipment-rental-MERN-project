@@ -11,6 +11,12 @@ export const IrangaReducer = (state, action) => {
                     (iranga) => iranga._id !== action.payload._id
                 ),
             };
+        case 'UPDATE_IRANGA':
+            return {
+                irangos: state.irangos.map(iranga =>
+                    iranga._id === action.payload._id ? action.payload : iranga
+                ),
+            };
         default:
             return state;
     }
