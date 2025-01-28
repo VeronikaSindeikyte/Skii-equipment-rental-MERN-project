@@ -3,10 +3,13 @@ import mongoose from "mongoose"
 
 // GET - paimti visas irangas
 export const getAllEquipment = async (req, res) => {
-    const user_id = req.user._id
-    const irangos = await Iranga.find({user_id}).sort({createdAt: -1})
-    res.status(200).json(irangos)
-}
+    try {
+        const iranga = await Iranga.find({});
+        res.status(200).json(iranga);
+    } catch (error) {
+        res.status(500).json({ error: 'Nepavyko gauti įrangos duomenų.' });
+    }
+};
 
 // GET - paimti vieną įrangą
 export const getOneEquiptment = async (req, res) => {

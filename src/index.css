@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
 
-html, body {
+html {
     background-image: url('./images/mountains.jpg');
     background-size: auto 100%;
     background-repeat: no-repeat; 
@@ -15,6 +15,62 @@ html, body {
     justify-content: center;
     align-items: center;
 }
+
+/*  -------- NAVBAR -------- */
+
+.navbar-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-header svg {
+    font-size: 150px;
+    color: white;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.navbar-container h1 {
+    color: white;
+    font-size: 50px;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+}
+
+.link-login, .link-signup {
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    background: rgba(226, 218, 218, 0.185); 
+    padding: 5px 15px;
+    width: 90%;
+    margin-bottom: 15px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.link-login:hover, .link-signup:hover {
+    background: rgba(226, 218, 218, 0.541);
+    color: #333;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
 
 /*  -------- LOGIN, SIGNUP -------- */
 
@@ -34,7 +90,67 @@ html, body {
     color: white;
 }
 
+.login h3, .signup h3 {
+    font-size: 30px;
+    margin: 0;
+}
 
+.login input, .signup input, .signup select {
+    font-family: "Inknut Antiqua", serif;
+    font-size: 15px;
+    text-align: center;
+    padding: 3px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background: rgba(235, 230, 230, 0.897); 
+}
+
+.login label, .signup label {
+    color: white;
+    font-size: 20px;
+}
+
+.login button, .signup button {
+    font-family: "Inknut Antiqua", serif;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    background: rgba(226, 218, 218, 0.185); 
+    padding: 5px 15px;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+}
+
+.login button:hover, .signup button:hover {
+    background: rgba(226, 218, 218, 0.541);
+    color: #333;
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.error {
+    font-family: "Inknut Antiqua", serif;
+    text-decoration: none;
+    text-align: center;
+    color: red;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    background: rgba(226, 218, 218, 0.774); 
+    padding: 5px 15px;
+    width: 97%;
+    margin-bottom: 15px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
 
 
 /* -------- ADD IRANGA FORM -------- */

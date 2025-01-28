@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import IrangaDetails from "../components/IrangaDetails";
 import IrangaForm from "../components/AddIrangaForm";
 import { useIrangaContext } from "../hooks/useIrangaContext";
@@ -7,13 +8,19 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const Home = () => {
     const { irangos, dispatch } = useIrangaContext();
     const { user } = useAuthContext();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchIrangas = async () => {
-            if (!user) return;
+        if (!user) {
+            navigate('/login');
+            return;
+        }
 
-            const response = await fetch('http://localhost:4001/api/iranga', {
-                headers: { 'Authorization': `Bearer ${user.token}` },
+        const fetchIrangas = async () => {
+            const response = await fetch('/api/iranga', {
+                headers: {
+                    'Authorization': user ? `Bearer ${user.token}` : '',
+                },
             });
 
             const json = await response.json();
@@ -27,7 +34,11 @@ const Home = () => {
         };
 
         fetchIrangas();
-    }, [dispatch, user]);
+    }, [dispatch, user, navigate]);
+
+    if (!user) {
+        return null;
+    }
 
     return (
         <div className="home">
@@ -40,7 +51,7 @@ const Home = () => {
                     <p>Įranga neprieinama.</p>
                 )}
             </div>
-            <IrangaForm />
+            {user.role === 'admin' && <IrangaForm />}
         </div>
     );
 };

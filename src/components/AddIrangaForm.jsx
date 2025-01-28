@@ -67,6 +67,10 @@ const IrangaForm = () => {
         }
     };
 
+    if (!user || user.role !== 'admin') {
+        return <p>Prieiga negalima. Tik administratoriai gali pridėti įrangą.</p>;
+    }
+
     return (
         <div className="iranga-form-and-list">
             <form className="create" onSubmit={handleSubmit}>
