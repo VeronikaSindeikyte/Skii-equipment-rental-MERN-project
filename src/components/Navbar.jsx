@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -10,11 +10,32 @@ const Navbar = () => {
 
     const handleClick = () => {
         logout();
+        setDropdownOpen(false); // Close dropdown after logging out
     };
 
     const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
+        setDropdownOpen((prev) => !prev);
     };
+
+    const closeDropdown = () => {
+        setDropdownOpen(false);
+    };
+
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (!e.target.closest('.dropdown')) {
+                setDropdownOpen(false);
+            }
+        };
+
+        if (dropdownOpen) {
+            document.addEventListener('click', handleOutsideClick);
+        }
+
+        return () => {
+            document.removeEventListener('click', handleOutsideClick);
+        };
+    }, [dropdownOpen]);
 
     return (
         <header>
@@ -28,19 +49,32 @@ const Navbar = () => {
                         <div className='log-out'>
                             <div className="dropdown">
                                 <button className='admin-dropdown' onClick={toggleDropdown}>
-                                    {user.email} ({user.role})
+                                    Paskyra ({user.role}):
                                 </button>
                                 {dropdownOpen && (
                                     <div className="dropdown-menu">
-                                        <Link to="/" className='dropdown-item'>Visas įrangos sąrašas</Link>
-                                        <Link to="/create" className="dropdown-item">Pridėti naują įrangą</Link>
-                                        <Link to="/update/:id" className="dropdown-item">Atnaujinti įrangos informaciją</Link>
-                                        <Link to="/drafts" className="dropdown-item">Juodraštis</Link>
-                                        <Link to="/reservations" className="dropdown-item">Rezervacijos</Link>
+                                        <p>{user.email}</p>
+                                        <Link to="/" className='dropdown-item' onClick={closeDropdown}>
+                                            Visas įrangos sąrašas
+                                        </Link>
+                                        <Link to="/create" className="dropdown-item" onClick={closeDropdown}>
+                                            Pridėti naują įrangą
+                                        </Link>
+                                        <Link to="/update/:id" className="dropdown-item" onClick={closeDropdown}>
+                                            Atnaujinti įrangos informaciją
+                                        </Link>
+                                        <Link to="/drafts" className="dropdown-item" onClick={closeDropdown}>
+                                            Juodraštis
+                                        </Link>
+                                        <Link to="/reservations" className="dropdown-item" onClick={closeDropdown}>
+                                            Rezervacijos
+                                        </Link>
+                                        <button className="dropdown-item-logout-button" onClick={handleClick}>
+                                            Atsijungti
+                                        </button>
                                     </div>
                                 )}
                             </div>
-                            <button onClick={handleClick}>Atsijungti</button>
                         </div>
                     )}
                 </div>

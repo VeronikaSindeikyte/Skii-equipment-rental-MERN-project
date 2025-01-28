@@ -10,8 +10,8 @@ router.get('/', controller.getAllEquipment)
 // GET - paimti vieną įrangą
 router.get('/:id', controller.getOneEquiptment)
 
-// Protected routes that require authentication
-router.use(requireAuth) // Apply authentication middleware to these routes
+// Žemiau nurodytoms funkcijosm reikalinga administratoriaus autentifikacija
+router.use(requireAuth) 
 
 // POST - sukurti naują įrangą
 router.post('/', controller.createEquipment)
