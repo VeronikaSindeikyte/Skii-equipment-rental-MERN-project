@@ -10,7 +10,7 @@ const Navbar = () => {
 
     const handleClick = () => {
         logout();
-        setDropdownOpen(false); // Close dropdown after logging out
+        setDropdownOpen(false); 
     };
 
     const toggleDropdown = () => {
@@ -63,7 +63,12 @@ const Navbar = () => {
                                         <Link to="/update/:id" className="dropdown-item" onClick={closeDropdown}>
                                             Atnaujinti įrangos informaciją
                                         </Link>
-                                        <Link to="/drafts" className="dropdown-item" onClick={closeDropdown}>
+                                        <Link 
+                                            to="/create" 
+                                            state={{ scrollToDrafts: true }} 
+                                            className="dropdown-item" 
+                                            onClick={closeDropdown}
+                                        >
                                             Juodraštis
                                         </Link>
                                         <Link to="/reservations" className="dropdown-item" onClick={closeDropdown}>

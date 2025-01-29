@@ -8,7 +8,6 @@ import Signup from './pages/Signup';
 import { useAuthContext } from './hooks/useAuthContext';
 import IrangaForm from './components/AddIrangaForm';
 import ChangeIrangaForm from './components/ChangeIrangaForm';
-import Drafts from './components/Drafts';
 
 function App() {
   const { user } = useAuthContext();
@@ -38,10 +37,6 @@ function App() {
             <Route
               path="/update/:id"
               element={user?.role === 'admin' ? <ChangeIrangaForm /> : <Navigate to="/" />}
-            />
-            <Route
-              path="/drafts"
-              element={user?.role === 'admin' ? <Drafts /> : <Navigate to="/" />}
             />
           </Routes>
         </div>
