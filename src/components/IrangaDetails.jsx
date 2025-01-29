@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 import { useAuthContext } from "../hooks/useAuthContext";
+import { Link } from "react-router-dom"
 
 const IrangaDetails = ({ iranga }) => {
     const { dispatch } = useIrangaContext();
@@ -44,8 +45,8 @@ const IrangaDetails = ({ iranga }) => {
             <p><strong>Nuomos kaina parai: </strong><span className="kaina">{iranga.rentPricePerDay !== null ? `${iranga.rentPricePerDay} €` : "Nenurodyta"}</span></p>
 
             <div className="iranga-details-buttons">
-                <button onClick={() => setShowDetails(!showDetails)}>
-                    {showDetails ? "Slėpti informaciją" : "Išsami informacija"}
+                <button>
+                    <Link to={`/iranga/${iranga._id}`}>Išsami informacija</Link>
                 </button>
 
                 {showDetails && (

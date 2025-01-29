@@ -1,6 +1,7 @@
 import express from 'express'
 import * as controller from "../controllers/controller.js"
 import requireAuth from '../middleware/requireAuth.js'
+import { reserveIranga } from '../controllers/controller.js'
 
 const router = express.Router()
 
@@ -9,6 +10,9 @@ router.get('/', controller.getAllEquipment)
 
 // GET - paimti vieną įrangą
 router.get('/:id', controller.getOneEquiptment)
+
+// PATCH - rezervuoti vieną įrangą
+router.patch("/:id/reserve", reserveIranga);
 
 // Žemiau nurodytoms funkcijosm reikalinga administratoriaus autentifikacija
 router.use(requireAuth) 

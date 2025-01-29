@@ -622,3 +622,67 @@ button:hover {
         padding: 15px;
     }
 }
+
+/* ------- ISSAMI INFO + KALENDORIUS ------- */
+
+.reserve-iranga-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+}
+
+.reserve-iranga-page h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.reserve-iranga-page h2 {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.issami-info-kalendorius {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+
+.issami-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    background: rgba(226, 218, 218, 0.555);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 20px;
+    width: 400px;
+    height: 600px;
+}
+
+.calendar-box {
+    width: 400px;
+    height: 600px;
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}

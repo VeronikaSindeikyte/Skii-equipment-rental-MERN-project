@@ -24,6 +24,21 @@ export const getOneEquiptment = async (req, res) => {
     res.status(200).json(iranga)
 }
 
+// PATCH - rezervuoti irangą
+export const reserveIranga = async (req, res) => {
+    const { id } = req.params;
+    const { from, to, available } = req.body;
+
+    try {
+        const updatedIranga = await Iranga.findByIdAndUpdate(id, { rentalPeriod: { from, to }, available }, { new: true });
+        if (!updatedIranga) return res.status(404).json({ error: "Įranga nerasta" });
+
+        res.json(updatedIranga);
+    } catch (error) {
+        res.status(400).json({ error: "Nepavyko atnaujinti rezervacijos" });
+    }
+};
+
 // POST - sukurti naują įrangą
 export const createEquipment = async (req, res) => {
     const { title, description, rentPricePerDay, gender, size, condition, available } = req.body

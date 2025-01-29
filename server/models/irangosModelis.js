@@ -32,6 +32,10 @@ const irangosSchema = new Schema({
         type: Boolean,
         default: true,
     },
+    rentalPeriod: { 
+        from: { type: Date, default: null }, 
+        to: { type: Date, default: null } 
+    },
     user_id: {
         type: String,
         required: true
