@@ -3,12 +3,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const IrangaInformation = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [iranga, setIranga] = useState(null);
   const [rentalPeriod, setRentalPeriod] = useState([{ startDate: new Date(), endDate: new Date(), key: "selection" }]);
+  const { user } = useAuthContext();
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -28,28 +30,48 @@ const IrangaInformation = () => {
   }, [id]);
 
   const handleReserve = async () => {
+    setError(null);
+  
+    console.log(user.token)
+    if (!user.token) {
+      setError("Turite būti prisijungęs, kad rezervuotumėte.");
+      return;
+    }
+  
     const toUTC = (date) => {
       const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
       return utcDate.toISOString();
     };
-
-    const response = await fetch(`/api/iranga/${iranga._id}/reserve`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: toUTC(rentalPeriod[0].startDate),
-        to: toUTC(rentalPeriod[0].endDate),
-        available: false,
-      }),
-    });
-
-    const json = await response.json();
-    if (!response.ok) {
-      setError(json.error);
-    } else {
-      alert("Successfully reserved!");
+  
+    try {
+      const response = await fetch(`/api/reservation/reserve`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+        body: JSON.stringify({
+          itemId: iranga._id,
+          rentalPeriod: {
+            from: toUTC(rentalPeriod[0].startDate),
+            to: toUTC(rentalPeriod[0].endDate),
+          },
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        throw new Error(data.error || "Nepavyko rezervuoti įrangos.");
+      }
+  
+      alert("Įranga sėkmingai rezervuota!");
+      navigate("/");
+    } catch (error) {
+      setError(error.message);
     }
   };
+  
 
   if (error) return <p>{error}</p>;
   if (!iranga) return <p>Kraunama...</p>;

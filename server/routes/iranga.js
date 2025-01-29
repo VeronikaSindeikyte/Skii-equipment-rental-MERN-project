@@ -11,11 +11,10 @@ router.get('/', controller.getAllEquipment)
 // GET - paimti vieną įrangą
 router.get('/:id', controller.getOneEquiptment)
 
-// PATCH - rezervuoti vieną įrangą
-router.patch("/:id/reserve", reserveIranga);
+router.use(requireAuth)
 
-// Žemiau nurodytoms funkcijosm reikalinga administratoriaus autentifikacija
-router.use(requireAuth) 
+// POST - rezervuoti įrangą
+router.post('/reserve', reserveIranga);
 
 // POST - sukurti naują įrangą
 router.post('/', controller.createEquipment)

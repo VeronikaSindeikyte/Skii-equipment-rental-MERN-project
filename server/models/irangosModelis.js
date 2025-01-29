@@ -32,10 +32,22 @@ const irangosSchema = new Schema({
         type: Boolean,
         default: true,
     },
-    rentalPeriod: { 
-        from: { type: Date, default: null }, 
-        to: { type: Date, default: null } 
-    },
+    reservations: [
+        {
+            user: {
+                type: mongoose.Schema.Types.ObjectId, ref: 'User'
+            },
+            rentalPeriod: { 
+                from: { type: Date, default: null }, 
+                to: { type: Date, default: null } 
+            },
+            reservationStatus: {
+                type: String,
+                enum: ['Patvirtinta', 'Laukia patvirtinimo', 'Nerezervuota', 'Atmesta'],
+                default: 'Laukia patvirtinimo'
+            }
+        }
+    ],
     user_id: {
         type: String,
         required: true

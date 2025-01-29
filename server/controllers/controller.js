@@ -1,5 +1,6 @@
 import Iranga from "../models/irangosModelis.js"
 import mongoose from "mongoose"
+import User from "../models/userModel.js"
 
 // GET - paimti visas irangas
 export const getAllEquipment = async (req, res) => {
@@ -26,18 +27,87 @@ export const getOneEquiptment = async (req, res) => {
 
 // PATCH - rezervuoti irangą
 export const reserveIranga = async (req, res) => {
-    const { id } = req.params;
-    const { from, to, available } = req.body;
+    const { itemId, rentalPeriod } = req.body;
+    const userId = req.user._id;
 
     try {
-        const updatedIranga = await Iranga.findByIdAndUpdate(id, { rentalPeriod: { from, to }, available }, { new: true });
-        if (!updatedIranga) return res.status(404).json({ error: "Įranga nerasta" });
+        if (!mongoose.Types.ObjectId.isValid(userId) || !mongoose.Types.ObjectId.isValid(itemId)) {
+            return res.status(400).json({ error: 'Invalid userId or itemId format' });
+        }
 
-        res.json(updatedIranga);
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ error: 'User not found' });
+
+        const item = await Iranga.findById(itemId);
+        if (!item) return res.status(404).json({ error: 'Item not found' });
+
+        item.reservations = item.reservations ?? [];
+
+        const isOverlapping = item.reservations.some(reservation => {
+            const existingStart = new Date(reservation.rentalPeriod.from);
+            const existingEnd = new Date(reservation.rentalPeriod.to);
+            const newStart = new Date(rentalPeriod.from);
+            const newEnd = new Date(rentalPeriod.to);
+
+            return (
+                (newStart >= existingStart && newStart <= existingEnd) ||
+                (newEnd >= existingStart && newEnd <= existingEnd) ||
+                (newStart <= existingStart && newEnd >= existingEnd)
+            );
+        });
+
+        if (isOverlapping) {
+            return res.status(400).json({ error: 'Pasirinktas laikas jau rezervuotas' });
+        }
+
+        const newReservation = {
+            user: userId,
+            rentalPeriod,
+            reservationStatus: 'Laukia patvirtinimo'
+        };
+
+        item.reservations.push(newReservation);
+
+        user.rentedItems.push({
+            item: itemId,
+            rentalPeriod,
+            reservationStatus: 'Laukia patvirtinimo' 
+        });
+
+        await Promise.all([item.save(), user.save()]);
+
+        return res.status(200).json({
+            message: 'Item successfully reserved',
+            reservation: newReservation
+        });
     } catch (error) {
-        res.status(400).json({ error: "Nepavyko atnaujinti rezervacijos" });
+        console.error(error);
+        return res.status(500).json({ error: 'An error occurred while reserving the item' });
     }
 };
+
+    // Fetch user reservations
+    export const getAllReservations = async (req, res) => {
+        try {
+            const userId = req.user._id; // Ensure authentication middleware sets req.user
+            const user = await User.findById(userId).populate({
+                path: "rentedItems.item",
+                model: "Iranga" // Ensure this matches your mongoose model name
+            });
+
+            if (!user) return res.status(404).json({ error: "User not found" });
+
+            res.json({
+                name: user.email, 
+                role: user.role,
+                rentedItems: user.rentedItems
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Failed to fetch reservations" });
+        }
+    };
+
 
 // POST - sukurti naują įrangą
 export const createEquipment = async (req, res) => {

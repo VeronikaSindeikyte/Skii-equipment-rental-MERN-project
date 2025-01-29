@@ -15,9 +15,15 @@ const userSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['user', 'admin'], 
+        enum: ['user', 'admin'],
         default: 'user'
-    }
+    },
+    rentedItems: [{
+        item: {
+            type: Schema.Types.ObjectId,
+            ref: 'Iranga'
+        }
+    }]
 });
 
 

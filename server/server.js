@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import irangaRoutes from './routes/iranga.js'
 import mongoose from 'mongoose'
 import userRoutes from './routes/user.js'
+import reservationRoutes from './routes/reservation.js'
 import cors from 'cors'
 dotenv.config()
 
@@ -21,6 +22,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/iranga', irangaRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/user', reservationRoutes)
 
 
 // connect to DB

@@ -9,6 +9,7 @@ import { useAuthContext } from './hooks/useAuthContext';
 import IrangaForm from './components/AddIrangaForm';
 import ChangeIrangaForm from './components/ChangeIrangaForm';
 import IrangaInformation from './pages/IrangaInformation';
+import UserReservations from './pages/UserReservations';
 
 function App() {
   const { user } = useAuthContext();
@@ -42,6 +43,10 @@ function App() {
             <Route
               path='/iranga/:id'
               element={<IrangaInformation />}
+            />
+            <Route
+              path='/UserReservations'
+              element={<UserReservations />}
             />
           </Routes>
         </div>

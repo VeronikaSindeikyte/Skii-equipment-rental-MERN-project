@@ -30,3 +30,18 @@ export const signupUser = async (req, res) => {
         res.status(400).json({ error: error.message });
     }
 };
+
+// controllers/userController.js
+export const getUserReservations = async (req, res) => {
+    try {
+      const userId = req.user._id;  // Assuming you authenticate the user and have `req.user`
+      const user = await User.findById(userId).populate('rentedItems.item');  // Populating rented items with item details
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      res.status(200).json(user.rentedItems);  // Return rentedItems array with detailed items
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to fetch user reservations' });
+    }
+  };
