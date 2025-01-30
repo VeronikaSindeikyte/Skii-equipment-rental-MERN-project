@@ -86,27 +86,83 @@ export const reserveIranga = async (req, res) => {
     }
 };
 
-    // Fetch user reservations
-    export const getAllReservations = async (req, res) => {
-        try {
-            const userId = req.user._id; // Ensure authentication middleware sets req.user
-            const user = await User.findById(userId).populate({
-                path: "rentedItems.item",
-                model: "Iranga" // Ensure this matches your mongoose model name
-            });
+// GET - paimti visas rezervacijas
+export const getAllReservations = async (req, res) => {
+    try {
+        const userId = req.user._id; 
+        const user = await User.findById(userId).populate({
+            path: "rentedItems.item",
+            model: "Iranga"
+        });
 
-            if (!user) return res.status(404).json({ error: "User not found" });
+        if (!user) return res.status(404).json({ error: "User not found" });
 
-            res.json({
-                name: user.email, 
-                role: user.role,
-                rentedItems: user.rentedItems
-            });
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({ error: "Failed to fetch reservations" });
+        res.json({
+            name: user.email, 
+            role: user.role,
+            rentedItems: user.rentedItems
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to fetch reservations" });
+    }
+};
+
+// DELETE - ištrinti vieną rezervaciją
+export const deleteReservation = async (req, res) => {
+    const { id: reservationId } = req.params;
+    const userId = req.user._id;
+
+    try {
+        console.log("Deleting reservation:", reservationId, "for user:", userId);
+
+        const item = await Iranga.findOne({ "reservations._id": reservationId });
+
+        if (!item) {
+            return res.status(404).json({ error: "Reservation not found" });
         }
-    };
+
+        const reservation = item.reservations.find(
+            res => res._id.toString() === reservationId
+        );
+
+        if (!reservation) {
+            return res.status(404).json({ error: "Reservation not found in item" });
+        }
+
+        if (reservation.user.toString() !== userId.toString()) {
+            return res.status(403).json({ error: "Unauthorized to delete this reservation" });
+        }
+
+        item.reservations = item.reservations.filter(
+            res => res._id.toString() !== reservationId
+        );
+
+        await item.save();
+
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        user.rentedItems = user.rentedItems.filter(
+            rental => rental.item.toString() !== item._id.toString()
+        );
+
+        await user.save();
+
+        return res.status(200).json({ 
+            message: "Reservation successfully deleted from item and user",
+            deletedReservation: reservation
+        });
+
+    } catch (error) {
+        console.error("Error in deleteReservation:", error);
+        return res.status(500).json({ error: "An error occurred while deleting the reservation" });
+    }
+};
+
+
 
 
 // POST - sukurti naują įrangą

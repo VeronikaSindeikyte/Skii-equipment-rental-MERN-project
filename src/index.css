@@ -686,3 +686,50 @@ button:hover {
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
+
+/* ------- USER RESERVATION PAGE ------- */
+
+.user-reservations {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    color: white;
+}
+
+.user-reservations h2 {
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.reservation-list {
+    text-align: left;
+    width: 100%;
+    padding: 20px;
+}
+
+.reservation-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style-type: none;
+    color: rgb(224, 217, 217);
+    font-size: 16px;
+    background: transparent;
+    backdrop-filter: blur(5px);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 30px;
+    font-size: 17px;
+}
+
+.reservation-box h3 {
+    font-size: 25px;
+}
