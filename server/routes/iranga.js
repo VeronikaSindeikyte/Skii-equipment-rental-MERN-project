@@ -5,7 +5,7 @@ import { reserveIranga } from '../controllers/controller.js'
 
 const router = express.Router()
 
-// GET - paimti visą įrangą (no authentication required)
+// GET - paimti visą įrangą
 router.get('/', controller.getAllEquipment)
 
 // GET - paimti vieną įrangą

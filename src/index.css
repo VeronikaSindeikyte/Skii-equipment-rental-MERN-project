@@ -403,11 +403,6 @@ button:hover {
 
 /* ------- ALL IRANGA LIST -------- */
 
-.iranga {
-    background: transparent;
-    backdrop-filter: blur(10px);  
-}
-
 .iranga h2 {
     align-items: center;
     justify-content: center;
@@ -441,7 +436,7 @@ button:hover {
 
 @media (max-width: 1200px) {
     .all-iranga-list {
-        grid-template-columns: repeat(2, 1fr); 
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
@@ -461,17 +456,46 @@ button:hover {
     text-align: center;
     position: relative;
     border: 1px solid #e6eef1;
-    width: 90%; 
+    width: 90%;
+    max-width: 350px; 
+    height: 500px; 
     background: rgb(244, 247, 252);
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    min-height: 350px;
-    max-height: 350px;
+    margin: auto;
+}
+
+/* ------- Iranga photos ------- */
+
+.iranga-photo, .iranga-photo-placeholder {
+    width: 80%;
+    height: 250px; 
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.iranga-photo-placeholder {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.iranga-details-buttons {
+    margin-top: auto; 
+}
+
+.iranga-details button a {
+    color: black;
+    text-decoration: none;
 }
 
 .iranga-details h4 {
-    font-size: 1.5rem;
+    margin: 10px 0;
+    font-size: 120%;
     color: #333;
     margin-bottom: 8px;
     text-transform: uppercase;
@@ -491,7 +515,7 @@ button:hover {
 
 .iranga-details .kaina {
     font-size: 25px;
-    color: rgb(241, 123, 54);
+    color: rgb(219, 60, 73);
 }
 
 .iranga-details-buttons {
@@ -529,6 +553,7 @@ button:hover {
     .iranga-details > div {
         flex: 1 1 100%;
         max-width: 100%;
+        align-items: center;
     }
 }
 
@@ -733,3 +758,4 @@ button:hover {
 .reservation-box h3 {
     font-size: 25px;
 }
+

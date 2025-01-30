@@ -171,14 +171,12 @@ export const updateReservation = async (req, res) => {
     try {
         console.log("Updating reservation:", reservationId, "for user:", userId, "with new dates:", rentalPeriod);
 
-        // Find the item that contains this reservation
         const item = await Iranga.findOne({ "reservations._id": reservationId });
 
         if (!item) {
             return res.status(404).json({ error: "Reservation not found" });
         }
 
-        // Find the reservation inside the item's reservations array
         const reservation = item.reservations.find(
             res => res._id.toString() === reservationId
         );
@@ -187,18 +185,14 @@ export const updateReservation = async (req, res) => {
             return res.status(404).json({ error: "Reservation not found in item" });
         }
 
-        // Check if the reservation belongs to the user
         if (reservation.user.toString() !== userId.toString()) {
             return res.status(403).json({ error: "Unauthorized to update this reservation" });
         }
 
-        // Update the rental period
         reservation.rentalPeriod = rentalPeriod;
 
-        // Save the updated item document
         await item.save();
 
-        // Find the user document and update their rented item's rental period
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -211,8 +205,7 @@ export const updateReservation = async (req, res) => {
         if (rentedItem) {
             rentedItem.rentalPeriod = rentalPeriod;
         }
-
-        // Save the updated user document
+        
         await user.save();
 
         return res.status(200).json({ 

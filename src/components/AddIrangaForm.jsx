@@ -43,7 +43,6 @@ const IrangaForm = () => {
             return;
         }
 
-        // Create preview
         setFile(selectedPhoto);
         setPreview(URL.createObjectURL(selectedPhoto));
 
@@ -60,11 +59,11 @@ const IrangaForm = () => {
                 formData
             );
 
-            console.log("Cloudinary response:", response.data); // Log the full response
+            console.log("Cloudinary response:", response.data);
 
             if (response.data.secure_url) {
                 setImageUrl(response.data.secure_url);
-                console.log("Image URL set to:", response.data.secure_url); // Log the URL
+                console.log("Image URL set to:", response.data.secure_url);
             } else {
                 setError("Unexpected server response.");
             }
@@ -108,7 +107,7 @@ const IrangaForm = () => {
             size,
             condition,
             available,
-            photos: imageUrl ? [imageUrl] : [] // Store imageUrl in photos array
+            photos: imageUrl ? [imageUrl] : []
         };
 
         console.log("Submitting data to server:", irangaData);
@@ -122,7 +121,7 @@ const IrangaForm = () => {
                 }
             });
 
-            console.log("Server response:", response.data); // Log the server response
+            console.log("Server response:", response.data);
     
             if (response.data) {
                 if (editingDraftIndex !== null) {
@@ -133,7 +132,7 @@ const IrangaForm = () => {
             }
         } catch (err) {
             console.error("Error creating equipment:", err);
-            console.error("Error response data:", err.response?.data); // Log error response
+            console.error("Error response data:", err.response?.data);
             setError(err.response?.data?.error || "Nepavyko pridėti įrangos.");
         } finally {
             setUploading(false);
@@ -150,7 +149,7 @@ const IrangaForm = () => {
             size, 
             condition, 
             available, 
-            photos: imageUrl ? [imageUrl] : [] // Store imageUrl in photos array for drafts
+            photos: imageUrl ? [imageUrl] : []
         };
 
         let updatedDrafts;
@@ -185,7 +184,7 @@ const IrangaForm = () => {
         setSize(draft.size || '');
         setCondition(draft.condition || 'new');
         setAvailable(draft.available !== undefined ? draft.available : true);
-        setImageUrl(draft.photos?.[0] || null); // Get first photo URL from photos array
+        setImageUrl(draft.photos?.[0] || null);
         setPreview(draft.photos?.[0] || null);
         setEditingDraftIndex(index);
         setError(null);
@@ -230,7 +229,7 @@ const IrangaForm = () => {
                     className={emptyFields.includes('description') ? 'error' : ''} 
                 />
     
-                <label>Nuomos kaina per dieną (EUR):</label>
+                <label>Nuomos kaina vienai parai (EUR):</label>
                 <input 
                     type="number" 
                     onChange={(e) => setRentPricePerDay(e.target.value)} 
@@ -238,15 +237,15 @@ const IrangaForm = () => {
                     className={emptyFields.includes('rentPricePerDay') ? 'error' : ''} 
                 />
     
-                <label>Žymėjimas (Lytis):</label>
+                <label>Kam skirta (Lytis):</label>
                 <select 
                     onChange={(e) => setGender(e.target.value)} 
                     value={gender}
                     className={emptyFields.includes('gender') ? 'error' : ''} 
                 >
                     <option value="unisex">Unisex</option>
-                    <option value="male">Vyras</option>
-                    <option value="female">Moteris</option>
+                    <option value="male">Vyrams</option>
+                    <option value="female">Moterims</option>
                 </select>
     
                 <label>Dydis:</label>
@@ -263,12 +262,12 @@ const IrangaForm = () => {
                     value={condition}
                     className={emptyFields.includes('condition') ? 'error' : ''} 
                 >
-                    <option value="new">Naujas</option>
-                    <option value="used">Naudotas</option>
-                    <option value="damaged">Sugadintas</option>
+                    <option value="new">Nauja</option>
+                    <option value="used">Naudota</option>
+                    <option value="refurbished">Atnaujinta</option>
                 </select>
     
-                <label>Disponuojama:</label>
+                <label>Ar įranga laisva nuomai:</label>
                 <select 
                     onChange={(e) => setAvailable(e.target.value === 'true')} 
                     value={available.toString()}
@@ -283,7 +282,7 @@ const IrangaForm = () => {
                 {preview && <img src={preview} alt="Peržiūra" className="preview-img" style={{ width: "100px", marginTop: "10px" }} />}
     
                 <button type="submit" disabled={uploading}>
-                    {uploading ? 'Įkeliamas...' : 'Pridėti įrangą'}
+                    {uploading ? 'Nuotrauka įkeliama...' : 'Pridėti įrangą'}
                 </button>
                 <button type="button" onClick={handleSaveDraft}>
                     {editingDraftIndex !== null ? 'Atnaujinti juodraštį' : 'Pridėti į juodraštį'}
