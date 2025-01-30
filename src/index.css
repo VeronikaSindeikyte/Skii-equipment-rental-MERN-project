@@ -471,9 +471,10 @@ button:hover {
 .iranga-photo, .iranga-photo-placeholder {
     width: 80%;
     height: 250px; 
-    object-fit: cover;
-    border-radius: 8px;
+    object-fit: contain;
     margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background-color: white;
 }
 
 .iranga-photo-placeholder {
