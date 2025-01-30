@@ -2,6 +2,10 @@ import mongoose from 'mongoose'
 
 const Schema = mongoose.Schema
 const irangosSchema = new Schema({
+    photos: {
+        type: [String],
+        default: []
+    },
     title: {
         type: String,
         required: true

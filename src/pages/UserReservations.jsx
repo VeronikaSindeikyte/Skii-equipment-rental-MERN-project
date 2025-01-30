@@ -61,7 +61,7 @@ const UserReservations = () => {
   const handleUpdate = async (itemId, reservationId, newDates) => {
     try {
       await axios.patch(
-        `/api/reservations/${reservationId}`,
+        `/api/user/reservations/${reservationId}`,
         {
           rentalPeriod: newDates,
         },

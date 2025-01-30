@@ -162,12 +162,76 @@ export const deleteReservation = async (req, res) => {
     }
 };
 
+// PATCH - atnaujinti rezervacijos laika
+export const updateReservation = async (req, res) => {
+    const { id: reservationId } = req.params;
+    const { rentalPeriod } = req.body;
+    const userId = req.user._id;
+
+    try {
+        console.log("Updating reservation:", reservationId, "for user:", userId, "with new dates:", rentalPeriod);
+
+        // Find the item that contains this reservation
+        const item = await Iranga.findOne({ "reservations._id": reservationId });
+
+        if (!item) {
+            return res.status(404).json({ error: "Reservation not found" });
+        }
+
+        // Find the reservation inside the item's reservations array
+        const reservation = item.reservations.find(
+            res => res._id.toString() === reservationId
+        );
+
+        if (!reservation) {
+            return res.status(404).json({ error: "Reservation not found in item" });
+        }
+
+        // Check if the reservation belongs to the user
+        if (reservation.user.toString() !== userId.toString()) {
+            return res.status(403).json({ error: "Unauthorized to update this reservation" });
+        }
+
+        // Update the rental period
+        reservation.rentalPeriod = rentalPeriod;
+
+        // Save the updated item document
+        await item.save();
+
+        // Find the user document and update their rented item's rental period
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const rentedItem = user.rentedItems.find(
+            rental => rental.item.toString() === item._id.toString()
+        );
+
+        if (rentedItem) {
+            rentedItem.rentalPeriod = rentalPeriod;
+        }
+
+        // Save the updated user document
+        await user.save();
+
+        return res.status(200).json({ 
+            message: "Reservation successfully updated",
+            updatedReservation: reservation
+        });
+
+    } catch (error) {
+        console.error("Error in updateReservation:", error);
+        return res.status(500).json({ error: "An error occurred while updating the reservation" });
+    }
+};
+
 
 
 
 // POST - sukurti naują įrangą
 export const createEquipment = async (req, res) => {
-    const { title, description, rentPricePerDay, gender, size, condition, available } = req.body
+    const { photos, title, description, rentPricePerDay, gender, size, condition, available } = req.body
 
     let emptyFields = []
 
@@ -184,7 +248,7 @@ export const createEquipment = async (req, res) => {
 
     try {
         const user_id = req.user._id
-        const iranga = await Iranga.create({title, description, rentPricePerDay, gender, size, condition, available, user_id})
+        const iranga = await Iranga.create({photos, title, description, rentPricePerDay, gender, size, condition, available, user_id})
         res.status(200).json(iranga)
     } catch (error) {
         res.status(400).json({error: error.message})
