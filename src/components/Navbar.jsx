@@ -71,7 +71,7 @@ const Navbar = () => {
                                                 <Link to="/create" state={{ scrollToDrafts: true }} className="dropdown-item" onClick={closeDropdown}>
                                                     Juodraštis
                                                 </Link>
-                                                <Link to="/reservations" className="dropdown-item" onClick={closeDropdown}>
+                                                <Link to="/ManageUsers" className="dropdown-item" onClick={closeDropdown}>
                                                     Rezervacijos
                                                 </Link>
                                             </>

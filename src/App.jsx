@@ -10,7 +10,8 @@ import IrangaForm from './components/AddIrangaForm';
 import ChangeIrangaForm from './components/ChangeIrangaForm';
 import IrangaInformation from './pages/IrangaInformation';
 import UserReservations from './pages/UserReservations';
-import Footer from './components/Footer';
+import ManageUsers from './pages/ManageUsers';
+import ManageReservations from './pages/ManageReservations';
 
 function App() {
   const { user } = useAuthContext();
@@ -48,6 +49,14 @@ function App() {
             <Route
               path='/UserReservations'
               element={<UserReservations />}
+            />
+            <Route
+              path='/ManageUsers'
+              element={<ManageUsers />}
+            />
+            <Route
+              path='/ManageReservations/:id'
+              element={<ManageReservations />}
             />
           </Routes>
         </div>

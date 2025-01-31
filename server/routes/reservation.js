@@ -1,4 +1,4 @@
-import { deleteReservation, getAllReservations, updateReservation } from '../controllers/controller.js';
+import { deleteReservation, getAllReservations, updateReservation,getUserReservations } from '../controllers/controller.js';
 import express from 'express';
 import { reserveIranga } from '../controllers/controller.js';  
 import requireAuth from '../middleware/requireAuth.js'
@@ -11,6 +11,9 @@ router.post('/reserve', reserveIranga);
 
 // GET - paimti visas rezervacijas
 router.get('/reservations', getAllReservations);
+
+// GET - paimti vieno userio rezervacijas per admin paskyra
+router.get('/reservations/:id', getUserReservations)
 
 // DELETE - istrinti viena rezervacija
 router.delete('/reservations/:id', deleteReservation)

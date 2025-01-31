@@ -709,6 +709,10 @@ button:hover {
     color: black;
 }
 
+.issami-info img {
+    max-width: fit-content;
+}
+
 .issami-info h2 {
     color: black;
 }
@@ -756,7 +760,7 @@ button:hover {
 
 }
 
-/* ------- USER RESERVATION PAGE ------- */
+/* ------- USER RESERVATIONS PAGE ------- */
 
 .user-reservations {
     display: flex;

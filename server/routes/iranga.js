@@ -19,7 +19,6 @@ router.post('/reserve', reserveIranga);
 // POST - sukurti naują įrangą
 router.post('/', controller.createEquipment)
 
-
 // PATCH - redaguoti vieną įrangą
 router.patch('/:id', controller.updateEquipment)
 

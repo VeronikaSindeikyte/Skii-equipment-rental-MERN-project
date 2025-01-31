@@ -31,6 +31,22 @@ export const signupUser = async (req, res) => {
     }
 };
 
+// Gauti visus userius
+export const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find({}).populate({
+            path: 'rentedItems.item',
+            populate: {
+                path: 'reservations'
+            }
+        });
+        res.status(200).json(users);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to fetch users' });
+    }
+}
+
 // Gauti prisijungusio userio rezervacijas
 export const getUserReservations = async (req, res) => {
     try {
@@ -44,4 +60,4 @@ export const getUserReservations = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'Failed to fetch user reservations' });
     }
-  };
+};
