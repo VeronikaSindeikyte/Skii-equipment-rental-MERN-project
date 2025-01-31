@@ -248,35 +248,30 @@ export const updateReservation = async (req, res) => {
 export const deleteUserReservation = async (req, res) => {
     const { id: reservationId } = req.params;
     console.log(reservationId)
-    const userId = req.user._id; // Assuming user is authenticated
+    const userId = req.user._id; 
 
     try {
         console.log("Deleting reservation:", reservationId, "for user:", userId);
 
-        // Find the item containing this reservation
         const item = await Iranga.findOne({ "reservations._id": reservationId });
 
         if (!item) {
             return res.status(404).json({ error: "Reservation not found" });
         }
 
-        // Find the reservation inside the item
         const reservation = item.reservations.find(res => res._id.toString() === reservationId);
 
         if (!reservation) {
             return res.status(404).json({ error: "Reservation not found in item" });
         }
 
-        // Ensure the reservation belongs to the requesting user
         if (reservation.user.toString() !== userId.toString()) {
             return res.status(403).json({ error: "Unauthorized to delete this reservation" });
         }
 
-        // Remove the reservation from the item's reservations array
         item.reservations = item.reservations.filter(res => res._id.toString() !== reservationId);
         await item.save();
 
-        // Find the user and remove the rented item by its **item ID**, not reservation ID
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -302,35 +297,20 @@ export const deleteUserReservation = async (req, res) => {
 
 // PATCH - atnaujinti rezervacijos statusą
 export const updateReservationStatus = async (req, res) => {
-    const { reservationId } = req.params;
+    const { id } = req.params; 
     const { reservationStatus } = req.body;
 
-    if (!["Patvirtinta", "Atmesta"].includes(reservationStatus)) {
-        return res.status(400).json({ error: "Invalid reservation status" });
-    }
-
     try {
-        const item = await Iranga.findOne({ "reservations._id": reservationId });
+        const item = await Iranga.findOne({ "reservations._id": new mongoose.Types.ObjectId(id) });
         if (!item) return res.status(404).json({ error: "Reservation not found" });
 
         const reservation = item.reservations.find(
-            (res) => res._id.toString() === reservationId
+            (res) => res._id.toString() === id
         );
         if (!reservation) return res.status(404).json({ error: "Reservation not found in item" });
 
         reservation.reservationStatus = reservationStatus;
         await item.save();
-
-        const user = await User.findById(reservation.user);
-        if (user) {
-            const rentedItem = user.rentedItems.find(
-                (rental) => rental._id.toString() === reservationId
-            );
-            if (rentedItem) {
-                rentedItem.reservationStatus = reservationStatus;
-                await user.save();
-            }
-        }
 
         res.status(200).json({ message: "Reservation status updated", reservation });
     } catch (error) {

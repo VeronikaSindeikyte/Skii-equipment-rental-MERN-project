@@ -22,7 +22,7 @@ router.delete('/reservations/:id', deleteReservation)
 router.delete('/delete/reservations/:id', deleteUserReservation)
 
 // PATCH - pakeisti rezervacijos statusa (admin)
-router.delete('/update/reservations/:id', updateReservationStatus)
+router.patch('/update/reservations/:id', updateReservationStatus)
 
 // PATCH - atnaujinti vienos rezervacijos laika
 router.patch('/reservations/:id', updateReservation);
