@@ -116,41 +116,10 @@ const ManageReservations = () => {
 
             setUserData(updatedResponse.data);
             setUpdateError(null);
+            alert('Rezervacijos būsena sėkmingai pakeista!')
         } catch (err) {
             setUpdateError("Failed to update reservation status.");
             console.error(err);
-        }
-    };
-
-    const handleTimeChange = async (reservationId) => {
-        if (!user?.token) {
-            setUpdateError("Authentication required.");
-            return;
-        }
-
-        const newFrom = prompt("Enter new start date (YYYY-MM-DD):");
-        const newTo = prompt("Enter new end date (YYYY-MM-DD):");
-
-        if (newFrom && newTo) {
-            try {
-                await axios.patch(
-                    `/api/user/reservations/${reservationId}`,
-                    { rentalPeriod: { from: newFrom, to: newTo } },
-                    {
-                        headers: { Authorization: `Bearer ${user.token}` },
-                    }
-                );
-
-                const updatedResponse = await axios.get(`/api/user/reservations/${id}`, {
-                    headers: { Authorization: `Bearer ${user.token}` },
-                });
-
-                setUserData(updatedResponse.data);
-                setUpdateError(null);
-            } catch (err) {
-                setUpdateError("Failed to change reservation time.");
-                console.error(err);
-            }
         }
     };
 
@@ -199,7 +168,7 @@ const ManageReservations = () => {
                                         </div>
                                     )}
                                     <h3>{item?.title || "Nežinomas pavadinimas"}</h3>
-                                    <p><strong>Aprašymas:</strong> {item?.description || "Nėra aprašymo"}</p>
+                                    <p className="aprasymas"><strong>Aprašymas:</strong> {item?.description || "Nėra aprašymo"}</p>
                                     <p><strong>Nuomos kaina per dieną:</strong> {item?.rentPricePerDay ? `${item.rentPricePerDay}€` : "Nenurodyta"}</p>
                                     <p><strong>Dydis:</strong> {item?.size || "Nenurodyta"}</p>
                                     <p><strong>Būklė:</strong> {item?.condition || "Nenurodyta"}</p>
@@ -209,9 +178,13 @@ const ManageReservations = () => {
                                             : "Nežinomas laikotarpis"
                                         }
                                     </p>
-                                    <p><strong>Rezervacijos statusas:</strong> {reservation?.reservationStatus || "Nenurodyta"}</p>
-                                </div>
-                                <div className="reservation-actions">
+                                    <p>
+                                        <strong>Rezervacijos statusas: <br /></strong> 
+                                        <span className={`reservation-status ${reservation?.reservationStatus?.toLowerCase()}`}>
+                                            {reservation?.reservationStatus || "Nenurodyta"}
+                                        </span>
+                                    </p>
+                                    <div className="reservation-actions">
                                     <button onClick={() => handleDelete(rentedItem)} className="delete-btn">
                                         Ištrinti rezervaciją
                                     </button>
@@ -229,10 +202,9 @@ const ManageReservations = () => {
                                     >
                                         Atmesti
                                     </button>
-                                    <button onClick={() => handleTimeChange(rentedItem._id)} className="time-change-btn">
-                                        Keisti nuomos laiką
-                                    </button>
                                 </div>
+                                </div>
+                                
                             </li>
                         );
                     })}

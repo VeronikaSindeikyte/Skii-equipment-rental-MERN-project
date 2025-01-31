@@ -833,3 +833,45 @@ footer {
     text-align: center;
     color: white;
 }
+
+/* ------- MANAGE RESERVATIONS PAGE ------- */
+
+.reservation-status {
+    font-weight: bold;
+}
+
+.reservation-status.patvirtinta {
+    color: green;
+}
+
+.reservation-status.atmesta {
+    color: red;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e6eef1;
+    background: rgb(244, 247, 252);
+    padding: 60px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin: 20px;
+}
+
+.item-details h3 {
+    color: black;
+    font-size: 25px;
+}
+
+.item-details .aprasymas {
+    width: 100%;
+}
+
+.user-reservations ul li {
+    list-style-type: none;
+}
