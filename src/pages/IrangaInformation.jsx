@@ -5,6 +5,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 
+
 const IrangaInformation = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const IrangaInformation = () => {
   const [rentalPeriod, setRentalPeriod] = useState([{ startDate: new Date(), endDate: new Date(), key: "selection" }]);
   const { user } = useAuthContext();
   const [error, setError] = useState(null);
+  const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     const fetchIranga = async () => {
@@ -82,15 +84,36 @@ const IrangaInformation = () => {
       <h2>Pasirinkite nuomos laikotarpį:</h2>
       <div className="issami-info-kalendorius">
         <div className="issami-info">
+        {iranga.photos && iranga.photos.length > 0 ? (
+                    <img 
+                        src={iranga.photos[0]} 
+                        alt={iranga.title || "Įrangos nuotrauka"} 
+                        className="iranga-photo"
+                    />
+                ) : (
+                    <div className="iranga-photo-placeholder">
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            width="48" 
+                            height="48" 
+                            fill="gray"
+                        >
+                            <path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM5 5h14v10.09l-2.5-2.5a1 1 0 0 0-1.42 0L11 16l-2.09-2.09a1 1 0 0 0-1.42 0L5 16.5zm0 14v-.59l3.5-3.5 2.09 2.09a1 1 0 0 0 1.42 0L15 14.5l3.5 3.5V19z"/>
+                            <circle cx="8" cy="8" r="2"/>
+                        </svg>
+                    </div>
+                )}
           <h2>{iranga.title}</h2>
-          <p><strong>Aprašymas:</strong> {iranga.description}</p>
-          <p><strong>Kaina per dieną:</strong> {iranga.rentPricePerDay} €</p>
-          <p><strong>Lyčiai:</strong> {iranga.gender || "Nenurodyta"}</p>
+          <p className="aprasymas"><strong>Aprašymas:</strong> {iranga.description}</p>
+          <div className="p-info">
+          <p><strong>Kaina vienai parai:</strong> {iranga.rentPricePerDay} €</p>
+          <p><strong>Kam skirta:</strong> {iranga.gender || "Nenurodyta"}</p>
           <p><strong>Dydis:</strong> {iranga.size || "Nenurodyta"}</p>
           <p><strong>Būklė:</strong> {iranga.condition || "Nenurodyta"}</p>
           <p><strong>Ar laisva:</strong> {iranga.available ? "Taip" : "Ne"}</p>
-        </div>
-        <div className="calendar-box">
+          </div>
+          <div className="calendar-box">
           <DateRange
             className="calendar"
             editableDateInputs={true}
@@ -100,6 +123,8 @@ const IrangaInformation = () => {
             minDate={new Date()}
           />
         </div>
+        </div>
+
       </div>
       <button onClick={handleReserve}>Rezervuoti</button>
       {error && <p className="error">{error}</p>}

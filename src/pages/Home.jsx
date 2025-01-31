@@ -4,6 +4,7 @@ import IrangaDetails from "../components/IrangaDetails";
 import IrangaForm from "../components/AddIrangaForm";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";
+import Footer from "../components/Footer";
 
 const Home = () => {
     const { irangos, dispatch } = useIrangaContext();
@@ -55,7 +56,6 @@ const Home = () => {
                 )}
                 </div>
             </div>
-            
         </div>
     );
 };

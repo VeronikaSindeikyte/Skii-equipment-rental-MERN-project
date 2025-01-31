@@ -10,6 +10,7 @@ import IrangaForm from './components/AddIrangaForm';
 import ChangeIrangaForm from './components/ChangeIrangaForm';
 import IrangaInformation from './pages/IrangaInformation';
 import UserReservations from './pages/UserReservations';
+import Footer from './components/Footer';
 
 function App() {
   const { user } = useAuthContext();
