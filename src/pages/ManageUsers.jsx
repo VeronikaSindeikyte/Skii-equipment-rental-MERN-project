@@ -39,6 +39,7 @@ const ManageUsers = () => {
     }, [user]);
 
     const handleDeleteUser = async (userId) => {
+        console.log("Attempting to delete user with ID:", userId);
         if (!user?.token) {
             setError("Authentication required.");
             return;
@@ -49,21 +50,22 @@ const ManageUsers = () => {
                     Authorization: `Bearer ${user.token}`,
                 },
             });
-            setUsersData(usersData.filter((u) => u._id !== userId));
+            setUsersData((prevUsers) => prevUsers.filter((u) => u._id !== userId));
+            alert('User deleted succesfully!')
         } catch (err) {
             setError("Failed to delete user.");
             console.error(err);
         }
     };
-
+    
     const handleChangeUserRole = async (userId, newRole) => {
         if (!user?.token) {
             setError("Authentication required.");
             return;
         }
         try {
-            await axios.patch(
-                `/api/user/${userId}/role`,
+            const response = await axios.patch(
+                `/api/user/${userId}`,
                 { role: newRole },
                 {
                     headers: {
@@ -71,14 +73,16 @@ const ManageUsers = () => {
                     },
                 }
             );
-            setUsersData(
-                usersData.map((u) => (u._id === userId ? { ...u, role: newRole } : u))
+            setUsersData((prevUsers) =>
+                prevUsers.map((u) => (u._id === userId ? { ...u, role: response.data.user.role } : u))
             );
+            alert('User role changed successfully!')
         } catch (err) {
             setError("Failed to change user role.");
             console.error(err);
         }
     };
+    
 
     if (loading) {
         return <p>Loading users...</p>;

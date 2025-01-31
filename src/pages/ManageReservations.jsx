@@ -38,29 +38,52 @@ const ManageReservations = () => {
         fetchUserReservations();
     }, [user, id]);
 
-    const handleDelete = async (reservationId) => {
+    const handleDelete = async (rentedItem) => {
         if (!user?.token) {
             setUpdateError("Authentication required.");
             return;
         }
-
+    
+        console.log("Rented Item:", rentedItem);
+    
+        const item = rentedItem?.item;
+        if (!item || !item.reservations || item.reservations.length === 0) {
+            setUpdateError("No reservations found for this item.");
+            console.error("Error: No reservations found", item);
+            return;
+        }
+    
+        const reservation = item.reservations.find(res => res.user?.toString() === userData.user._id?.toString());
+        console.log("User ID to delete reservation from:", reservation.user);
+    
+        if (!reservation || !reservation._id) {
+            setUpdateError("Reservation ID not found.");
+            console.error("Error: Reservation ID not found", reservation);
+            return;
+        }
+    
+        console.log("Deleting reservation with ID:", reservation._id);
+    
         try {
-            await axios.delete(`/api/user/reservations/${reservationId}`, {
+            const response = await axios.delete(
+                `/api/user/delete/reservations/${reservation._id}`,
+                {
+                    headers: { Authorization: `Bearer ${user.token}` },
+                }
+            );
+    
+            console.log("Delete response:", response.data);
+    
+            // Refetch updated user data
+            const updatedResponse = await axios.get(`/api/user/reservations/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
-
-            setUserData(prevData => ({
-                ...prevData,
-                user: {
-                    ...prevData.user,
-                    rentedItems: prevData.user.rentedItems.filter(item => item._id !== reservationId),
-                }
-            }));
-
+    
+            setUserData(updatedResponse.data);
             setUpdateError(null);
         } catch (err) {
             setUpdateError("Failed to delete reservation.");
-            console.error(err);
+            console.error("Deletion error:", err);
         }
     };
 
@@ -72,17 +95,19 @@ const ManageReservations = () => {
 
         try {
             await axios.patch(
-                `/api/user/reservations/${reservationId}`,
+                `/api/user/update/reservations/${reservationId}`,
                 { reservationStatus: newStatus },
                 {
                     headers: { Authorization: `Bearer ${user.token}` },
                 }
             );
 
-            const updatedData = await axios.get(`/api/user/reservations/${id}`, {
+            // Refetch the updated user data
+            const updatedResponse = await axios.get(`/api/user/reservations/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
-            setUserData(updatedData.data);
+
+            setUserData(updatedResponse.data);
             setUpdateError(null);
         } catch (err) {
             setUpdateError("Failed to update reservation status.");
@@ -109,10 +134,11 @@ const ManageReservations = () => {
                     }
                 );
 
-                const updatedData = await axios.get(`/api/user/reservations/${id}`, {
+                const updatedResponse = await axios.get(`/api/user/reservations/${id}`, {
                     headers: { Authorization: `Bearer ${user.token}` },
                 });
-                setUserData(updatedData.data);
+
+                setUserData(updatedResponse.data);
                 setUpdateError(null);
             } catch (err) {
                 setUpdateError("Failed to change reservation time.");
@@ -130,24 +156,17 @@ const ManageReservations = () => {
     return (
         <div className="user-reservations">
             <h2>{userData.user.email} rezervacijos</h2>
+            {updateError && <p className="error">{updateError}</p>}
             {userData?.user?.rentedItems?.length ? (
                 <ul>
                     {userData.user.rentedItems.map((rentedItem) => {
                         const item = rentedItem.item;
-
-                        console.log('User ID:', userData.user._id);
-
                         const reservation = item && item.reservations
-                            ? item.reservations.find(res => {
-                                console.log("Reservation user._id:", res.user);
-                                console.log("Current user._id:", userData.user._id);
-                                return res.user && userData.user._id && res.user.toString() === userData.user._id.toString();
-                            })
+                            ? item.reservations.find(res => 
+                                res.user && userData.user._id && 
+                                res.user.toString() === userData.user._id.toString()
+                            )
                             : null;
-
-                        console.log('Reservation:', reservation);
-                        const rentalPeriod = reservation?.rentalPeriod;
-                        console.log('Rental Period:', rentalPeriod); 
 
                         return (
                             <li key={rentedItem._id}>
@@ -178,20 +197,29 @@ const ManageReservations = () => {
                                     <p><strong>Dydis:</strong> {item?.size || "Nenurodyta"}</p>
                                     <p><strong>Būklė:</strong> {item?.condition || "Nenurodyta"}</p>
                                     <p><strong>Nuomos periodas:</strong>
-                                        {rentalPeriod && rentalPeriod.from && rentalPeriod.to
-                                            ? `${new Date(rentalPeriod.from).toLocaleDateString()} - ${new Date(rentalPeriod.to).toLocaleDateString()}`
+                                        {reservation?.rentalPeriod && reservation.rentalPeriod.from && reservation.rentalPeriod.to
+                                            ? `${new Date(reservation.rentalPeriod.from).toLocaleDateString()} - ${new Date(reservation.rentalPeriod.to).toLocaleDateString()}`
                                             : "Nežinomas laikotarpis"
                                         }
                                     </p>
+                                    <p><strong>Rezervacijos statusas:</strong> {reservation?.reservationStatus || "Nenurodyta"}</p>
                                 </div>
                                 <div className="reservation-actions">
-                                    <button onClick={() => handleDelete(rentedItem._id)} className="delete-btn">
-                                        Ištrinti rezervaciją
-                                    </button>
-                                    <button onClick={() => handleStatusUpdate(rentedItem._id, 'Patvirtinta')} className="status-btn">
+                                <button onClick={() => handleDelete(rentedItem)} className="delete-btn">
+    Ištrinti rezervaciją
+</button>
+                                    <button 
+                                        onClick={() => handleStatusUpdate(rentedItem._id, 'Patvirtinta')} 
+                                        className="status-btn"
+                                        disabled={reservation?.reservationStatus === 'Patvirtinta'}
+                                    >
                                         Patvirtinti
                                     </button>
-                                    <button onClick={() => handleStatusUpdate(rentedItem._id, 'Atmesta')} className="status-btn">
+                                    <button 
+                                        onClick={() => handleStatusUpdate(rentedItem._id, 'Atmesta')} 
+                                        className="status-btn"
+                                        disabled={reservation?.reservationStatus === 'Atmesta'}
+                                    >
                                         Atmesti
                                     </button>
                                     <button onClick={() => handleTimeChange(rentedItem._id)} className="time-change-btn">
@@ -203,11 +231,10 @@ const ManageReservations = () => {
                     })}
                 </ul>
             ) : (
-                <p>No reservations found.</p>
+                <p>Rezervacijų nerasta.</p>
             )}
         </div>
     );
-
 };
 
 export default ManageReservations;

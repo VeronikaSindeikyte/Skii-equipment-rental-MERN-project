@@ -61,3 +61,48 @@ export const getUserReservations = async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch user reservations' });
     }
 };
+
+// Ištrinti userį
+export const deleteUser = async (req, res) => {
+    const { id } = req.params; 
+    console.log("Received DELETE request for user ID:", id);
+
+    try {
+        const user = await User.findByIdAndDelete(id);
+        if (!user) {
+            console.log("User not found in database.");
+            return res.status(404).json({ error: "User not found" });
+        }
+        res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting user:", error);
+        res.status(500).json({ error: "Failed to delete user" });
+    }
+};
+
+// Pakeisti userio rolę
+export const updateUserRole = async (req, res) => {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    if (!['admin', 'user'].includes(role)) {
+        return res.status(400).json({ error: 'Invalid role' });
+    }
+
+    try {
+        const user = await User.findByIdAndUpdate(
+            id,
+            { role },
+            { new: true }
+        );
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        res.status(200).json({ message: 'User role updated successfully', user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to update user role' });
+    }
+};
