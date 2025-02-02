@@ -875,3 +875,90 @@ footer {
 .user-reservations ul li {
     list-style-type: none;
 }
+
+/* ------- MANAGE USERS PAGE ------- */
+
+.manage-all-users {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: transparent;
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    color: black;
+}
+
+.manage-all-users h2 {
+    color: white;
+    font-size: 40px;
+
+}
+
+.users-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+
+.user-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e6eef1;
+    background: rgb(244, 247, 252);
+    padding: 40px; 
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin: 20px;
+    color: black;
+}
+
+.user-section h3, 
+.user-section p, 
+.user-section button, 
+.user-section label {
+    color: black;
+}
+
+.user-section h3 {
+    border-color: black;
+    box-shadow: 0 4px 10px #053169cc;
+    width: 100%;
+    background-color: #173b805b;
+    border-radius: 5px;
+}
+
+.user-section p {
+    font-size: 20px;
+}
+
+.user-section button {
+    max-width: 100%; 
+}
+
+.user-actions select {
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    background: rgba(99, 83, 83, 0.185); 
+    padding: 5px 15px;
+    width: 90%;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border-color: black;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+

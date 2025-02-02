@@ -80,6 +80,7 @@ const ManageReservations = () => {
 
             setUserData(updatedResponse.data);
             setUpdateError(null);
+            alert('Reservation deleted successfully!')
         } catch (err) {
             setUpdateError("Failed to delete reservation.");
             console.error("Deletion error:", err);

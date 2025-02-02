@@ -94,20 +94,19 @@ const ManageUsers = () => {
 
     return (
         <div className="manage-all-users">
-            <h2>All Users</h2>
+            <h2>Visų vartotojų sąrašas:</h2>
 
             {usersData.length === 0 ? (
-                <p>No users found.</p>
+                <p>Vartotojų nerasta.</p>
             ) : (
                 <div className="users-list">
                     {usersData.map((userData) => (
                         <div key={userData._id} className="user-section">
-                            <h3>{userData.email}</h3>
-                            <p><strong>Role:</strong> {userData.role}</p>
+                            <h3><strong>Vartotojas: </strong> {userData.email}</h3>
+                            <p><strong>Rolė: </strong> {userData.role}</p>
                             <div className="user-actions">
-                                <button onClick={() => handleDeleteUser(userData._id)}>
-                                    Ištrinti vartotoją
-                                </button>
+                                <div className="change-role">
+                                <label htmlFor="select">Keisti vartotojo rolę: </label>
                                 <select
                                     value={userData.role}
                                     onChange={(e) => handleChangeUserRole(userData._id, e.target.value)}
@@ -115,8 +114,12 @@ const ManageUsers = () => {
                                     <option value="user">User</option>
                                     <option value="admin">Admin</option>
                                 </select>
+                                </div>
                                 <button onClick={() => navigate(`/ManageReservations/${userData._id}`)}>
                                     Peržiūrėti vartotojo rezervacijas
+                                </button>
+                                <button onClick={() => handleDeleteUser(userData._id)}>
+                                    Ištrinti vartotoją
                                 </button>
                             </div>
                         </div>
