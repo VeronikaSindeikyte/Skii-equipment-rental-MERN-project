@@ -13,6 +13,7 @@ import UserReservations from './pages/UserReservations';
 import ManageUsers from './pages/ManageUsers';
 import ManageReservations from './pages/ManageReservations';
 import RootLayout from './layouts/rootLayout';
+import NotFound from './pages/NotFound';
 
 function App() {
   const { user } = useAuthContext();
@@ -61,6 +62,8 @@ function App() {
               element={<ManageReservations />}
             />
             </Route>
+
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </div>
       </BrowserRouter>
