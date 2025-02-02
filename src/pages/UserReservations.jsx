@@ -158,7 +158,7 @@ const UserReservations = () => {
                   </div>
                 )}
                 <h3>{item.title || 'Untitled Item'}</h3>
-                <p><strong>Aprašymas:</strong> {item.description || 'No description available'}</p>
+                <p className="aprasymas"><strong>Aprašymas:</strong> {item.description || 'No description available'}</p>
                 <p><strong>Dydis:</strong> {item.size || 'Not specified'}</p>
                 <p><strong>Būklė:</strong> {item.condition || 'Not specified'}</p>
                 <p><strong>Nuomos kaina parai:</strong> €{item.rentPricePerDay || '0'}</p>
