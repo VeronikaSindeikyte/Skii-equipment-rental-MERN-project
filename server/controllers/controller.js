@@ -247,43 +247,36 @@ export const updateReservation = async (req, res) => {
 // DELETE - ištrinti vartotojo rezervaciją iš admin pusės
 export const deleteUserReservation = async (req, res) => {
     const { id: reservationId } = req.params;
-    console.log(reservationId)
-    const userId = req.user._id; 
+    console.log("Reservation ID to delete:", reservationId);
 
     try {
-        console.log("Deleting reservation:", reservationId, "for user:", userId);
-
         const item = await Iranga.findOne({ "reservations._id": reservationId });
 
         if (!item) {
-            return res.status(404).json({ error: "Reservation not found" });
+            return res.status(404).json({ error: "Reservation not found in any item" });
         }
 
-        const reservation = item.reservations.find(res => res._id.toString() === reservationId);
-
-        if (!reservation) {
-            return res.status(404).json({ error: "Reservation not found in item" });
-        }
-
-        if (reservation.user.toString() !== userId.toString()) {
-            return res.status(403).json({ error: "Unauthorized to delete this reservation" });
-        }
+        console.log("Found item:", item._id);
 
         item.reservations = item.reservations.filter(res => res._id.toString() !== reservationId);
         await item.save();
 
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ error: "User not found" });
+        console.log("Reservation removed from item:", item._id);
+
+        const result = await User.updateOne(
+            { "rentedItems.item": item }, 
+            { $pull: { rentedItems: { item: item } } } 
+        );
+
+        if (result.modifiedCount === 0) {
+            console.log("No rented items were removed.");
+            return res.status(404).json({ error: "Rented item not found in user document" });
         }
 
-        user.rentedItems = user.rentedItems.filter(rental => rental.item.toString() !== item._id.toString());
-
-        await user.save();
+        console.log("Rented item removed from user:", item._id);
 
         return res.status(200).json({
-            message: "Reservation successfully deleted from item and user",
-            deletedReservation: reservation
+            message: "Reservation successfully deleted from item and user rentedItems"
         });
 
     } catch (error) {
@@ -291,8 +284,6 @@ export const deleteUserReservation = async (req, res) => {
         return res.status(500).json({ error: "An error occurred while deleting the reservation" });
     }
 };
-
-
 
 
 // PATCH - atnaujinti rezervacijos statusą
