@@ -1,3 +1,4 @@
+import "./componentsCSS/IrangaDetails.css"
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { Link } from "react-router-dom";

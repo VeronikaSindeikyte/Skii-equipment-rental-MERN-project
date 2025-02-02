@@ -1,3 +1,4 @@
+import"./componentsCSS/AddIrangaForm.css"
 import { useState, useEffect, useRef } from "react";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -188,6 +189,11 @@ const IrangaForm = () => {
         setPreview(draft.photos?.[0] || null);
         setEditingDraftIndex(index);
         setError(null);
+
+        const formElement = document.querySelector(".create");
+        if (formElement) {
+            formElement.scrollIntoView({ behavior: "smooth" });
+        }
     };
 
     const resetForm = () => {

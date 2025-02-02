@@ -1,0 +1,70 @@
+/* ------- DRAFTS ------- */
+
+.draft-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.drafts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 20px;
+    width: 100%;
+    padding: 20px;
+}
+
+.drafts ul {
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
+    list-style-type: none;
+    padding: 20px;
+    margin: 0;
+}
+
+.drafts ul li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e6eef1;
+    width: 90%;
+    max-width: 350px; 
+    background: rgb(244, 247, 252);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin: auto;
+}
+
+.drafts ul li strong {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.drafts ul li button {
+    margin: 5px;
+    color: black;
+}
+
+@media screen and (max-width: 768px) {
+    .drafts ul {
+        grid-template-columns: 1fr;
+        padding: 10px;
+    }
+    
+    .drafts ul li {
+        min-height: 120px;
+        padding: 15px;
+    }
+}

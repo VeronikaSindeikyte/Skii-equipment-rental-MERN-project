@@ -1,0 +1,98 @@
+/* ------- ISSAMI INFO + KALENDORIUS ------- */
+
+.reserve-iranga-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.reserve-iranga-page h3 {
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.reserve-iranga-page h2 {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.issami-info-kalendorius {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+}
+
+.issami-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e6eef1;
+    background: rgb(244, 247, 252);
+    padding: 60px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    color: black;
+}
+
+.issami-info img {
+    max-width: fit-content;
+}
+
+.issami-info h2 {
+    color: black;
+}
+
+.p-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.p-info p {
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin: 5px;
+    text-transform: uppercase;
+}
+
+.p-info strong {
+    text-transform: capitalize;
+}
+
+.aprasymas {
+    max-width: 600px;
+    text-align: justify;
+}
+
+.calendar-box {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.calendar {
+    padding: 20px;
+    font-family: "Inknut Antiqua", serif;
+    color: black;
+}
+
+.calendar button {
+    font-size: 15px;
+
+}

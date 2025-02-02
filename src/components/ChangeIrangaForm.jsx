@@ -1,3 +1,4 @@
+import "./componentsCSS/ChangeIrangaForm.css"
 import { useState, useEffect } from "react";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";

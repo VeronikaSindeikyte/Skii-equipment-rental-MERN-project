@@ -1,0 +1,65 @@
+/* ------- MANAGE RESERVATIONS PAGE ------- */
+.user-reservations {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh; 
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+    overflow-wrap: break-word;
+}
+
+@media (max-width: 800px) {
+    .user-reservations h2 {
+        font-size: 1.2rem;
+    }
+}
+
+.reservation-status {
+    font-weight: bold;
+}
+
+.reservation-status.patvirtinta {
+    color: green;
+}
+
+.reservation-status.atmesta {
+    color: red;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e6eef1;
+    background: rgb(244, 247, 252);
+    padding: 60px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin: 20px;
+}
+
+.item-details h3 {
+    color: black;
+    font-size: 25px;
+}
+
+.item-details .aprasymas {
+    width: 100%;
+}
+
+.user-reservations ul li {
+    list-style-type: none;
+}
+
+.nerasta {
+    color: rgb(214, 108, 108);
+    font-size: 20px;
+}

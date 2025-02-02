@@ -1,3 +1,4 @@
+import "./pagesCSS/IrangaInformation.css"
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DateRange } from "react-date-range";
@@ -13,7 +14,6 @@ const IrangaInformation = () => {
   const [rentalPeriod, setRentalPeriod] = useState([{ startDate: new Date(), endDate: new Date(), key: "selection" }]);
   const { user } = useAuthContext();
   const [error, setError] = useState(null);
-  const [photos, setPhotos] = useState([]);
 
   useEffect(() => {
     const fetchIranga = async () => {

@@ -1,10 +1,10 @@
+import "./pagesCSS/Home.css"
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IrangaDetails from "../components/IrangaDetails";
-import IrangaForm from "../components/AddIrangaForm";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";
-import Footer from "../components/Footer";
+
 
 const Home = () => {
     const { irangos, dispatch } = useIrangaContext();

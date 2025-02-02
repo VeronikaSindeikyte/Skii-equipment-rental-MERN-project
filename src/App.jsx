@@ -1,7 +1,7 @@
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // pages and components
-import Home from './pages/Home'
+import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -12,6 +12,7 @@ import IrangaInformation from './pages/IrangaInformation';
 import UserReservations from './pages/UserReservations';
 import ManageUsers from './pages/ManageUsers';
 import ManageReservations from './pages/ManageReservations';
+import RootLayout from './layouts/rootLayout';
 
 function App() {
   const { user } = useAuthContext();
@@ -22,17 +23,18 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-            <Route
-              path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
-            />
-            <Route
+          <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
             <Route
               path="/signup"
               element={!user ? <Signup /> : <Navigate to="/" />}
+            />
+            <Route path='/' element={<RootLayout />}>
+            <Route
+              path="/"
+              element={user ? <Home /> : <Navigate to="/login" />}
             />
             <Route
               path="/create"
@@ -58,6 +60,7 @@ function App() {
               path='/ManageReservations/:id'
               element={<ManageReservations />}
             />
+            </Route>
           </Routes>
         </div>
       </BrowserRouter>

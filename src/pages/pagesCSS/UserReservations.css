@@ -1,0 +1,61 @@
+/* ------- USER RESERVATIONS PAGE ------- */
+
+.user-reservations {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    color: black;
+}
+
+.user-reservations ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-reservations h2 {
+    color: white;
+}
+
+.user-reservations h2 {
+    font-size: 30px;
+    text-transform: uppercase;
+}
+
+.reservation-list {
+    text-align: left;
+    width: 100%;
+    padding: 20px;
+}
+
+.reservation-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    padding: 60px;
+
+}
+
+.reservation-box h3 {
+    font-size: 25px;
+    color: black;
+}
+
+.item-details img {
+    max-width: fit-content;
+}
+
+.reservation-actions button {
+    color: black;
+}

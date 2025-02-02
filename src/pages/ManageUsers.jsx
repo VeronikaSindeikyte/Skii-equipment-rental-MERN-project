@@ -1,3 +1,4 @@
+import "./pagesCSS/ManageUsers.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";

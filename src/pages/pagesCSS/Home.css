@@ -1,0 +1,48 @@
+/* ------- HOME -------- */
+
+.home {
+    margin-bottom: 100px;
+}
+
+.iranga h2 {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    font-style: normal;
+    color: white;
+    font-size: 40px;
+
+}
+
+.iranga p {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    font-style: normal;
+    color: white;
+    font-size: 20px;
+}
+
+.all-iranga-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    margin: 10px;
+}
+
+@media (max-width: 1200px) {
+    .all-iranga-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 800px) {
+    .all-iranga-list {
+        grid-template-columns: repeat(1, 1fr); 
+    }
+}

@@ -1,3 +1,4 @@
+import "./pagesCSS/ManageReservations.css"
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -211,7 +212,7 @@ const ManageReservations = () => {
                     })}
                 </ul>
             ) : (
-                <p>Rezervacijų nerasta.</p>
+                <p className="nerasta">Rezervacijų nerasta.</p>
             )}
         </div>
     );

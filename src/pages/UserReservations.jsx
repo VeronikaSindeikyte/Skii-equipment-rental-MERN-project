@@ -1,3 +1,4 @@
+import "./pagesCSS/UserReservations.css"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -98,7 +99,7 @@ const UserReservations = () => {
   };
 
   if (loading) {
-    return <p>Loading reservations...</p>;
+    return <p>Ieškoma vartotojo rezervacijų...</p>;
   }
 
   if (error) {
@@ -106,16 +107,14 @@ const UserReservations = () => {
   }
 
   if (!userData?.rentedItems?.length) {
-    return <p>No reservation data available.</p>;
+    return <p>Rezervacijų duomenys neprieinami.</p>;
   }
 
-  // Group reservations by item
   const groupedItems = userData.rentedItems.reduce((acc, rental) => {
     if (!rental?.item) return acc;
     
     const existingItem = acc.find(i => i.item._id === rental.item._id);
     if (existingItem) {
-      // Merge reservations arrays, avoiding duplicates
       const newReservations = rental.item.reservations || [];
       existingItem.item.reservations = [...existingItem.item.reservations || [], ...newReservations]
         .filter((reservation, index, self) => 
@@ -163,9 +162,7 @@ const UserReservations = () => {
                 <p><strong>Dydis:</strong> {item.size || 'Not specified'}</p>
                 <p><strong>Būklė:</strong> {item.condition || 'Not specified'}</p>
                 <p><strong>Nuomos kaina parai:</strong> €{item.rentPricePerDay || '0'}</p>
-              </div>
-
-              <div className="reservations-section">
+                <div className="reservations-section">
                 <h4>Rezervacijos:</h4>
                 {item.reservations?.length > 0 ? (
                   <ul className="one-item-all-reservations">
@@ -226,6 +223,9 @@ const UserReservations = () => {
                   <p>Nuomojamos įrangos rezervacijų nerasta.</p>
                 )}
               </div>
+              </div>
+
+
             </li>
           );
         })}

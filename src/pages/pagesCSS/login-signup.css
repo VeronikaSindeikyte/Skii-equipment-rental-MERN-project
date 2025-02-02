@@ -1,0 +1,80 @@
+/*  -------- LOGIN, SIGNUP -------- */
+
+.login, .signup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(226, 218, 218, 0.185); 
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 50%;
+}
+
+.login, .signup label, h3 {
+    color: white;
+}
+
+.login h3, .signup h3 {
+    font-size: 30px;
+    margin: 0;
+}
+
+.login input, .signup input, .signup select {
+    font-family: "Inknut Antiqua", serif;
+    font-size: 15px;
+    text-align: center;
+    padding: 3px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background: rgba(235, 230, 230, 0.897); 
+}
+
+.login label, .signup label {
+    color: white;
+    font-size: 20px;
+}
+
+.login button, .signup button {
+    font-family: "Inknut Antiqua", serif;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    background: rgba(226, 218, 218, 0.185); 
+    padding: 5px 15px;
+    width: 100%;
+    margin-bottom: 15px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+}
+
+.login button:hover, .signup button:hover {
+    background: rgba(226, 218, 218, 0.541);
+    color: #333;
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.error {
+    font-family: "Inknut Antiqua", serif;
+    text-decoration: none;
+    text-align: center;
+    color: red;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    background: rgba(226, 218, 218, 0.774); 
+    padding: 5px 15px;
+    width: 97%;
+    margin-bottom: 15px;
+    border-radius: 10px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}

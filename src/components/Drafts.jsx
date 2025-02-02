@@ -1,3 +1,4 @@
+import "./componentsCSS/Drafts.css"
 
 const Drafts = ({ drafts = [], onDelete, onEdit }) => {
     return (

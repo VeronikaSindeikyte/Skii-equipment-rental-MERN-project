@@ -1,0 +1,115 @@
+/* ------- IRANGA DETAILS -------- */
+
+.iranga-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    border: 1px solid #e6eef1;
+    width: 90%;
+    max-width: 350px; 
+    height: 500px; 
+    background: rgb(244, 247, 252);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    margin: auto;
+}
+
+/* ------- Iranga photos ------- */
+
+.iranga-photo, .iranga-photo-placeholder {
+    width: 80%;
+    height: 250px; 
+    object-fit: fit-content;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    background-color: white;
+}
+
+.iranga-photo {
+    max-width: 100%;
+}
+
+.iranga-photo-placeholder {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.iranga-details-buttons {
+    margin-top: auto; 
+}
+
+.iranga-details button a {
+    color: black;
+    text-decoration: none;
+}
+
+.iranga-details h4 {
+    margin: 10px 0;
+    font-size: 120%;
+    color: #333;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.iranga-details p {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
+
+}
+
+.iranga-details strong {
+    font-weight: bold;
+    color: #333;
+}
+
+.iranga-details .kaina {
+    font-size: 25px;
+    color: rgb(219, 60, 73);
+}
+
+.iranga-details-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.iranga-details-buttons button {
+    margin: 10px;
+    font-size: 20px;
+    color: black;
+}
+
+.trashcan {
+    font-size: 25px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.trashcan:hover {
+    color: #ff5733;
+    transform: scale(1.1); 
+}
+
+
+.trashcan {
+    position: absolute;  
+    top: 15px; 
+    right: 15px; 
+}
+
+@media (max-width: 768px) {
+    .iranga-details > div {
+        flex: 1 1 100%;
+        max-width: 100%;
+        align-items: center;
+    }
+}
