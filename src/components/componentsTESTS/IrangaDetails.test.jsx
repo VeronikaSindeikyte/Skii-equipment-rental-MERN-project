@@ -4,6 +4,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import IrangaDetails from '../IrangaDetails.jsx';
 import { MemoryRouter } from 'react-router-dom';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { useIrangaContext } from '../../hooks/useIrangaContext';
 
 jest.mock('../../hooks/useAuthContext', () => ({
     useAuthContext: jest.fn()
@@ -13,8 +15,7 @@ jest.mock('../../hooks/useIrangaContext', () => ({
     useIrangaContext: jest.fn()
 }));
 
-import { useAuthContext } from '../../hooks/useAuthContext';
-import { useIrangaContext } from '../../hooks/useIrangaContext';
+
 
 global.fetch = jest.fn();
 
