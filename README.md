@@ -1,3 +1,43 @@
+# SKI EQUIPMENT RENT - the final exam project
+An application to rent skiing equipment and manage rental items and user reservations.
+
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- []
+
+
+
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/username/repository.git
+   ```
+
+2. Navigate to the project directory:
+   ```bash
+   cd repository
+   ```
+
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Run the application:
+   ```bash
+   npm run dev
+   ```
+
+## Usage
+
+After installation, you can navigate to the app in your browser at `http://localhost:5173/`.
+
+- To reserve an item, select a date range on the reservation calendar.
+- View, modify, or delete user reservations from the admin panel.
+
 # Login/Signup page:
 ![image](https://github.com/user-attachments/assets/fc0accbb-26ab-412c-bcb8-fd8719d717e3)
 
