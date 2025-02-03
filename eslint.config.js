@@ -10,7 +10,10 @@ export default [
     files: ['**/*.{js,jsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        jest: true,
+      },
       parserOptions: {
         ecmaVersion: 'latest',
         ecmaFeatures: { jsx: true },
@@ -22,6 +25,7 @@ export default [
       react,
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      jest: require('eslint-plugin-jest'), 
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -33,6 +37,7 @@ export default [
         'warn',
         { allowConstantExport: true },
       ],
+      'jest/no-undef': 'error',
     },
   },
 ]

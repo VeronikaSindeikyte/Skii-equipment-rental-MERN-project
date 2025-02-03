@@ -1,4 +1,5 @@
 import"./componentsCSS/AddIrangaForm.css"
+import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -123,6 +124,7 @@ const IrangaForm = () => {
             });
 
             console.log("Server response:", response.data);
+            alert('Nauja įranga pridėta sėkmingai!')
     
             if (response.data) {
                 if (editingDraftIndex !== null) {
@@ -164,6 +166,7 @@ const IrangaForm = () => {
         setDrafts(updatedDrafts);
         localStorage.setItem("drafts", JSON.stringify(updatedDrafts));
         resetForm();
+        alert('Įranga pridėta į juodraščius!')
     };
 
     const handleDeleteDraft = (index) => {
@@ -220,31 +223,35 @@ const IrangaForm = () => {
             <form className="create" onSubmit={handleSubmit}>
                 <h3>{editingDraftIndex !== null ? 'Redaguoti juodraštį' : 'Pridėti naują įrangą'}</h3>
     
-                <label>Pavadinimas:</label>
-                <input 
+                <label htmlFor="name">Pavadinimas:</label>
+                <input
+                    id="name"
                     type="text" 
                     onChange={(e) => setTitle(e.target.value)} 
                     value={title} 
                     className={emptyFields.includes('title') ? 'error' : ''} 
                 />
     
-                <label>Aprašymas:</label>
-                <textarea 
+                <label htmlFor="description">Aprašymas:</label>
+                <textarea
+                    id="description"
                     onChange={(e) => setDescription(e.target.value)} 
                     value={description}
                     className={emptyFields.includes('description') ? 'error' : ''} 
                 />
     
-                <label>Nuomos kaina vienai parai (EUR):</label>
-                <input 
+                <label htmlFor="price">Nuomos kaina vienai parai (EUR):</label>
+                <input
+                    id="price"
                     type="number" 
                     onChange={(e) => setRentPricePerDay(e.target.value)} 
                     value={rentPricePerDay} 
                     className={emptyFields.includes('rentPricePerDay') ? 'error' : ''} 
                 />
     
-                <label>Kam skirta (Lytis):</label>
-                <select 
+                <label htmlFor="gender">Kam skirta (Lytis):</label>
+                <select
+                    id="gender"
                     onChange={(e) => setGender(e.target.value)} 
                     value={gender}
                     className={emptyFields.includes('gender') ? 'error' : ''} 
@@ -254,16 +261,18 @@ const IrangaForm = () => {
                     <option value="female">Moterims</option>
                 </select>
     
-                <label>Dydis:</label>
-                <input 
+                <label htmlFor="size">Dydis:</label>
+                <input
+                    id="size"
                     type="text" 
                     onChange={(e) => setSize(e.target.value)} 
                     value={size} 
                     className={emptyFields.includes('size') ? 'error' : ''} 
                 />
     
-                <label>Būklė:</label>
-                <select 
+                <label htmlFor="condition">Būklė:</label>
+                <select
+                    id="condition"
                     onChange={(e) => setCondition(e.target.value)} 
                     value={condition}
                     className={emptyFields.includes('condition') ? 'error' : ''} 
@@ -273,8 +282,9 @@ const IrangaForm = () => {
                     <option value="refurbished">Atnaujinta</option>
                 </select>
     
-                <label>Ar įranga laisva nuomai:</label>
-                <select 
+                <label htmlFor="availabilty">Ar įranga laisva nuomai:</label>
+                <select
+                    id="availability"
                     onChange={(e) => setAvailable(e.target.value === 'true')} 
                     value={available.toString()}
                     className={emptyFields.includes('available') ? 'error' : ''} 
@@ -283,8 +293,8 @@ const IrangaForm = () => {
                     <option value="false">Ne</option>
                 </select>
     
-                <label>Nuotrauka:</label>
-                <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+                <label htmlFor="image">Nuotrauka:</label>
+                <input id="image" type="file" accept="image/*" onChange={handlePhotoUpload} />
                 {preview && <img src={preview} alt="Peržiūra" className="preview-img" style={{ width: "100px", marginTop: "10px" }} />}
     
                 <button type="submit" disabled={uploading}>

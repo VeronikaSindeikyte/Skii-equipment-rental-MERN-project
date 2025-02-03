@@ -1,4 +1,5 @@
 import "./componentsCSS/Drafts.css"
+import React from 'react';
 
 const Drafts = ({ drafts = [], onDelete, onEdit }) => {
     return (

@@ -1,3 +1,4 @@
+import React from 'react';
 
 export const IrangaReducer = (state, action) => {
     switch (action.type) {

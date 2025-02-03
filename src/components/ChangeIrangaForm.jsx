@@ -1,4 +1,5 @@
 import "./componentsCSS/ChangeIrangaForm.css"
+import React from 'react';
 import { useState, useEffect } from "react";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -86,11 +87,14 @@ const ChangeIrangaForm = () => {
         <div className="iranga-form-and-list">
             <form className="edit-form" onSubmit={handleSubmit}>
             <h3>Atnaujinti įrangos informaciją:</h3>
-                <label>Pasirinkti įrangą:</label>
-                <select onChange={(e) => {
+                <label htmlFor="equipment">Pasirinkti įrangą:</label>
+                <select
+                id="equipment"
+                onChange={(e) => {
                     const selected = irangos.find(i => i._id === e.target.value);
-                    setSelectedIranga(selected);
-                }}>
+                    setSelectedIranga(selected);}}
+                    value={selectedIranga ? selectedIranga._id : ""}
+                    >
                     <option value="">Pasirinkite įrangą </option>
                     {irangos.map(iranga => (
                         <option key={iranga._id} value={iranga._id}>
@@ -101,30 +105,34 @@ const ChangeIrangaForm = () => {
 
                 {selectedIranga && (
                     <>
-                        <label>Pavadinimas:</label>
+                        <label htmlFor="title">Pavadinimas:</label>
                         <input
+                            id="title"
                             type="text"
                             onChange={(e) => setTitle(e.target.value)}
                             value={title}
                             className={emptyFields.includes('title') ? 'error' : ''}
                         />
 
-                        <label>Aprašymas:</label>
+                        <label htmlFor="description">Aprašymas:</label>
                         <textarea
+                            id="description"
                             onChange={(e) => setDescription(e.target.value)}
                             value={description}
                         ></textarea>
 
-                        <label>Nuomos kaina per dieną (EUR):</label>
+                        <label htmlFor="price">Nuomos kaina per dieną (EUR):</label>
                         <input
+                            id="price"
                             type="number"
                             onChange={(e) => setRentPricePerDay(e.target.value)}
                             value={rentPricePerDay}
                             className={emptyFields.includes('rentPricePerDay') ? 'error' : ''}
                         />
 
-                        <label>Lytis:</label>
+                        <label htmlFor="gender">Lytis:</label>
                         <select
+                            id="gender"
                             onChange={(e) => setGender(e.target.value)}
                             value={gender}
                         >
@@ -133,15 +141,17 @@ const ChangeIrangaForm = () => {
                             <option value="unisex">Unisex</option>
                         </select>
 
-                        <label>Dydis:</label>
+                        <label htmlFor="size">Dydis:</label>
                         <input
+                            id="size"
                             type="text"
                             onChange={(e) => setSize(e.target.value)}
                             value={size}
                         />
 
-                        <label>Būklė:</label>
+                        <label htmlFor="condition">Būklė:</label>
                         <select
+                            id="condition"
                             onChange={(e) => setCondition(e.target.value)}
                             value={condition}
                         >
@@ -151,10 +161,11 @@ const ChangeIrangaForm = () => {
                         </select>
 
                         <div className="checkbox-container">
-                            <label className="checkbox-label">Ar įranga laisva nuomai?</label>
+                            <label className="checkbox-label" htmlFor="availability">Ar įranga laisva nuomai?</label>
                             
-                            <label className="radio-label">
+                            <label className="radio-label" htmlFor="availability">
                                 <input
+                                    id="availability"
                                     type="radio"
                                     name="availability"
                                     value="true"
@@ -164,8 +175,9 @@ const ChangeIrangaForm = () => {
                                 Taip
                             </label>
 
-                            <label className="radio-label">
+                            <label className="radio-label" htmlFor="availability">
                                 <input
+                                    id="availability"
                                     type="radio"
                                     name="availability"
                                     value="false"
@@ -176,7 +188,7 @@ const ChangeIrangaForm = () => {
                             </label>
                         </div>
 
-                        <button>Atnaujinti įrangą</button>
+                        <button type="submit">Atnaujinti įrangą</button>
                     </>
                 )}
 

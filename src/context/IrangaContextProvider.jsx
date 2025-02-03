@@ -1,3 +1,4 @@
+import React from 'react';
 import { useReducer } from "react";
 import PropTypes from "prop-types"; 
 import { IrangaContext } from "./IrangaContext";
