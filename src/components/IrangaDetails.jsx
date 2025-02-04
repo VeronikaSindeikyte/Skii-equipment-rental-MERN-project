@@ -76,8 +76,8 @@ const IrangaDetails = ({ iranga }) => {
 
             <h4>{iranga.title || "Pavadinimas neprieinamas"}</h4>
             <p>
-                <strong>Nuomos kaina parai: </strong>
-                <span className="kaina">{iranga.rentPricePerDay !== null ? `${iranga.rentPricePerDay} €` : "Nenurodyta"}</span>
+                <strong>Nuomos kaina parai:</strong>
+                <span className="kaina"> {iranga.rentPricePerDay !== null ? `${iranga.rentPricePerDay} €` : "Nenurodyta"}</span>
             </p>
 
             <div className="iranga-details-buttons">

@@ -7,10 +7,12 @@
     align-items: center;
     text-align: center;
     padding: 20px;
+    margin-bottom: 30px;
+    width: 100%;
 }
 
 .reserve-iranga-page h3 {
-    font-size: 30px;
+    font-size: 25px;
     text-transform: uppercase;
 }
 
@@ -27,8 +29,13 @@
     align-items: center;
     text-align: center;
     text-decoration: none;
-    color: white;
     font-size: 16px;
+    max-width: 90%;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #e6eef1;
+    padding-bottom: 20px;
 }
 
 .issami-info {
@@ -38,12 +45,9 @@
     align-items: center;
     text-align: center;
     position: relative;
-    border: 1px solid #e6eef1;
-    background: rgb(244, 247, 252);
-    padding: 60px;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
     color: black;
+    max-width: 500px;
 }
 
 .issami-info img {
@@ -51,7 +55,11 @@
 }
 
 .issami-info h2 {
-    color: black;
+    margin: 10px 0;
+    font-size: 100%;
+    color: #333;
+    margin-bottom: 8px;
+    text-transform: uppercase;
 }
 
 .p-info {
@@ -60,6 +68,9 @@
     align-items: center;
     text-align: center;
     flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    font-size: 80%;
 }
 
 .p-info p {
@@ -74,25 +85,38 @@
 }
 
 .aprasymas {
-    max-width: 600px;
-    text-align: justify;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    font-size: 100%;
+    color: #333;
+    width: 400px;
 }
 
 .calendar-box {
     margin: 20px;
     padding: 20px;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+   
 }
 
 .calendar {
     padding: 20px;
     font-family: "Inknut Antiqua", serif;
     color: black;
+    max-width: 600px;
 }
 
 .calendar button {
     font-size: 15px;
+}
 
+.rezervuoti, .grizti {
+    color: black;
+    max-width: 60%;
+    font-size: 100%;
+    margin: 10px;
 }

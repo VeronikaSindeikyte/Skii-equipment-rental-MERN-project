@@ -11,18 +11,19 @@
     font-weight: 700;
     font-style: normal;
     color: white;
-    font-size: 40px;
+    font-size: 30px;
 
 }
 
 .iranga p {
     align-items: center;
-    justify-content: center;
     text-align: center;
     font-weight: 700;
     font-style: normal;
     color: white;
-    font-size: 20px;
+    font-size: 15px;
+    max-width: 100%;
+    padding: 20px;
 }
 
 .all-iranga-list {

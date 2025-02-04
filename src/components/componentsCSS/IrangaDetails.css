@@ -9,7 +9,7 @@
     position: relative;
     border: 1px solid #e6eef1;
     width: 90%;
-    max-width: 350px; 
+    max-width: 300px; 
     height: 500px; 
     background: rgb(244, 247, 252);
     padding: 20px;
@@ -21,16 +21,11 @@
 /* ------- Iranga photos ------- */
 
 .iranga-photo, .iranga-photo-placeholder {
-    width: 80%;
+    width: 250px;
     height: 250px; 
-    object-fit: fit-content;
     margin-bottom: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     background-color: white;
-}
-
-.iranga-photo {
-    max-width: 100%;
 }
 
 .iranga-photo-placeholder {
@@ -39,7 +34,6 @@
     justify-content: center;
     align-items: center;
 }
-
 
 .iranga-details-buttons {
     margin-top: auto; 
@@ -52,15 +46,21 @@
 
 .iranga-details h4 {
     margin: 10px 0;
-    font-size: 120%;
+    font-size: 80%;
     color: #333;
     margin-bottom: 8px;
     text-transform: uppercase;
 }
 
 .iranga-details p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     margin: 0;
-    font-size: 1.2rem;
+    padding: 0;
+    font-size: 100%;
     color: #333;
 
 }
@@ -73,17 +73,24 @@
 .iranga-details .kaina {
     font-size: 25px;
     color: rgb(219, 60, 73);
+    font-size: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 5px rgba(219, 60, 73, 0.5);
+    background-color: rgba(219, 60, 73, 0.1);
+    padding: 8px 12px; 
+    border-radius: 50%; 
 }
 
 .iranga-details-buttons {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0;
 }
 
 .iranga-details-buttons button {
     margin: 10px;
-    font-size: 20px;
+    font-size: 15px;
     color: black;
 }
 
@@ -102,14 +109,7 @@
 
 .trashcan {
     position: absolute;  
-    top: 15px; 
-    right: 15px; 
+    top: 10px; 
+    right: 10px; 
 }
 
-@media (max-width: 768px) {
-    .iranga-details > div {
-        flex: 1 1 100%;
-        max-width: 100%;
-        align-items: center;
-    }
-}
