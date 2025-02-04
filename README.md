@@ -110,18 +110,37 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 ## File Structure
 ```
 project-root/
-│── src/
-│   ├── components/   # Reusable components
-│   ├── pages/        # Page views
-│   ├── context/      # Context API for state management
-│   ├── hooks/        # Custom React hooks
-│   ├── services/     # API services
-│   ├── utils/        # Utility functions
-│── public/           # Static files
-│── server/           # Backend files
-│── tests/            # Unit and integration tests
-│── package.json      # Dependencies and scripts
-│── README.md         # Project documentation
+│── node_modules/       # Dependencies
+│── public/            # Static files
+│── server/            # Backend files
+│   ├── controllers/   # Handles API requests
+│   ├── middleware/    # Authentication and file handling
+│   ├── models/        # Database models
+│   ├── routes/        # API routes
+│   ├── .env           # Environment variables
+│   ├── server.js      # Main backend file
+│── src/               # Frontend files
+│   ├── components/    # Reusable components
+│   │   ├── componentsCSS/   # Component-specific styles
+│   │   ├── componentsTESTS/ # Component tests
+│   ├── context/       # Context API for state management
+│   ├── hooks/         # Custom React hooks
+│   ├── images/        # Image assets
+│   ├── layouts/       # Layout components
+│   ├── pages/         # Page views
+│   │   ├── pagesCSS/   # Pages-specific styles
+│   ├── App.jsx        # Main App component
+│   ├── index.css      # Global styles
+│   ├── main.jsx       # Application entry point
+│── .gitignore         # Ignored files in Git
+│── babel.config.cjs   # Babel configuration
+│── eslint.config.js   # ESLint configuration
+│── index.html         # Main html document
+│── jest.config.cjs    # Jest testing environment configuration
+│── jest.setup.cjs     # Jest testing environment setup
+│── package.json       # Dependencies and scripts
+│── README.md          # Project documentation
+│── vite.config.js     # Vite configuration
 ```
 
 ## API Endpoints
