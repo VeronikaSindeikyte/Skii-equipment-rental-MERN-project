@@ -63,30 +63,41 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 ### User Guide
 - **Sign Up / Log In**: Create an account or log in to reserve equipment.
-![image](https://github.com/user-attachments/assets/fc0accbb-26ab-412c-bcb8-fd8719d717e3){width=600}
+
+![image](https://github.com/user-attachments/assets/fc0accbb-26ab-412c-bcb8-fd8719d717e3)
 
 - **Browsing Equipment**: View available ski equipment.
-![image](https://github.com/user-attachments/assets/96a9bdaf-6df3-42b0-9f6d-7778faf867ba){width=600}
+
+![image](https://github.com/user-attachments/assets/96a9bdaf-6df3-42b0-9f6d-7778faf867ba)
 
 - **Making a Reservation**: Select a date range and confirm your rental.
+
+![alt text](image.png)
+
 - **Managing Reservations**:
   - Users can modify or cancel their reservations.
   - Admins can adjust rental periods, change statuses, or delete reservations.
-![image](https://github.com/user-attachments/assets/105a3337-4566-4d9d-bf34-6a4187398754){width=600}
+
+![image](https://github.com/user-attachments/assets/105a3337-4566-4d9d-bf34-6a4187398754)
 
 - **Admin Panel**:
   - Add, edit, or delete equipment.
-![image](https://github.com/user-attachments/assets/296eccad-88c8-45b1-9ccd-dfbbf4d38d1a){width=600}
+
+![image](https://github.com/user-attachments/assets/296eccad-88c8-45b1-9ccd-dfbbf4d38d1a)
 
   - Manage drafts before adding equipment to the database.
-![image](https://github.com/user-attachments/assets/c70b770d-e5c7-457b-9aa8-9ce4c9676c74){width=600}
+
+![image](https://github.com/user-attachments/assets/c70b770d-e5c7-457b-9aa8-9ce4c9676c74)
 
   - Change user roles and view user reservations.
-![image](https://github.com/user-attachments/assets/2d4494a5-9f82-45b8-bcf5-7193597bf799){width=600}
-![image](https://github.com/user-attachments/assets/feb88ed6-5076-486c-8043-d3d1f9d6f92c){width=600}
+
+![image](https://github.com/user-attachments/assets/2d4494a5-9f82-45b8-bcf5-7193597bf799)
+
+![image](https://github.com/user-attachments/assets/feb88ed6-5076-486c-8043-d3d1f9d6f92c)
 
   - Change reservation status, date range or delete reservation entirely.
-![image](https://github.com/user-attachments/assets/d74e4f0b-0394-4634-b174-0fe92899b103){width=600}
+
+![image](https://github.com/user-attachments/assets/d74e4f0b-0394-4634-b174-0fe92899b103)
 
 
 ## Technologies Used
