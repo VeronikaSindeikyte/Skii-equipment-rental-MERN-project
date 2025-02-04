@@ -15,6 +15,7 @@ router.get('/users', getAllUsers)
 // DELETE - delete one user
 router.delete('/:id', deleteUser)
 
+// PATCH - update user role
 router.patch('/:id', updateUserRole)
 
 
