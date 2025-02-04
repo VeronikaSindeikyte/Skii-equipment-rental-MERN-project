@@ -64,7 +64,7 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 ### User Guide
 - **Sign Up / Log In**: Create an account or log in to reserve equipment.
 
-![image](https://github.com/user-attachments/assets/fc0accbb-26ab-412c-bcb8-fd8719d717e3)
+![image](https://github.com/user-attachments/assets/24f8020f-0b7d-45cc-85cb-aa041c8a27bd)
 
 - **Browsing Equipment**: View available ski equipment.
 
