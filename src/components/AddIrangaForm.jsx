@@ -295,7 +295,7 @@ const IrangaForm = () => {
     
                 <label htmlFor="image">Nuotrauka:</label>
                 <input id="image" type="file" accept="image/*" onChange={handlePhotoUpload} />
-                {preview && <img src={preview} alt="Peržiūra" className="preview-img" style={{ width: "100px", marginTop: "10px" }} />}
+                {preview && <img src={preview} alt="Peržiūra" className="preview-img" style={{ width: "300px", marginTop: "10px" }} />}
     
                 <button type="submit" disabled={uploading}>
                     {uploading ? 'Nuotrauka įkeliama...' : 'Pridėti įrangą'}

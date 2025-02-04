@@ -23,30 +23,31 @@
 
 
 .create h3 {
-    font-size: 30px;
+    font-size: 20px;
     margin: 0;
 }
 
 
 label {
     color: white;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 
 input,
 textarea,
 select {
+    align-items: center;
+    text-align: center;
     font-family: "Inknut Antiqua", serif;
     width: 50%; 
-    padding: 10px;
+    padding: 3px 0;
     margin-bottom: 15px;
     border: 1px solid #ced4da; 
     border-radius: 4px; 
-    font-size: 16px; 
+    font-size: 17px; 
     transition: border-color 0.3s;
 }
-
 
 input:focus,
 textarea:focus,
@@ -54,7 +55,6 @@ select:focus {
     border-color: #020b1481; 
     outline: none; 
 }
-
 
 .error {
     border-color: #dc3545;

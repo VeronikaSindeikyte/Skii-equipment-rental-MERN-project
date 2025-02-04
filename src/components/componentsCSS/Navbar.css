@@ -7,6 +7,17 @@ header {
     align-items: center;
     margin: 0;
 }
+
+.navbar-container {
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .navbar-header {
     display: flex;
     flex-direction: column;
@@ -27,7 +38,8 @@ header {
     align-items: center;
     text-align: center;
     justify-content: space-between;
-    gap: 15px;
+    gap: 10px;
+    width: 53%;
 }
 
 .navbar-container h1 {

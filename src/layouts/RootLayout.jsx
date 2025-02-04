@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { useState } from 'react';
-import './RootLayout.css'
+import './RootLayout.css';
 
 const RootLayout = () => {
     const [email, setEmail] = useState("");
@@ -17,13 +17,15 @@ const RootLayout = () => {
                 <Outlet />
             </main>
             <footer className='footer'>
-                    <h2>Apie mus</h2>
-
-                        <p>
+             <h2>Apie mus</h2>
+                <div className='footer-text'>
+                    <p>
                         Mes esame įmonė, siekianti suteikti geriausias paslaugas savo klientams.
                         Susisiekite su mumis dėl bet kokių klausimų ar pasiūlymų.
                     </p>
+                </div>
 
+                <div className='footer-form'>
                     <h3>Prisijunkite prie mūsų naujienlaiškio: </h3>
                     <form onSubmit={handleSubscribe}>
                         <input
@@ -37,7 +39,8 @@ const RootLayout = () => {
                             Prenumeruoti
                         </button>
                     </form>
-                    <p>&copy; 2025 Visos teisės saugomos.</p>
+                </div>
+                <p>&copy; 2025 Visos teisės saugomos.</p>
             </footer>
 
         </div>
