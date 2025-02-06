@@ -47,7 +47,7 @@ const IrangaInformation = () => {
     };
 
     try {
-      const response = await fetch(`/api/user/reserve`, {
+      const response = await fetch(`/api/reservations/reserve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

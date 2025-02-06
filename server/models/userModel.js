@@ -18,10 +18,23 @@ const userSchema = new Schema({
         enum: ['user', 'admin'],
         default: 'user'
     },
-    rentedItems: [{
+    reservations: [{
         item: {
             type: Schema.Types.ObjectId,
             ref: 'Iranga'
+        },
+        reservationId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Iranga.reservations', 
+        },
+        rentalPeriod: { 
+            from: { type: Date, default: null }, 
+            to: { type: Date, default: null } 
+        },
+        reservationStatus: {
+            type: String,
+            enum: ['Patvirtinta', 'Laukia patvirtinimo', 'Nerezervuota', 'Atmesta'],
+            default: 'Laukia patvirtinimo'
         }
     }]
 });

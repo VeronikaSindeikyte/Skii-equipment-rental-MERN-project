@@ -6,26 +6,33 @@ import requireAuth from '../middleware/requireAuth.js'
 const router = express.Router();
 router.use(requireAuth)
 
+
 // POST - rezervuoti iranga
 router.post('/reserve', reserveIranga);
 
-// GET - paimti visas rezervacijas
-router.get('/reservations', getAllReservations);
 
-// GET - paimti vieno userio rezervacijas per admin paskyra
-router.get('/reservations/:id', getUserReservations)
+// ------- USER Routes ------- 
+
+// GET - paimti visas rezervacijas
+router.get('/user', getAllReservations);
 
 // DELETE - istrinti viena rezervacija is user puses
-router.delete('/reservations/:id', deleteReservation)
+router.delete('/user/delete', deleteReservation)
+
+
+// ------- ADMIN Routes ------- 
+
+// GET - paimti vieno userio rezervacijas per admin paskyra
+router.get('/admin/:id', getUserReservations)
 
 // DELETE - istrinti viena rezervacija is admin puses
-router.delete('/delete/reservations/:id', deleteUserReservation)
+router.delete('/admin/delete/:id', deleteUserReservation)
 
 // PATCH - pakeisti rezervacijos statusa (admin)
-router.patch('/update/reservations/:id', updateReservationStatus)
+router.patch('/admin/updateStatus/:id', updateReservationStatus)
 
 // PATCH - atnaujinti vienos rezervacijos laika
-router.patch('/reservations/:id', updateReservation);
+router.patch('/admin/updateTime/:id', updateReservation);
 
 
 export default router;

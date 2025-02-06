@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/api/iranga', irangaRoutes)
 app.use('/api/user', userRoutes)
-app.use('/api/user', reservationRoutes)
+app.use('/api/reservations', reservationRoutes)
 
 
 

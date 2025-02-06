@@ -1,4 +1,4 @@
-import "./pagesCSS/UserReservations.css"
+import "./pagesCSS/UserReservations.css";
 import React from 'react';
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -12,7 +12,7 @@ const UserReservations = () => {
   const [updateError, setUpdateError] = useState(null);
 
   useEffect(() => {
-    const initializeData = async () => {
+    const fetchReservations = async () => {
       if (!user || !user.token) {
         setLoading(false);
         setError("Please log in to view your reservations.");
@@ -20,54 +20,55 @@ const UserReservations = () => {
       }
 
       try {
-        const response = await axios.get("/api/user/reservations", {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
+        const response = await axios.get("/api/reservations/user", {
+          headers: { Authorization: `Bearer ${user.token}` },
         });
-        
+
         setUserData(response.data);
         setError(null);
       } catch (err) {
         console.error("Fetch error:", err);
-        if (err.response?.status === 401) {
-          setError("Authentication failed. Please try logging in again.");
-        } else {
-          setError("Failed to fetch reservations.");
-        }
+        setError("Failed to fetch reservations.");
       } finally {
         setLoading(false);
       }
     };
 
-    initializeData();
+    fetchReservations();
   }, [user]);
 
-  const handleDelete = async (itemId, reservationId) => {
+
+
+  const handleDelete = async (reservationId) => {
     if (!user?.token) {
       setUpdateError("Authentication required.");
       return;
     }
 
+    console.log("Reservation id:", reservationId);
+
     try {
-      await axios.delete(`/api/user/reservations/${reservationId}`, {
+      const response = await axios.delete(`/api/reservations/user/delete?reservationId=${reservationId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 
-      const response = await axios.get("/api/user/reservations", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+      console.log("Reservation deleted:", response.data);
+
+      const userResponse = await axios.get("/api/reservations/user", {
+        headers: { Authorization: `Bearer ${user.token}` },
       });
-      setUserData(response.data);
+
+      setUserData(userResponse.data);
       setUpdateError(null);
+
+      console.log("Updated user data:", userResponse.data);
     } catch (err) {
       setUpdateError("Failed to delete reservation.");
-      console.error(err);
+      console.error("Error in handleDelete:", err.response?.data || err);
     }
   };
 
-  const handleUpdate = async (itemId, reservationId, newDates) => {
+  const handleUpdate = async (reservationId, newDates) => {
     if (!user?.token) {
       setUpdateError("Authentication required.");
       return;
@@ -75,22 +76,15 @@ const UserReservations = () => {
 
     try {
       await axios.patch(
-        `/api/user/reservations/${reservationId}`,
-        {
-          rentalPeriod: newDates,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
+        `/api/reservations/admin/updateTime/${reservationId}`,
+        { rentalPeriod: newDates },
+        { headers: { Authorization: `Bearer ${user.token}` } }
       );
 
-      const response = await axios.get("/api/user/reservations", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
+      const response = await axios.get("/api/reservations/user", {
+        headers: { Authorization: `Bearer ${user.token}` },
       });
+
       setUserData(response.data);
       setUpdateError(null);
     } catch (err) {
@@ -99,31 +93,22 @@ const UserReservations = () => {
     }
   };
 
-  if (loading) {
-    return <p>Ieškoma vartotojo rezervacijų...</p>;
-  }
+  if (loading) {return <p>Ieškoma vartotojo rezervacijų...</p>}
+  if (error) {return <p className="error">{error}</p>}
+  if (!userData?.reservations?.length) {return <p>Rezervacijų nerasta.</p>}
 
-  if (error) {
-    return <p className="error">{error}</p>;
-  }
+  const groupedItems = userData.reservations.reduce((acc, reservation) => {
+    const existingItem = acc.find(item => item.item._id === reservation.item._id);
 
-  if (!userData?.rentedItems?.length) {
-    return <p>Rezervacijų duomenys neprieinami.</p>;
-  }
-
-  const groupedItems = userData.rentedItems.reduce((acc, rental) => {
-    if (!rental?.item) return acc;
-    
-    const existingItem = acc.find(i => i.item._id === rental.item._id);
     if (existingItem) {
-      const newReservations = rental.item.reservations || [];
-      existingItem.item.reservations = [...existingItem.item.reservations || [], ...newReservations]
-        .filter((reservation, index, self) => 
-          index === self.findIndex(r => r._id === reservation._id)
-        );
+      existingItem.reservations.push(reservation);
     } else {
-      acc.push(rental);
+      acc.push({
+        item: reservation.item,
+        reservations: [reservation]
+      });
     }
+
     return acc;
   }, []);
 
@@ -132,42 +117,40 @@ const UserReservations = () => {
       <h2>Mano nuomojama įranga:</h2>
       {updateError && <p className="error">{updateError}</p>}
       <ul className="reservation-list">
-        {groupedItems.map(rental => {
-          const item = rental.item;
-          
-          return (
-            <li key={item._id} className="reservation-box">
-              <div className="item-details">
-                {item.photos && item.photos.length > 0 ? (
-                  <img 
-                    src={item.photos[0]} 
-                    alt={item.title || "Įrangos nuotrauka"} 
-                    className="iranga-photo"
-                  />
-                ) : (
-                  <div className="iranga-photo-placeholder">
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      viewBox="0 0 24 24" 
-                      width="48" 
-                      height="48" 
-                      fill="gray"
-                    >
-                      <path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM5 5h14v10.09l-2.5-2.5a1 1 0 0 0-1.42 0L11 16l-2.09-2.09a1 1 0 0 0-1.42 0L5 16.5zm0 14v-.59l3.5-3.5 2.09 2.09a1 1 0 0 0 1.42 0L15 14.5l3.5 3.5V19z"/>
-                      <circle cx="8" cy="8" r="2"/>
-                    </svg>
-                  </div>
-                )}
-                <h3>{item.title || 'Untitled Item'}</h3>
-                <p className="aprasymas"><strong>Aprašymas:</strong> {item.description || 'No description available'}</p>
-                <p><strong>Dydis:</strong> {item.size || 'Not specified'}</p>
-                <p><strong>Būklė:</strong> {item.condition || 'Not specified'}</p>
-                <p><strong>Nuomos kaina parai:</strong> €{item.rentPricePerDay || '0'}</p>
-                <div className="reservations-section">
+        {groupedItems.map(({ item, reservations }) => (
+          <li key={item._id} className="reservation-box">
+            <div className="item-details">
+              {item.photos && item.photos.length > 0 ? (
+                <img
+                  src={item.photos[0]}
+                  alt={item.title || "Įrangos nuotrauka"}
+                  className="iranga-photo"
+                />
+              ) : (
+                <div className="iranga-photo-placeholder">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="48"
+                    height="48"
+                    fill="gray"
+                  >
+                    <path d="M21 19V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2zM5 5h14v10.09l-2.5-2.5a1 1 0 0 0-1.42 0L11 16l-2.09-2.09a1 1 0 0 0-1.42 0L5 16.5zm0 14v-.59l3.5-3.5 2.09 2.09a1 1 0 0 0 1.42 0L15 14.5l3.5 3.5V19z" />
+                    <circle cx="8" cy="8" r="2" />
+                  </svg>
+                </div>
+              )}
+              <h3>{item.title || 'Untitled Item'}</h3>
+              <p className="aprasymas"><strong>Aprašymas:</strong> {item.description || 'No description available'}</p>
+              <p><strong>Dydis:</strong> {item.size || 'Not specified'}</p>
+              <p><strong>Būklė:</strong> {item.condition || 'Not specified'}</p>
+              <p><strong>Nuomos kaina parai:</strong> €{item.rentPricePerDay || '0'}</p>
+
+              <div className="reservations-section">
                 <h4>Rezervacijos:</h4>
-                {item.reservations?.length > 0 ? (
+                {reservations?.length > 0 ? (
                   <ul className="one-item-all-reservations">
-                    {item.reservations.map((reservation, index) => (
+                    {reservations.map((reservation, index) => (
                       <li key={`${item._id}-${index}`} className="one-item-one-reservation">
                         {reservation?.rentalPeriod ? (
                           <p>
@@ -195,7 +178,7 @@ const UserReservations = () => {
                               );
 
                               if (newFrom && newTo) {
-                                handleUpdate(item._id, reservation._id, {
+                                handleUpdate(reservation._id, {
                                   from: newFrom,
                                   to: newTo
                                 });
@@ -208,7 +191,7 @@ const UserReservations = () => {
                           <button
                             onClick={() => {
                               if (window.confirm("Ar tikrai norite atšaukti šią rezervaciją?")) {
-                                handleDelete(item._id, reservation._id);
+                                handleDelete(reservation.reservationId);
                               }
                             }}
                             className="delete-btn"
@@ -224,12 +207,9 @@ const UserReservations = () => {
                   <p>Nuomojamos įrangos rezervacijų nerasta.</p>
                 )}
               </div>
-              </div>
-
-
-            </li>
-          );
-        })}
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
