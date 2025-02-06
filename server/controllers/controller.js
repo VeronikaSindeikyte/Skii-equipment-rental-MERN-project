@@ -196,22 +196,28 @@ export const deleteReservation = async (req, res) => {
 
 // PATCH - atnaujinti rezervacijos laika
 export const updateReservation = async (req, res) => {
-    const { id: reservationId } = req.params;
+    const { reservationId } = req.query;
     const { rentalPeriod } = req.body;
+    console.log("Authenticated user:", req.user);
     const userId = req.user._id;
+    console.log("User_id:", req.user._id);
+    console.log("ReservationId:", reservationId)
 
     try {
         console.log("Updating reservation:", reservationId, "for user:", userId, "with new dates:", rentalPeriod);
 
+        if (!mongoose.Types.ObjectId.isValid(reservationId)) {
+            return res.status(400).json({ error: "Invalid reservation ID format" });
+        }
+
         const item = await Iranga.findOne({ "reservations._id": reservationId });
 
         if (!item) {
-            return res.status(404).json({ error: "Reservation not found" });
+            return res.status(404).json({ error: "Reservation not found in Iranga collection" });
         }
 
-        const reservation = item.reservations.find(
-            res => res._id.toString() === reservationId
-        );
+        const reservation = item.reservations.find(res => res._id.toString() === reservationId);
+        console.log("Reservation:", reservation)
 
         if (!reservation) {
             return res.status(404).json({ error: "Reservation not found in item" });
@@ -222,23 +228,19 @@ export const updateReservation = async (req, res) => {
         }
 
         reservation.rentalPeriod = rentalPeriod;
-
         await item.save();
 
-        const user = await User.findById(userId);
+        const user = await User.findOneAndUpdate(
+            { _id: userId, "reservations.reservationId": reservationId },
+            { $set: { "reservations.$.rentalPeriod": rentalPeriod } }, 
+            { new: true } 
+          );
+
+        console.log("useris:", user)
+
         if (!user) {
-            return res.status(404).json({ error: "User not found" });
+            return res.status(404).json({ error: "User not found or reservation does not exist in user data" });
         }
-
-        const rentedItem = user.rentedItems.find(
-            rental => rental.item.toString() === item._id.toString()
-        );
-
-        if (rentedItem) {
-            rentedItem.rentalPeriod = rentalPeriod;
-        }
-
-        await user.save();
 
         return res.status(200).json({
             message: "Reservation successfully updated",

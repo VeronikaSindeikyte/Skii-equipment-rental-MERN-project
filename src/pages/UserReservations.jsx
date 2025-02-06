@@ -45,8 +45,6 @@ const UserReservations = () => {
       return;
     }
 
-    console.log("Reservation id:", reservationId);
-
     try {
       const response = await axios.delete(`/api/reservations/user/delete?reservationId=${reservationId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -76,17 +74,26 @@ const UserReservations = () => {
 
     try {
       await axios.patch(
-        `/api/reservations/admin/updateTime/${reservationId}`,
+        `/api/reservations/updateTime?reservationId=${reservationId}`,
         { rentalPeriod: newDates },
         { headers: { Authorization: `Bearer ${user.token}` } }
       );
+
+      console.log("PATCH successful. Fetching updated user data...");
 
       const response = await axios.get("/api/reservations/user", {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 
+      setUserData(prevState => ({ ...prevState, ...response.data }));
+      console.log("User data received:", response.data);
+
       setUserData(response.data);
       setUpdateError(null);
+
+      const updatedUserData = await response.data;  
+      console.log("Updated User Data:", updatedUserData);
+      setUserData(updatedUserData);
     } catch (err) {
       setUpdateError("Failed to update reservation.");
       console.error(err);
@@ -178,7 +185,7 @@ const UserReservations = () => {
                               );
 
                               if (newFrom && newTo) {
-                                handleUpdate(reservation._id, {
+                                handleUpdate(reservation.reservationId, {
                                   from: newFrom,
                                   to: newTo
                                 });

@@ -6,9 +6,13 @@ import requireAuth from '../middleware/requireAuth.js'
 const router = express.Router();
 router.use(requireAuth)
 
+// ------- USER/ADMIN ------- 
 
 // POST - rezervuoti iranga
 router.post('/reserve', reserveIranga);
+
+// PATCH - atnaujinti vienos rezervacijos laika
+router.patch('/updateTime', updateReservation);
 
 
 // ------- USER Routes ------- 
@@ -31,8 +35,7 @@ router.delete('/admin/delete/:id', deleteUserReservation)
 // PATCH - pakeisti rezervacijos statusa (admin)
 router.patch('/admin/updateStatus/:id', updateReservationStatus)
 
-// PATCH - atnaujinti vienos rezervacijos laika
-router.patch('/admin/updateTime/:id', updateReservation);
+
 
 
 export default router;
