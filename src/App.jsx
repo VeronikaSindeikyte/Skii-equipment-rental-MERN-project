@@ -16,7 +16,7 @@ import ManageUsers from './pages/ManageUsers';
 import ManageReservations from './pages/ManageReservations';
 import RootLayout from './layouts/rootLayout';
 import NotFound from './pages/NotFound';
-import ChangeDate from './components/ChangeDate';
+import ChangeDate from './pages/ChangeDate';
 
 function App() {
   const { user } = useAuthContext();

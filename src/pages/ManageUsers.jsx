@@ -41,11 +41,16 @@ const ManageUsers = () => {
     }, [user]);
 
     const handleDeleteUser = async (userId) => {
-        console.log("Attempting to delete user with ID:", userId);
         if (!user?.token) {
             setError("Authentication required.");
             return;
         }
+
+        const isConfirmed = window.confirm("Ar tikrai norite ištrinti šį vartotoją?");
+        if (!isConfirmed) {
+            return;
+        }
+
         try {
             await axios.delete(`/api/user/${userId}`, {
                 headers: {
@@ -53,9 +58,9 @@ const ManageUsers = () => {
                 },
             });
             setUsersData((prevUsers) => prevUsers.filter((u) => u._id !== userId));
-            alert('User deleted succesfully!')
+            alert('Vartotojas ištrintas sėkmingai!')
         } catch (err) {
-            setError("Failed to delete user.");
+            setError("Nepavyko ištrinti vartotojo. Bandykite dar kartą.");
             console.error(err);
         }
     };
@@ -78,9 +83,9 @@ const ManageUsers = () => {
             setUsersData((prevUsers) =>
                 prevUsers.map((u) => (u._id === userId ? { ...u, role: response.data.user.role } : u))
             );
-            alert('User role changed successfully!')
+            alert('Vartotojo rolė sėkmingai pakeista!')
         } catch (err) {
-            setError("Failed to change user role.");
+            setError("Nepavyko pakeisti vartotojo rolės. Bandykite dar kartą.");
             console.error(err);
         }
     };

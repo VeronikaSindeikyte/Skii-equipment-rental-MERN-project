@@ -238,8 +238,6 @@ export const updateReservation = async (req, res) => {
     const { reservationId } = req.params;
     const { rentalPeriod } = req.body;
     const userId = req.user._id;
-    console.log("Received Dates:", rentalPeriod);
-    console.log("Converted to Date:", new Date(rentalPeriod.from), new Date(rentalPeriod.to));
 
     try {
         console.log("Updating reservation:", reservationId, "for user:", userId, "with new dates:", rentalPeriod);

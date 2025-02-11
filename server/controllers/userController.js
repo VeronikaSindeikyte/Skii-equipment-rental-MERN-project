@@ -1,4 +1,5 @@
 import User from '../models/userModel.js';
+import Iranga from '../models/irangosModelis.js';
 import jwt from 'jsonwebtoken';
 
 const createToken = (_id, role) => {
@@ -35,7 +36,7 @@ export const signupUser = async (req, res) => {
 export const getAllUsers = async (req, res) => {
     try {
         const users = await User.find({}).populate({
-            path: 'rentedItems.item',
+            path: 'reservations.item',
             populate: {
                 path: 'reservations'
             }
@@ -68,15 +69,23 @@ export const deleteUser = async (req, res) => {
     console.log("Received DELETE request for user ID:", id);
 
     try {
-        const user = await User.findByIdAndDelete(id);
+        const user = await User.findById(id);
         if (!user) {
             console.log("User not found in database.");
             return res.status(404).json({ error: "User not found" });
         }
-        res.status(200).json({ message: "User deleted successfully" });
+        const result = await Iranga.updateMany(
+            { "reservations.user": id }, 
+            { $pull: { reservations: { user: id } } }
+        );
+
+        console.log("Deleted reservations count:", result.modifiedCount);
+
+        await User.findByIdAndDelete(id);
+        res.status(200).json({ message: "User and all their reservations deleted successfully" });
     } catch (error) {
-        console.error("Error deleting user:", error);
-        res.status(500).json({ error: "Failed to delete user" });
+        console.error("Error deleting user and reservations:", error);
+        res.status(500).json({ error: "Failed to delete user and reservations" });
     }
 };
 
