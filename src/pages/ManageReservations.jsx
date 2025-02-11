@@ -22,7 +22,7 @@ const ManageReservations = () => {
             }
 
             try {
-                const response = await axios.get(`/api/user/reservations/${id}`, {
+                const response = await axios.get(`/api/reservations/admin/${id}`, {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -30,7 +30,6 @@ const ManageReservations = () => {
                 
                 console.log("Full response data:", response.data);
                 
-                // Add more robust checks
                 if (!response.data || !response.data.user) {
                     setError("No user data received");
                     setLoading(false);
@@ -121,9 +120,8 @@ const ManageReservations = () => {
         return <p>Loading user data...</p>;
     }
 
-    // Group reservations by item
-    const itemReservations = userData.user.rentedItems.reduce((acc, rentedItem) => {
-        const item = rentedItem.item;
+    const itemReservations = userData.user.reservations.reduce((acc, reservation) => {
+        const item = reservation.item;
         const itemReservations = item.reservations.filter(
             res => res.user.toString() === userData.user._id.toString()
         );

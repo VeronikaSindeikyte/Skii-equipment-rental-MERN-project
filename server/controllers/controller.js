@@ -113,6 +113,8 @@ export const getAllReservations = async (req, res) => {
     }
 };
 
+
+// GET - paimti vieną rezervaciją pagal id
 export const getReservationById = async (req, res) => {
     try {
         const userId = req.user._id;
@@ -158,7 +160,7 @@ export const getUserReservations = async (req, res) => {
 
     try {
         const user = await User.findById(id).select("-password").populate({
-            path: "rentedItems.item",
+            path: "reservations.item",
             model: "Iranga",
         });
 
