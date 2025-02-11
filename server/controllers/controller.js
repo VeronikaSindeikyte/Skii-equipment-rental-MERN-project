@@ -235,12 +235,11 @@ export const deleteReservation = async (req, res) => {
 
 // PATCH - atnaujinti rezervacijos laika
 export const updateReservation = async (req, res) => {
-    const { reservationId } = req.query;
+    const { reservationId } = req.params;
     const { rentalPeriod } = req.body;
-    console.log("Authenticated user:", req.user);
     const userId = req.user._id;
-    console.log("User_id:", req.user._id);
-    console.log("ReservationId:", reservationId)
+    console.log("Received Dates:", rentalPeriod);
+    console.log("Converted to Date:", new Date(rentalPeriod.from), new Date(rentalPeriod.to));
 
     try {
         console.log("Updating reservation:", reservationId, "for user:", userId, "with new dates:", rentalPeriod);

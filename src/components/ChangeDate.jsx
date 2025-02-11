@@ -10,6 +10,7 @@ const ChangeDate = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const [updateError, setUpdateError] = useState(null);
+    const [updateSuccess, setUpdateSuccess] = useState("");
     const [currentReservation, setCurrentReservation] = useState(null);
     const [disabledDates, setDisabledDates] = useState([]);
     const [rentalPeriod, setRentalPeriod] = useState([]);
@@ -116,6 +117,66 @@ const ChangeDate = () => {
         }
     };
 
+    const handleUpdateReservation = async () => {
+        if (!user || !user.token) {
+            setUpdateError("Please log in to update your reservation.");
+            return;
+        }
+    
+        if (!rentalPeriod || !rentalPeriod[0]?.startDate || !rentalPeriod[0]?.endDate) {
+            setUpdateError("Prašome pasirinkti rezervacijos laikotarpį");
+            return;
+        }
+    
+        const localStartDate = new Date(rentalPeriod[0].startDate);
+        localStartDate.setHours(12, 0, 0, 0); 
+        const localEndDate = new Date(rentalPeriod[0].endDate);
+        localEndDate.setHours(12, 0, 0, 0);
+    
+        try {
+            const response = await fetch(`/api/reservations/update/${id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.token}`,
+                },
+                body: JSON.stringify({
+                    rentalPeriod: {
+                        from: localStartDate.toISOString(),
+                        to: localEndDate.toISOString()
+                    }
+                })
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to update reservation');
+            }
+    
+            const updatedData = await response.json();
+    
+            setCurrentReservation(prev => ({
+                ...prev,
+                reservation: {
+                    ...prev.reservation,
+                    rentalPeriod: {
+                        from: localStartDate.toISOString(),
+                        to: localEndDate.toISOString()
+                    }
+                }
+            }));
+    
+            setUpdateSuccess("Rezervacijos laikas sėkmingai atnaujintas!");
+            setTimeout(() => setUpdateSuccess(""), 3000);
+            fetchReservationAndBlockedDates();
+    
+        } catch (error) {
+            console.error('Error updating reservation:', error);
+            setUpdateError(error.message || "Įvyko klaida atnaujinant rezervaciją");
+        }
+    };
+    
+
     return (
         <div className="update-reservation">
             <h2>Keisti rezervacijos laiką</h2>
@@ -152,9 +213,16 @@ const ChangeDate = () => {
                     />
 
                     <div className="update-reservation-buttons">
-                        <button onClick={() => console.log("Updating...")} className="save-btn">
-                            Išsaugoti pakeitimus
+                        <button 
+                            onClick={handleUpdateReservation}
+                            disabled={currentReservation?.reservation?.reservationStatus !== "Laukia patvirtinimo"}
+                        >
+                        Išsaugoti pakeitimus
                         </button>
+        
+                        {updateSuccess && (<div>{updateSuccess}</div>)}
+                        {updateError && (<div>{updateError}</div>)}
+
                         <button onClick={() => navigate("/UserReservations")} className="grizti">Grįžti</button>
                     </div>
                 </div>

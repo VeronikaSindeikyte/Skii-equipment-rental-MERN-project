@@ -12,7 +12,7 @@ router.use(requireAuth)
 router.post('/reserve', reserveIranga);
 
 // PATCH - atnaujinti vienos rezervacijos laika
-router.patch('/updateTime', updateReservation);
+router.patch('/update/:reservationId', updateReservation);
 
 
 // ------- USER Routes ------- 
