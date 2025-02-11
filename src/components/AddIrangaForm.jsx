@@ -23,7 +23,6 @@ const IrangaForm = () => {
     const [drafts, setDrafts] = useState([]);
     const [editingDraftIndex, setEditingDraftIndex] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
-
     const { dispatch } = useIrangaContext();
     const { user } = useAuthContext();
     const location = useLocation();

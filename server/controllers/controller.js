@@ -113,6 +113,45 @@ export const getAllReservations = async (req, res) => {
     }
 };
 
+export const getReservationById = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const reservationId = req.params.reservationId;
+        
+        console.log(`Fetching reservation ${reservationId} for user ${userId}`);
+
+        const user = await User.findById(userId).populate({
+            path: "reservations.item",
+            model: "Iranga"
+        });
+
+        if (!user) {
+            console.log("User not found");
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const reservation = user.reservations.find(
+            (res) => res.reservationId.toString() === reservationId
+        )
+
+        if (!reservation) {
+            console.log("Reservation not found for this user");
+            return res.status(404).json({ error: "Reservation not found" });
+        }
+
+        console.log("Reservation found:", reservation);
+
+        res.json({
+            name: user.email,
+            role: user.role,
+            reservation
+        });
+    } catch (error) {
+        console.error("Error fetching reservation:", error);
+        res.status(500).json({ error: "Failed to fetch reservation" });
+    }
+};
+
 // GET - paimti vieno userio rezervacijas (admin)
 export const getUserReservations = async (req, res) => {
     const { id } = req.params;

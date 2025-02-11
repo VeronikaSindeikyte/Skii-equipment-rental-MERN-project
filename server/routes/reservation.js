@@ -1,4 +1,4 @@
-import { deleteReservation, getAllReservations, updateReservation,getUserReservations, deleteUserReservation, updateReservationStatus } from '../controllers/controller.js';
+import { deleteReservation, getAllReservations, updateReservation,getUserReservations, deleteUserReservation, updateReservationStatus, getReservationById } from '../controllers/controller.js';
 import express from 'express';
 import { reserveIranga } from '../controllers/controller.js';  
 import requireAuth from '../middleware/requireAuth.js'
@@ -19,6 +19,9 @@ router.patch('/updateTime', updateReservation);
 
 // GET - paimti visas rezervacijas
 router.get('/user', getAllReservations);
+
+// GET - paimti vieną userio rezervaciją
+router.get('/user/:reservationId', getReservationById);
 
 // DELETE - istrinti viena rezervacija is user puses
 router.delete('/user/delete', deleteReservation)

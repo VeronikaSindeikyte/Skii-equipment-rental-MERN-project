@@ -1,42 +1,65 @@
 import "./pagesCSS/IrangaInformation.css";
-import React from 'react';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-
 const IrangaInformation = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [iranga, setIranga] = useState(null);
-  const [rentalPeriod, setRentalPeriod] = useState([{ startDate: new Date(), endDate: new Date(), key: "selection" }]);
+  const [rentalPeriod, setRentalPeriod] = useState([{ 
+    startDate: new Date(), 
+    endDate: new Date(), 
+    key: "selection" }]);
   const { user } = useAuthContext();
   const [error, setError] = useState(null);
+  const [disabledDates, setDisabledDates] = useState([]);
+  const navigate = useNavigate();
+
+
+  const fetchIrangaAndReservations = async () => {
+    try {
+      const irangaResponse = await fetch(`/api/iranga/${id}`);
+      if (!irangaResponse.ok) throw new Error("Failed to fetch iranga data");
+      const irangaData = await irangaResponse.json();
+      setIranga(irangaData);
+
+      // Paimamos visos rezervacijos is DB
+      const reservationsResponse = await fetch(`/api/iranga/${id}`);
+      if (!reservationsResponse.ok) throw new Error("Failed to fetch reservations");
+      const itemData = await reservationsResponse.json();
+      const reservations = itemData.reservations;
+
+      // Rezervacijos paverciamos i disabled datas
+      const bookedDates = [];
+      reservations.forEach(reservation => {
+        const start = new Date(reservation.rentalPeriod.from);
+        const end = new Date(reservation.rentalPeriod.to);
+
+        const current = new Date(start);
+        while (current <= end) {
+          bookedDates.push(new Date(current));
+          current.setDate(current.getDate() + 1);
+        }
+      });
+
+      setDisabledDates(bookedDates);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("Nepavyko gauti įrangos duomenų.");
+    }
+  };
 
   useEffect(() => {
-    const fetchIranga = async () => {
-      try {
-        const response = await fetch(`/api/iranga/${id}`);
-        if (!response.ok) throw new Error("Failed to fetch data");
-        const data = await response.json();
-        setIranga(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setError("Nepavyko gauti įrangos duomenų.");
-      }
-    };
-
-    fetchIranga();
+    fetchIrangaAndReservations();
   }, [id]);
 
   const handleReserve = async () => {
     setError(null);
 
-    console.log(user.token);
-    if (!user.token) {
+    if (!user?.token) {
       setError("Turite būti prisijungęs, kad rezervuotumėte.");
       return;
     }
@@ -47,7 +70,7 @@ const IrangaInformation = () => {
     };
 
     try {
-      const response = await fetch(`/api/reservations/reserve`, {
+      const response = await fetch(`/api/iranga/reserve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,13 +91,19 @@ const IrangaInformation = () => {
         throw new Error(data.error || "Nepavyko rezervuoti įrangos.");
       }
 
+      setRentalPeriod([{ 
+        startDate: new Date(), 
+        endDate: new Date(), 
+        key: "selection" 
+      }]);
+
+      await fetchIrangaAndReservations();
+
       alert("Įranga sėkmingai rezervuota!");
-      navigate("/");
     } catch (error) {
       setError(error.message);
     }
   };
-
 
   if (error) return <p>{error}</p>;
   if (!iranga) return <p>Kraunama...</p>;
@@ -115,21 +144,25 @@ const IrangaInformation = () => {
             <p><strong>Ar laisva:</strong> {iranga.available ? "Taip" : "Ne"}</p>
           </div>
         </div>
-          <div className="calendar-box">
-              <DateRange
-                className="calendar"
-                editableDateInputs={true}
-                moveRangeOnFirstSelection={false}
-                ranges={rentalPeriod}
-                onChange={(item) => setRentalPeriod([item.selection])}
-                minDate={new Date()}
-              />
-          </div>
-          <button onClick={handleReserve} className="rezervuoti">Rezervuoti</button>
-          {error && <p className="error">{error}</p>}
-          <button onClick={() => navigate("/")} className="grizti">Grįžti</button>
+        <div className="calendar-box">
+          <h2>Rezervuokite įrangą:</h2>
+          <p>Pasirinkite sau tinkamą rezervacijos periodą kalendoriuje ir spauskite "Rezervuoti":</p>
+          <DateRange
+            className="calendar"
+            editableDateInputs={true}
+            moveRangeOnFirstSelection={false}
+            ranges={rentalPeriod}
+            onChange={(item) => setRentalPeriod([item.selection])}
+            minDate={new Date()}
+            disabledDates={disabledDates}
+            rangeColors={["#2ecc71"]}
+            color="#e74c3c"
+          />
+        </div>
+        <button onClick={handleReserve} className="rezervuoti">Rezervuoti</button>
+        {error && <p className="error">{error}</p>}
+        <button onClick={() => navigate("/")} className="grizti">Grįžti</button>
       </div>
-
     </div>
   );
 };

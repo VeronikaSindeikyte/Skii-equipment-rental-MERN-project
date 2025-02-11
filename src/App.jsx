@@ -16,6 +16,7 @@ import ManageUsers from './pages/ManageUsers';
 import ManageReservations from './pages/ManageReservations';
 import RootLayout from './layouts/rootLayout';
 import NotFound from './pages/NotFound';
+import ChangeDate from './components/ChangeDate';
 
 function App() {
   const { user } = useAuthContext();
@@ -26,7 +27,7 @@ function App() {
         <Navbar />
         <div className="pages">
           <Routes>
-          <Route
+            <Route
               path="/login"
               element={!user ? <Login /> : <Navigate to="/" />}
             />
@@ -35,34 +36,37 @@ function App() {
               element={!user ? <Signup /> : <Navigate to="/" />}
             />
             <Route path='/' element={<RootLayout />}>
-            <Route
-              path="/"
-              element={user ? <Home /> : <Navigate to="/login" />}
-            />
-            <Route
-              path="/create"
-              element={user?.role === 'admin' ? <IrangaForm /> : <Navigate to="/" />}
-            />
-            <Route
-              path="/update/:id"
-              element={user?.role === 'admin' ? <ChangeIrangaForm /> : <Navigate to="/" />}
-            />
-            <Route
-              path='/iranga/:id'
-              element={<IrangaInformation />}
-            />
-            <Route
-              path='/UserReservations'
-              element={<UserReservations />}
-            />
-            <Route
-              path='/ManageUsers'
-              element={<ManageUsers />}
-            />
-            <Route
-              path='/ManageReservations/:id'
-              element={<ManageReservations />}
-            />
+              <Route
+                path="/"
+                element={user ? <Home /> : <Navigate to="/login" />}
+              />
+              <Route
+                path="/create"
+                element={user?.role === 'admin' ? <IrangaForm /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/update/:id"
+                element={user?.role === 'admin' ? <ChangeIrangaForm /> : <Navigate to="/" />}
+              />
+              <Route
+                path='/iranga/:id'
+                element={<IrangaInformation />}
+              />
+              <Route
+                path='/UserReservations'
+                element={<UserReservations />}/>
+              <Route
+                path="/reservations/:id"
+                element={<ChangeDate />}
+              />
+              <Route
+                path='/ManageUsers'
+                element={<ManageUsers />}
+              />
+              <Route
+                path='/ManageReservations/:id'
+                element={<ManageReservations />}
+              />
             </Route>
 
             <Route path='*' element={<NotFound />} />
