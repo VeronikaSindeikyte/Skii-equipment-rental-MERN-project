@@ -1,4 +1,66 @@
 /*  -------- LOGIN, SIGNUP -------- */
+.login-page, .signup-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.login-page svg, .signup-page svg {
+    font-size: 70px;
+    color: white;
+    margin-top: 80px;
+}
+
+.login-page h1, .signup-page h1 {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    font-style: normal;
+    text-align: center;
+    font-size: 30px;
+    width: 100%;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.navbar-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.link-login, .link-signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 15px;
+    background: rgba(226, 218, 218, 0.185);
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 100%; 
+    box-sizing: border-box; 
+}
 
 .login, .signup {
     display: flex;
@@ -6,11 +68,13 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: rgba(226, 218, 218, 0.185); 
+    background: rgba(226, 218, 218, 0.185);
     padding: 20px;
-    border-radius: 10px; 
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    width: 50%;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
 }
 
 .login, .signup label, h3 {
@@ -18,7 +82,7 @@
 }
 
 .login h3, .signup h3 {
-    font-size: 30px;
+    font-size: 25px;
     margin: 0;
 }
 
@@ -34,7 +98,7 @@
 
 .login label, .signup label {
     color: white;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .login button, .signup button {
@@ -44,8 +108,8 @@
     color: white;
     font-weight: 600;
     font-style: normal;
-    font-size: 20px;
-    background: rgba(226, 218, 218, 0.185); 
+    font-size: 15px;
+    background: rgba(226, 218, 218, 0.295); 
     padding: 5px 15px;
     width: 100%;
     margin-bottom: 15px;
@@ -55,8 +119,8 @@
 }
 
 .login button:hover, .signup button:hover {
-    background: rgba(226, 218, 218, 0.541);
-    color: #333;
+    background: rgba(226, 218, 218, 0.808);
+    color: #111010;
     transform: scale(1.01);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
     border-radius: 8px;
@@ -70,7 +134,7 @@
     color: red;
     font-weight: 600;
     font-style: normal;
-    font-size: 20px;
+    font-size: 15px;
     background: rgba(226, 218, 218, 0.774); 
     padding: 5px 15px;
     width: 97%;

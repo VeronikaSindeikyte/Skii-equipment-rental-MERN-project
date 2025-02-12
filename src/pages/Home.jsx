@@ -48,18 +48,20 @@ const Home = () => {
     return (
         <div className="home">
             <div className="iranga">
-                <h2>Visos Įrangos Sąrašas:</h2>
-                <p>Pasirinkite norimą slidinėjimo įrangą ir išsinuomuokite puikioms ir ekstremalioms atostogoms!</p>
-                
-                <div className="search-container">
-                    <p>Paieška:</p>
-                    <input
-                        type="text"
-                        placeholder="Ieškoti pagal pavadinimą..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="search-input"
-                    />
+                <div className="home-welcome">
+                    <h2>Visos Įrangos Sąrašas:</h2>
+                    <p>Pasirinkite norimą slidinėjimo įrangą ir išsinuomuokite puikioms ir ekstremalioms atostogoms!</p>
+                    
+                    <div className="search-container">
+                        <p>Paieška:</p>
+                        <input
+                            type="text"
+                            placeholder="Ieškoti pagal pavadinimą..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="search-input"
+                        />
+                    </div>
                 </div>
 
                 <div className="all-iranga-list">

@@ -24,15 +24,6 @@ html, body {
     overflow-x: hidden;
 }
 
-.App {
-    min-height: 100vh; 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-}
-
 .pages {
     width: 100%; 
     max-width: 100%;
@@ -41,5 +32,6 @@ html, body {
     justify-content: center;
     align-items: center;
     margin: 0;
+    
 }
 

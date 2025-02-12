@@ -5,6 +5,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+
 }
 
 .main {
@@ -13,7 +14,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 20px;
+
+    background-color: white;
     background: rgb(193,136,89);
     background: linear-gradient(180deg, rgba(163, 114, 107, 0.432) 0%, rgba(32, 75, 139, 0.63) 90%);
     margin-bottom: 15px;
