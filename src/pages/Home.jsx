@@ -1,16 +1,16 @@
-import "./pagesCSS/Home.css"
-import React from 'react';
+import "./pagesCSS/Home.css";
+import React, { useState } from 'react';
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import IrangaDetails from "../components/IrangaDetails";
 import { useIrangaContext } from "../hooks/useIrangaContext";
 import { useAuthContext } from "../hooks/useAuthContext";
 
-
 const Home = () => {
     const { irangos, dispatch } = useIrangaContext();
     const { user } = useAuthContext();
     const navigate = useNavigate();
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         if (!user) {
@@ -42,19 +42,35 @@ const Home = () => {
         return null;
     }
 
+    const filteredIrangos = irangos?.filter(iranga => 
+        iranga.title?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <div className="home">
             <div className="iranga">
-            <h2>Visos Įrangos Sąrašas:</h2>
-            <p>Pasirinkite norimą slidinėjimo įrangą ir išsinuomuokite puikioms ir ekstremalioms atostogoms!</p>
+                <h2>Visos Įrangos Sąrašas:</h2>
+                <p>Pasirinkite norimą slidinėjimo įrangą ir išsinuomuokite puikioms ir ekstremalioms atostogoms!</p>
+                
+                <div className="search-container">
+                    <p>Paieška:</p>
+                    <input
+                        type="text"
+                        placeholder="Ieškoti pagal pavadinimą..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="search-input"
+                    />
+                </div>
+
                 <div className="all-iranga-list">
-                {irangos && irangos.length > 0 ? (
-                    irangos.map((iranga) => (
-                        <IrangaDetails key={iranga._id} iranga={iranga} />
-                    ))
-                ) : (
-                    <p>Įranga neprieinama.</p>
-                )}
+                    {filteredIrangos && filteredIrangos.length > 0 ? (
+                        filteredIrangos.map((iranga) => (
+                            <IrangaDetails key={iranga._id} iranga={iranga} />
+                        ))
+                    ) : (
+                        <p>Įranga nerasta.</p>
+                    )}
                 </div>
             </div>
         </div>

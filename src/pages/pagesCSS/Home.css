@@ -1,7 +1,12 @@
 /* ------- HOME -------- */
 
 .home {
+    margin-top: 50px;
     margin-bottom: 100px;
+    padding: 50px 50px;
+    background-color: white;
+    color: black;
+
 }
 
 .iranga h2 {
@@ -10,7 +15,6 @@
     text-align: center;
     font-weight: 700;
     font-style: normal;
-    color: white;
     font-size: 30px;
 
 }
@@ -20,7 +24,6 @@
     text-align: center;
     font-weight: 700;
     font-style: normal;
-    color: white;
     font-size: 15px;
     max-width: 100%;
     padding: 20px;
@@ -46,4 +49,40 @@
     .all-iranga-list {
         grid-template-columns: repeat(1, 1fr); 
     }
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    width: 100%;
+    max-width: 500px;
+    height: 100px;
+}
+
+.search-container p {
+    font-size: 16px;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    padding: 1em;
+    background-color: #cccccc41;
+    box-shadow: inset 2px 5px 10px rgba(0,0,0,0.3);
+    transition: 300ms ease-in-out;
+}
+
+.input:focus {
+    background-color: white;
+    transform: scale(1.05);
+    box-shadow: 13px 13px 100px #969696,
+               -13px -13px 100px #ffffff;
+  }
+
+.search-input::placeholder {
+    color: #776e6e;
 }

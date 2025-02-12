@@ -294,40 +294,43 @@ export const updateReservation = async (req, res) => {
 
 // DELETE - ištrinti vartotojo rezervaciją iš admin pusės
 export const deleteUserReservation = async (req, res) => {
-    const { id: reservationId } = req.params;
-
     try {
-        // Find the item containing the specific reservation
-        const item = await Iranga.findOne({ "reservations._id": reservationId });
+        const { itemId, reservationId } = req.query;
 
-        if (!item) {
-            return res.status(404).json({ error: "Reservation not found in any item" });
+        if (!mongoose.Types.ObjectId.isValid(itemId) || !mongoose.Types.ObjectId.isValid(reservationId)) {
+            return res.status(400).json({ error: "Invalid item ID or reservation ID" });
         }
 
-        // Remove only the specific reservation from the item's reservations array
-        item.reservations = item.reservations.filter(res => res._id.toString() !== reservationId);
-        await item.save();
-
-        // Remove only this specific rented item from the user's rentedItems
-        const result = await User.updateOne(
-            { "_id": item.user_id },
-            {
-                $pull: {
-                    rentedItems: {
-                        "item": item._id,
-                        "reservation": reservationId
-                    }
-                }
+        const userUpdateResult = await User.updateOne(
+            { "reservations.reservationId": new mongoose.Types.ObjectId(reservationId) },
+            { 
+                $pull: { 
+                    reservations: { 
+                        reservationId: new mongoose.Types.ObjectId(reservationId)
+                    } 
+                } 
             }
         );
 
-        return res.status(200).json({
-            message: "Reservation successfully deleted"
-        });
+        const irangaUpdateResult = await Iranga.updateOne(
+            { _id: new mongoose.Types.ObjectId(itemId) },
+            { 
+                $pull: { 
+                    reservations: { 
+                        _id: new mongoose.Types.ObjectId(reservationId)
+                    } 
+                } 
+            }
+        );
 
+        if (userUpdateResult.modifiedCount === 0 && irangaUpdateResult.modifiedCount === 0) {
+            return res.status(404).json({ error: "Reservation not found" });
+        }
+
+        res.status(200).json({ message: "Reservation deleted successfully" });
     } catch (error) {
-        console.error("Error in deleteUserReservation:", error);
-        return res.status(500).json({ error: "An error occurred while deleting the reservation" });
+        console.error("Error deleting reservation:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 };
 
@@ -339,17 +342,24 @@ export const updateReservationStatus = async (req, res) => {
 
     try {
         const item = await Iranga.findOne({ "reservations._id": new mongoose.Types.ObjectId(id) });
-        if (!item) return res.status(404).json({ error: "Reservation not found" });
+        if (!item) return res.status(404).json({ error: "Reservation not found in Iranga model" });
 
-        const reservation = item.reservations.find(
-            (res) => res._id.toString() === id
-        );
+        const reservation = item.reservations.find(res => res._id.toString() === id);
         if (!reservation) return res.status(404).json({ error: "Reservation not found in item" });
 
         reservation.reservationStatus = reservationStatus;
         await item.save();
 
-        res.status(200).json({ message: "Reservation status updated", reservation });
+        const user = await User.findOne({ "reservations.reservationId": new mongoose.Types.ObjectId(id) });
+        if (!user) return res.status(404).json({ error: "Reservation not found in User model" });
+
+        const userReservation = user.reservations.find(res => res.reservationId.toString() === id);
+        if (!userReservation) return res.status(404).json({ error: "Reservation not found in user" });
+
+        userReservation.reservationStatus = reservationStatus;
+        await user.save();
+
+        res.status(200).json({ message: "Reservation status updated in both models", reservation });
     } catch (error) {
         console.error("Error in updateReservationStatus:", error);
         res.status(500).json({ error: "An error occurred while updating the reservation status" });

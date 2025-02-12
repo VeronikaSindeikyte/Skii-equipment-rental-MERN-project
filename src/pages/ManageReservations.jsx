@@ -1,4 +1,4 @@
-import "./pagesCSS/ManageReservations.css"
+import "./pagesCSS/ManageReservations.css";
 import React from 'react';
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -12,6 +12,7 @@ const ManageReservations = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [updateError, setUpdateError] = useState(null);
+    const [allReservations, setAllReservations] = useState(null);
 
     useEffect(() => {
         const fetchUserReservations = async () => {
@@ -27,9 +28,7 @@ const ManageReservations = () => {
                         Authorization: `Bearer ${user.token}`,
                     },
                 });
-                
-                console.log("Full response data:", response.data);
-                
+ 
                 if (!response.data || !response.data.user) {
                     setError("No user data received");
                     setLoading(false);
@@ -54,60 +53,75 @@ const ManageReservations = () => {
             setUpdateError("Authentication required.");
             return;
         }
-
-        if (!reservation || !reservation._id) {
-            setUpdateError("Reservation ID not found.");
+    
+        if (!reservation?._id || !itemId) {
+            setUpdateError("Reservation ID or Item ID not found.");
             return;
         }
-
+    
         try {
-            await axios.delete(
-                `/api/user/delete/reservations/${reservation._id}`,
-                {
-                    headers: { Authorization: `Bearer ${user.token}` },
+            const response = await axios.delete("/api/reservations/admin/delete", {
+                headers: {
+                    Authorization: `Bearer ${user.token}`
+                },
+                params: {
+                    itemId: itemId,          
+                    reservationId: reservation._id
                 }
-            );
-
-            const updatedResponse = await axios.get(`/api/user/reservations/${id}`, {
-                headers: { Authorization: `Bearer ${user.token}` },
             });
-
-            setUserData(updatedResponse.data);
-            setUpdateError(null);
-            alert('Reservation deleted successfully!')
+    
+            try {
+                const [userResponse, allReservationsResponse] = await Promise.all([
+                    axios.get("/api/reservations/user", {
+                        headers: { Authorization: `Bearer ${user.token}` }
+                    }),
+                    axios.get(`/api/reservations/admin/${id}`, {
+                        headers: { Authorization: `Bearer ${user.token}` }
+                    })
+                ]);
+                setUserData(userResponse.data);
+                setAllReservations?.(allReservationsResponse.data);
+                setUpdateError(null);
+                alert("Rezervacija ištrinta sėkmingai!");
+                window.location.reload(); 
+            } catch (fetchError) {
+                console.error("Error fetching updated data:", fetchError);
+                setUpdateError("Reservation deleted but failed to fetch updated data.");
+            }
         } catch (err) {
-            setUpdateError("Failed to delete reservation.");
-            console.error("Deletion error:", err);
+            const errorMessage = err.response?.data?.error || "Failed to delete reservation.";
+            setUpdateError(errorMessage);
+            console.error("Error in handleDelete:", err);
         }
     };
 
-    const handleStatusUpdate = async (reservation, itemId, newStatus) => {
+    const handleStatusUpdate = async (reservationId, newStatus) => {
         if (!user?.token) {
             setUpdateError("Authentication required.");
             return;
         }
 
-        if (!reservation) {
+        if (!reservationId) {
             setUpdateError("Reservation not found.");
             return;
         }
 
         try {
             await axios.patch(
-                `/api/user/update/reservations/${reservation._id}`,
+                `/api/reservations/admin/updateStatus/${reservationId}`,
                 { reservationStatus: newStatus },
                 {
                     headers: { Authorization: `Bearer ${user.token}` },
                 }
             );
 
-            const updatedResponse = await axios.get(`/api/user/reservations/${id}`, {
+            const updatedResponse = await axios.get(`/api/reservations/admin/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
 
             setUserData(updatedResponse.data);
             setUpdateError(null);
-            alert('Rezervacijos būsena sėkmingai pakeista!')
+            alert('Rezervacijos būsena sėkmingai pakeista!');
         } catch (err) {
             setUpdateError("Failed to update reservation status.");
             console.error(err);
@@ -125,24 +139,47 @@ const ManageReservations = () => {
         const itemReservations = item.reservations.filter(
             res => res.user.toString() === userData.user._id.toString()
         );
-        
+
         if (itemReservations.length > 0) {
-            acc.push({ 
-                item, 
-                reservations: itemReservations 
+            acc.push({
+                item,
+                reservations: itemReservations
             });
         }
         return acc;
     }, []);
 
+
+    const uniqueItemReservations = itemReservations.reduce((acc, current) => {
+    const existingItem = acc.find(item => item.item._id === current.item._id);
+    
+    if (existingItem) {
+        const allReservations = [...existingItem.reservations, ...current.reservations];
+        const uniqueReservations = allReservations.filter((reservation, index, self) =>
+            index === self.findIndex(r => r._id === reservation._id)
+        );
+        existingItem.reservations = uniqueReservations;
+    } else {
+        const uniqueReservations = current.reservations.filter((reservation, index, self) =>
+            index === self.findIndex(r => r._id === reservation._id)
+        );
+        acc.push({
+            ...current,
+            reservations: uniqueReservations
+        });
+    }
+    
+    return acc;
+}, []);
+
     return (
         <div className="user-reservations">
             <h2>{userData.user.email} rezervacijos</h2>
             {updateError && <p className="error">{updateError}</p>}
-            
-            {itemReservations.length ? (
-                <ul>
-                    {itemReservations.map((itemData) => {
+    
+            {uniqueItemReservations.length ? (
+            <ul>
+                {uniqueItemReservations.map((itemData) => {
                         const { item, reservations } = itemData;
                         
                         return (
@@ -174,8 +211,9 @@ const ManageReservations = () => {
                                     <p><strong>Dydis:</strong> {item?.size || "Nenurodyta"}</p>
                                     <p><strong>Būklė:</strong> {item?.condition || "Nenurodyta"}</p>
                                 </div>
-                                
+    
                                 <div className="item-reservations">
+                                    <h4>Šio daikto rezervacijos:</h4>
                                     {reservations.map((reservation) => (
                                         <div key={reservation._id} className="reservation-details">
                                             <p><strong>Nuomos periodas:</strong>
@@ -185,27 +223,27 @@ const ManageReservations = () => {
                                                 }
                                             </p>
                                             <p>
-                                                <strong>Rezervacijos statusas: <br /></strong> 
+                                                <strong>Rezervacijos statusas: <br /></strong>
                                                 <span className={`reservation-status ${reservation.reservationStatus?.toLowerCase()}`}>
                                                     {reservation.reservationStatus || "Nenurodyta"}
                                                 </span>
                                             </p>
                                             <div className="reservation-actions">
-                                                <button 
-                                                    onClick={() => handleDelete(reservation, item._id)} 
+                                                <button
+                                                    onClick={() => handleDelete(reservation, item._id)}
                                                     className="delete-btn"
                                                 >
                                                     Ištrinti rezervaciją
                                                 </button>
                                                 <button
-                                                    onClick={() => handleStatusUpdate(reservation, item._id, 'Patvirtinta')}
+                                                    onClick={() => handleStatusUpdate(reservation._id, 'Patvirtinta')}
                                                     className="status-btn"
                                                     disabled={reservation.reservationStatus === 'Patvirtinta'}
                                                 >
                                                     Patvirtinti
                                                 </button>
                                                 <button
-                                                    onClick={() => handleStatusUpdate(reservation, item._id, 'Atmesta')}
+                                                    onClick={() => handleStatusUpdate(reservation._id, 'Atmesta')}
                                                     className="status-btn"
                                                     disabled={reservation.reservationStatus === 'Atmesta'}
                                                 >

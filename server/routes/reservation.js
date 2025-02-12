@@ -32,12 +32,11 @@ router.delete('/user/delete', deleteReservation)
 // GET - paimti vieno userio rezervacijas per admin paskyra
 router.get('/admin/:id', getUserReservations)
 
-// DELETE - istrinti viena rezervacija is admin puses
-router.delete('/admin/delete/:id', deleteUserReservation)
-
 // PATCH - pakeisti rezervacijos statusa (admin)
 router.patch('/admin/updateStatus/:id', updateReservationStatus)
 
+// DELETE - istrinti viena rezervacija is admin puses
+router.delete('/admin/delete', deleteUserReservation)
 
 
 
