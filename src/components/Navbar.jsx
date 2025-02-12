@@ -130,7 +130,7 @@ const Navbar = () => {
                                         )}
 
                                         {user.role === 'user' && (
-                                            <Link to="/UserReservations" className="nav-item">
+                                            <Link to="/UserReservations" className={`nav-item ${location.pathname === "/UserReservations" ? "active" : ""}`}>
                                                 Mano rezervacijos
                                             </Link>
                                         )}
