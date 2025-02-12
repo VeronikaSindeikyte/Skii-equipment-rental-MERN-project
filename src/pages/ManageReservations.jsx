@@ -213,14 +213,18 @@ const ManageReservations = () => {
                                 </div>
     
                                 <div className="item-reservations">
-                                    <h4>Šio daikto rezervacijos:</h4>
+                                    <h4>Rezervacijos:</h4>
                                     {reservations.map((reservation) => (
                                         <div key={reservation._id} className="reservation-details">
-                                            <p><strong>Nuomos periodas:</strong>
-                                                {reservation.rentalPeriod && reservation.rentalPeriod.from && reservation.rentalPeriod.to
-                                                    ? `${new Date(reservation.rentalPeriod.from).toLocaleDateString()} - ${new Date(reservation.rentalPeriod.to).toLocaleDateString()}`
-                                                    : "Nežinomas laikotarpis"
-                                                }
+                                            <p><strong>Rezervacijos pradžia: </strong> 
+                                                {reservation.rentalPeriod?.from 
+                                                    ? new Date(reservation.rentalPeriod.from).toISOString().split('T')[0] 
+                                                    : "Nežinoma"}
+                                            </p>
+                                            <p><strong>Rezervacijos pabaiga: </strong> 
+                                                {reservation.rentalPeriod?.to 
+                                                    ? new Date(reservation.rentalPeriod.to).toISOString().split('T')[0] 
+                                                    : "Nežinoma"}
                                             </p>
                                             <p>
                                                 <strong>Rezervacijos statusas: <br /></strong>

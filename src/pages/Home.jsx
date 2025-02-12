@@ -28,7 +28,6 @@ const Home = () => {
             const json = await response.json();
 
             if (response.ok) {
-                console.log("Fetched irangos:", json);
                 dispatch({ type: 'SET_IRANGA', payload: json });
             } else {
                 console.error("Failed to fetch irangos:", json.error);
