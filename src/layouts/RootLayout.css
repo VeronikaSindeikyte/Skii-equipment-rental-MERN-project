@@ -1,11 +1,8 @@
 /* -------------- root layout CSS ------------------------*/
 .root-layout {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    text-align: center;
     min-height: 100vh;
-
 }
 
 .main {
@@ -14,12 +11,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
-    background-color: white;
     background: rgb(193,136,89);
-    background: linear-gradient(180deg, rgba(163, 114, 107, 0.432) 0%, rgba(32, 75, 139, 0.63) 90%);
+    background: linear-gradient(180deg, rgba(163, 114, 107, 0.432) 0%, rgba(32, 75, 139, 0.63) 70%);
     margin-bottom: 15px;
-    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.562);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.623);
+
 }
 
 /* ---------------- Footer Styling ------------------------- */

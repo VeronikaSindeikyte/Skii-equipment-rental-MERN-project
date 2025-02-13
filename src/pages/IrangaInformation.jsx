@@ -136,13 +136,7 @@ const IrangaInformation = () => {
           )}
           <h2>{iranga.title}</h2>
           <p className="aprasymas"><strong>Aprašymas:</strong> {iranga.description}</p>
-          <div className="p-info">
-            <p><strong>Kaina vienai parai:</strong> {iranga.rentPricePerDay} €</p>
-            <p><strong>Kam skirta:</strong> {iranga.gender || "Nenurodyta"}</p>
-            <p><strong>Dydis:</strong> {iranga.size || "Nenurodyta"}</p>
-            <p><strong>Būklė:</strong> {iranga.condition || "Nenurodyta"}</p>
-            <p><strong>Ar laisva:</strong> {iranga.available ? "Taip" : "Ne"}</p>
-          </div>
+          
         </div>
         <div className="calendar-box">
           <h2>Rezervuokite įrangą:</h2>
