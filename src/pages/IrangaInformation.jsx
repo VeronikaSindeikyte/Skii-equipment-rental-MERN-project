@@ -1,5 +1,5 @@
 import "./pagesCSS/IrangaInformation.css";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css";
@@ -9,15 +9,17 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const IrangaInformation = () => {
   const { id } = useParams();
   const [iranga, setIranga] = useState(null);
-  const [rentalPeriod, setRentalPeriod] = useState([{ 
-    startDate: new Date(), 
-    endDate: new Date(), 
-    key: "selection" }]);
+  const [rentalPeriod, setRentalPeriod] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
   const { user } = useAuthContext();
   const [error, setError] = useState(null);
   const [disabledDates, setDisabledDates] = useState([]);
   const navigate = useNavigate();
-
 
   const fetchIrangaAndReservations = async () => {
     try {
@@ -28,13 +30,14 @@ const IrangaInformation = () => {
 
       // Paimamos visos rezervacijos is DB
       const reservationsResponse = await fetch(`/api/iranga/${id}`);
-      if (!reservationsResponse.ok) throw new Error("Failed to fetch reservations");
+      if (!reservationsResponse.ok)
+        throw new Error("Failed to fetch reservations");
       const itemData = await reservationsResponse.json();
       const reservations = itemData.reservations;
 
       // Rezervacijos paverciamos i disabled datas
       const bookedDates = [];
-      reservations.forEach(reservation => {
+      reservations.forEach((reservation) => {
         const start = new Date(reservation.rentalPeriod.from);
         const end = new Date(reservation.rentalPeriod.to);
 
@@ -65,7 +68,9 @@ const IrangaInformation = () => {
     }
 
     const toUTC = (date) => {
-      const utcDate = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      const utcDate = new Date(
+        Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
+      );
       return utcDate.toISOString();
     };
 
@@ -91,11 +96,13 @@ const IrangaInformation = () => {
         throw new Error(data.error || "Nepavyko rezervuoti įrangos.");
       }
 
-      setRentalPeriod([{ 
-        startDate: new Date(), 
-        endDate: new Date(), 
-        key: "selection" 
-      }]);
+      setRentalPeriod([
+        {
+          startDate: new Date(),
+          endDate: new Date(),
+          key: "selection",
+        },
+      ]);
 
       await fetchIrangaAndReservations();
 
@@ -105,13 +112,43 @@ const IrangaInformation = () => {
     }
   };
 
+  const calculateDays = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const diffTime = Math.abs(end - start);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays + 1;
+  };
+
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("lt-LT", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
+
+  const calculateTotalPrice = () => {
+    const days = calculateDays(
+      rentalPeriod[0].startDate,
+      rentalPeriod[0].endDate
+    );
+    return (days * iranga.rentPricePerDay).toFixed(2);
+  };
+
   if (error) return <p>{error}</p>;
   if (!iranga) return <p>Kraunama...</p>;
 
   return (
     <div className="reserve-iranga-page">
-      <h3>Rezervuoti įrangą</h3>
-      <h2>Pasirinkite nuomos laikotarpį:</h2>
+      <div className="reserve-header">
+        <h2>Rezervuokite įrangą per kelias sekundes!</h2>
+        <p>Kalendoriuje pasirinkite Jums reikiamą rezervacijos laikotarpį ir spauskite rezervuoti.</p>
+        <p> Savo rezervacijas galite peržiūrėti ir valdyti puslapyje:</p>
+        <button onClick={() => navigate("/UserReservations")} className="user-reservations-btn">
+          Mano Rezervacijos
+        </button>
+      </div>
       <div className="issami-info-kalendorius">
         <div className="issami-info">
           {iranga.photos && iranga.photos.length > 0 ? (
@@ -135,12 +172,36 @@ const IrangaInformation = () => {
             </div>
           )}
           <h2>{iranga.title}</h2>
-          <p className="aprasymas"><strong>Aprašymas:</strong> {iranga.description}</p>
-          
+          <p className="aprasymas">{iranga.description}</p>
+          <p><strong>Rezervacijos informacija:</strong></p>
+          <div className="rezervacijos-info">
+            <p>
+              Nuomos kaina vienai parai: <span>{iranga.rentPricePerDay} €</span>
+            </p>
+            <p>
+              Rezervacijos pradžia:{" "}
+              <span>{formatDate(rentalPeriod[0].startDate)}</span>
+            </p>
+            <p>
+              Rezervacijos pabaiga:{" "}
+              <span>{formatDate(rentalPeriod[0].endDate)}</span>
+            </p>
+            <p>
+              Dienų skaičius:{" "}
+              <span>
+                {calculateDays(
+                  rentalPeriod[0].startDate,
+                  rentalPeriod[0].endDate
+                )}
+              </span>
+            </p>
+            <p className="total-price">
+              Rezervacijos kaina už pasirinktą laikotarpį:{" "}
+              <span>{calculateTotalPrice()} €</span>
+            </p>
+          </div>
         </div>
         <div className="calendar-box">
-          <h2>Rezervuokite įrangą:</h2>
-          <p>Pasirinkite sau tinkamą rezervacijos periodą kalendoriuje ir spauskite "Rezervuoti":</p>
           <DateRange
             className="calendar"
             editableDateInputs={true}
@@ -149,13 +210,17 @@ const IrangaInformation = () => {
             onChange={(item) => setRentalPeriod([item.selection])}
             minDate={new Date()}
             disabledDates={disabledDates}
-            rangeColors={["#2ecc71"]}
-            color="#e74c3c"
+            rangeColors={["rgba(193, 136, 89, 0.664)"]}
+            color={["#e74c3c"]}
           />
+          <button onClick={handleReserve} className="rezervuoti">
+            Rezervuoti
+          </button>
         </div>
-        <button onClick={handleReserve} className="rezervuoti">Rezervuoti</button>
         {error && <p className="error">{error}</p>}
-        <button onClick={() => navigate("/")} className="grizti">Grįžti</button>
+          <button onClick={() => navigate("/")} className="grizti">
+            Grįžti
+          </button>
       </div>
     </div>
   );

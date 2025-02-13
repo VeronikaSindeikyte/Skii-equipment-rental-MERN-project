@@ -34,16 +34,10 @@ header {
     gap: 10px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 940px) {
     .name-and-logo {
         display: flex;
         flex-direction: column;
-    }
-    .logout-button {
-        position: absolute;
-        right: 25px;
-        top: 10px;
-        color: black;
     }
 }
 
@@ -84,25 +78,14 @@ header {
 }
 
 .nav-item:hover {
-    text-shadow: 0 0 10px rgb(193,136,89), 0 0 20px rgba(32, 75, 139, 0.63);
-}
-
-.nav-item:hover {
-    color: #f0ebe8; 
+    color: rgb(245, 217, 195);
     text-shadow: 0 0 10px rgba(193, 136, 89, 0.8), 0 0 20px rgba(32, 75, 139, 0.6);
 }
-
-.nav-item:active {
-    color: #eeeae7; 
-    text-shadow: 0 0 15px #ffcc99, 0 0 30px #d99a66;
-}
-
 
 .nav-item.active {
     color: #f0b690; 
     text-shadow: 0 0 15px #f0b690, 0 0 30px rgba(193, 136, 89, 0.8), 0 0 45px rgba(32, 75, 139, 0.6);
 }
-
 
 .nav-item, .nav-item:hover, .nav-item:active, .nav-item.active {
     transition: all 0.3s ease-in-out;

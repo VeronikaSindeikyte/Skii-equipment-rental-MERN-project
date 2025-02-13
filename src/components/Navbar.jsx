@@ -102,7 +102,7 @@ const Navbar = () => {
                                         </div>
                                     )}
                                     <button className='menu-button' onClick={toggleDropdown}>
-                                        ☰ Menu
+                                        ☰ Meniu
                                     </button>
                                 </div>
                             ) : (

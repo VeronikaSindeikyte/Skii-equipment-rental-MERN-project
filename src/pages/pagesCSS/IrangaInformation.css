@@ -6,20 +6,55 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 20px;
-    margin-bottom: 30px;
+    padding-bottom: 100px;
+    width: 100%;
+    color: black;
+    background: rgb(236, 232, 229);
+}
+
+.reserve-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: rgb(27, 38, 68);
+    width: 80%;
+    margin: 40px;
+    margin-bottom: 0;
+}
+
+.reserve-header h2 {
+    font-weight: 700;
+    width: 80%;
+    text-align: center;
+    font-size: clamp(20px, 4vw, 30px);
+    margin: 20px;
+}
+
+.reserve-header p {
+    font-weight: 600;
+    font-size: 20px;
+    margin: 0;
+    font-size: clamp(15px, 2vw, 18px);
     width: 100%;
 }
 
-.reserve-iranga-page h3 {
-    font-size: 25px;
-    text-transform: uppercase;
+.user-reservations-btn {
+    max-width: 300px;
+    border-radius: 50px;
+    margin: 10px;
+    font-size: 15px;
+    color: white;
+    margin-bottom: 50px;
+    background-color: rgba(69, 77, 99, 0.842);
 }
 
-.reserve-iranga-page h2 {
+.user-reservations-btn:hover {
+    background-color: rgb(69, 77, 99);
     color: white;
-    font-size: 20px;
-    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 50px;
 }
 
 .issami-info-kalendorius {
@@ -31,11 +66,12 @@
     text-decoration: none;
     font-size: 16px;
     max-width: 90%;
-    background-color: white;
+    padding-bottom: 20px;
+    border: 1px solid black;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     border: 1px solid #e6eef1;
-    padding-bottom: 20px;
+    background-color: white;
 }
 
 .issami-info {
@@ -44,10 +80,26 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    position: relative;
-    padding: 20px;
     color: black;
     max-width: 500px;
+    background: #fff;
+    padding: 20px;
+    overflow: hidden;
+    height: 800px;
+    margin: 40px 10px;
+    transition: box-shadow 0.3s ease;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #e6eef1;
+}
+
+@media screen and (max-width: 768px) {
+    .issami-info {
+        max-width: 90%;
+        height: auto;
+        margin: 20px 5px;
+        padding: 15px;
+    }
 }
 
 .issami-info img {
@@ -57,48 +109,181 @@
 .issami-info h2 {
     margin: 10px 0;
     font-size: 100%;
-    color: #333;
     margin-bottom: 8px;
     text-transform: uppercase;
 }
 
-.aprasymas {
+.issami-info .aprasymas {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
     margin: 0;
-    padding: 10px;
-    font-size: 100%;
-    color: #333;
-    width: 400px;
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 20px 10px;
+}
+
+.rezervacijos-info p {
+    margin: 0;
+    padding: 4px;
+    color: black;
+    font-size: 15px;
+    font-weight: 400;
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, 0.404);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rezervacijos-info p:last-child {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.397);
 }
 
 .calendar-box {
-    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    height: 800px;
+    margin: 40px 10px;
     padding: 20px;
-   
+    background: #fff;
+    transition: box-shadow 0.3s ease;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 1px solid #e6eef1;
+}
+
+.calendar-box:hover {
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .calendar {
-    padding: 20px;
+    padding: 10px;
     font-family: "Inknut Antiqua", serif;
     color: black;
-    max-width: 600px;
+    width: 100%;
+    height: auto;
 }
 
 .calendar button {
     font-size: 15px;
 }
 
-.rezervuoti, .grizti {
+.rezervuoti {
+    background-color: rgba(193, 136, 89, 0.664);
     color: black;
-    max-width: 60%;
-    font-size: 100%;
+    max-width: 700px;
+    font-size: 16px;
+    margin: 10px;
+    border-radius: 50px;
+}
+
+.rezervuoti:hover {
+    cursor: pointer;
+    border-radius: 50px; 
+    background-color: rgba(193, 136, 89, 0.664); 
+    transform: scale(1.05);
+}
+
+.grizti {
+    background-color: rgba(69, 77, 99, 0.842);
+    font-size: 15px;
+    border-radius: 50px;
+    color: white;
+    max-width: 700px;
     margin: 10px;
 }
 
-.calendar-box h2 {
-    color: black;
+.grizti:hover {
+    background-color: rgb(69, 77, 99);
+    color: white;
+    cursor: pointer;
+    border-radius: 50px;
 }
+
+
+
+@media screen and (max-width: 1106px) {
+    .calendar-box {
+        width: 100%; 
+        height: auto;
+        margin-top: 0;
+        padding: 15px;
+        margin: 20px 5px;
+    }
+
+    .calendar-box .calendar {
+        font-size: 14px; 
+    }
+
+    .calendar-box .rdrMonth {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .calendar-box .rdrCalendarWrapper {
+        width: 100% !important;
+        font-size: 14px !important;
+    }
+
+    .calendar-box .rdrDateDisplayWrapper {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .calendar-box {
+        width: 100%; 
+        height: auto; 
+        margin: 20px 5px;
+        padding: 15px; 
+        margin-top: 0;
+    }
+
+    .calendar-box .calendar {
+        font-size: 14px; 
+    }
+
+    .calendar-box .rdrMonth {
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .calendar-box .rdrCalendarWrapper {
+        width: 100% !important;
+        font-size: 14px !important;
+    }
+
+    .calendar-box .rdrDateDisplayWrapper {
+        width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .calendar-box {
+        max-width: 95%;
+        padding: 10px; 
+        margin: 10px 5px;
+    }
+
+    .calendar-box .calendar {
+        font-size: 12px; 
+    }
+    .calendar-box .rdrDateDisplayItem {
+        padding: 5px !important;
+    }
+
+    .calendar-box .rdrDateDisplayItemActive {
+        margin: 0 3px !important;
+    }
+}
+

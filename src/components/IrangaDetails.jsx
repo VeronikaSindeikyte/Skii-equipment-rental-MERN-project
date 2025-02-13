@@ -11,6 +11,7 @@ const IrangaDetails = ({ iranga }) => {
 
     const handleClick = async (e) => {
         e.stopPropagation();
+        window.confirm("Ar tikrai norite ištrinti pasirinktą įrangą?")
         if (!user || user.role !== "admin") {
             console.error("Unauthorized action");
             return;
