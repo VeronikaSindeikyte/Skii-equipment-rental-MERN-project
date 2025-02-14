@@ -1,20 +1,72 @@
 /* ------- MANAGE RESERVATIONS PAGE ------- */
 .user-reservations {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    text-align: center;
-    align-items: center;
     justify-content: center;
-    min-height: 50vh; 
+    align-items: center;
+    width: 80%;
     padding: 20px;
-    box-sizing: border-box;
     text-align: center;
-    overflow-wrap: break-word;
+    border-radius: 10px; 
+    background: rgb(236, 232, 229);
+    margin-top: 100px;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.397);
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+}
+
+.user-reservations ul {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    grid-template-columns: repeat(3, minmax(250px, 1fr));
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+}
+
+@media (max-width: 1200px) {
+    .user-reservations ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .user-reservations ul {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .user-reservations ul li {
+        min-height: 120px;
+        padding: 15px;
+    }
+}
+
+
+.user-reservations h2 {
+    margin: 0 auto;
+    margin-bottom: 10px;
+    color: rgb(50, 59, 85);
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.user-reservations h3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    color: rgb(50, 59, 85);
+    font-size: 20px;
+    font-weight: 600;
 }
 
 @media (max-width: 800px) {
-    .user-reservations h2 {
+    .user-reservations h3 {
         font-size: 1.2rem;
     }
 }
@@ -25,12 +77,11 @@
 
 .reservation-status.patvirtinta {
     color: green;
-    font-size: 25px;
+
 }
 
 .reservation-status.atmesta {
     color: rgba(221, 56, 34, 0.911);
-    font-size: 25px;
 }
 
 .item-details {
@@ -38,14 +89,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
     position: relative;
     border: 1px solid #e6eef1;
-    background: rgb(244, 247, 252);
-    padding: 60px;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
     margin: 20px;
+    background-color: white;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease;
+    border: 1px solid rgba(0, 0, 0, 0.651);
+    width: 400px;
 }
 
 .item-details h3 {
@@ -53,15 +106,25 @@
     font-size: 20px;
 }
 
-.item-details .aprasymas {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    flex-wrap: wrap;
+.item-details p {
     margin: 0;
-    padding: 0;
+    padding: 4px;
+    color: #333;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: left;
+    border: 1px solid rgba(0, 0, 0, 0.404);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
 
+
+.reservation-details p:last-child {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.397);
 }
 
 .user-reservations ul li {
@@ -73,20 +136,51 @@
     font-size: 20px;
 }
 
-.status-btn-patvirtinta {
+/* ---- reservation action buttons ---- */
+
+.status-select {
+    padding: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-left: 10px;
+    width: 50%;
     border: 1px solid black;
-    background-color: rgba(48, 94, 48, 0.425);
 }
 
-.status-btn-patvirtinta:hover {
-    background-color: rgba(40, 158, 40, 0.425);
+.status-select.patvirtinta {
+    color: green;
 }
 
-.status-btn-atmesta {
-    border: 1px solid black;
-    background-color: rgba(197, 15, 15, 0.425);
+.status-select.atmesta {
+    background-color: #ffebee;
+    color: #c62828;
 }
 
-.status-btn-atmesta:hover {
-    background-color: rgba(221, 56, 34, 0.678);
+.status-select.laukiama {
+    background-color: #fff3e0;
+    color: #ef6c00;
 }
+.reservation-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.delete-btn {
+    background-color: rgba(109, 28, 28, 0.425);
+    font-size: 15px;
+    border-radius: 50px;
+    color: black;
+    max-width: 500px;
+    width: 100%;
+}
+
+.delete-btn:hover {
+    background-color: rgba(167, 30, 30, 0.842);
+    font-size: 15px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+

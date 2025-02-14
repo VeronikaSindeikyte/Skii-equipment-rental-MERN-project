@@ -28,7 +28,7 @@ const ManageReservations = () => {
                         Authorization: `Bearer ${user.token}`,
                     },
                 });
- 
+
                 if (!response.data || !response.data.user) {
                     setError("No user data received");
                     setLoading(false);
@@ -53,23 +53,23 @@ const ManageReservations = () => {
             setUpdateError("Authentication required.");
             return;
         }
-    
+
         if (!reservation?._id || !itemId) {
             setUpdateError("Reservation ID or Item ID not found.");
             return;
         }
-    
+
         try {
             const response = await axios.delete("/api/reservations/admin/delete", {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 },
                 params: {
-                    itemId: itemId,          
+                    itemId: itemId,
                     reservationId: reservation._id
                 }
             });
-    
+
             try {
                 const [userResponse, allReservationsResponse] = await Promise.all([
                     axios.get("/api/reservations/user", {
@@ -83,7 +83,7 @@ const ManageReservations = () => {
                 setAllReservations?.(allReservationsResponse.data);
                 setUpdateError(null);
                 alert("Rezervacija ištrinta sėkmingai!");
-                window.location.reload(); 
+                window.location.reload();
             } catch (fetchError) {
                 console.error("Error fetching updated data:", fetchError);
                 setUpdateError("Reservation deleted but failed to fetch updated data.");
@@ -128,10 +128,10 @@ const ManageReservations = () => {
         }
     };
 
-    if (loading) return <p>Loading reservations...</p>;
+    if (loading) return <p>Kraunama rezervacijų informacija...</p>;
     if (error) return <p className="error">{error}</p>;
     if (!userData || !userData.user) {
-        return <p>Loading user data...</p>;
+        return <p>Kraunama vartotojo informacija...</p>;
     }
 
     const itemReservations = userData.user.reservations.reduce((acc, reservation) => {
@@ -151,49 +151,52 @@ const ManageReservations = () => {
 
 
     const uniqueItemReservations = itemReservations.reduce((acc, current) => {
-    const existingItem = acc.find(item => item.item._id === current.item._id);
-    
-    if (existingItem) {
-        const allReservations = [...existingItem.reservations, ...current.reservations];
-        const uniqueReservations = allReservations.filter((reservation, index, self) =>
-            index === self.findIndex(r => r._id === reservation._id)
-        );
-        existingItem.reservations = uniqueReservations;
-    } else {
-        const uniqueReservations = current.reservations.filter((reservation, index, self) =>
-            index === self.findIndex(r => r._id === reservation._id)
-        );
-        acc.push({
-            ...current,
-            reservations: uniqueReservations
-        });
-    }
-    
-    return acc;
-}, []);
+        const existingItem = acc.find(item => item.item._id === current.item._id);
+
+        if (existingItem) {
+            const allReservations = [...existingItem.reservations, ...current.reservations];
+            const uniqueReservations = allReservations.filter((reservation, index, self) =>
+                index === self.findIndex(r => r._id === reservation._id)
+            );
+            existingItem.reservations = uniqueReservations;
+        } else {
+            const uniqueReservations = current.reservations.filter((reservation, index, self) =>
+                index === self.findIndex(r => r._id === reservation._id)
+            );
+            acc.push({
+                ...current,
+                reservations: uniqueReservations
+            });
+        }
+
+        return acc;
+    }, []);
 
     return (
         <div className="user-reservations">
-            <h2>{userData.user.email} rezervacijos</h2>
+            <h2>Rezervacijos</h2>
+            <h3>Vartotojas: <strong>{userData.user.email}</strong></h3>
             {updateError && <p className="error">{updateError}</p>}
     
             {uniqueItemReservations.length ? (
-            <ul>
-                {uniqueItemReservations.map((itemData) => {
+                <ul className="all-reservations">
+                    {uniqueItemReservations.map((itemData) => {
                         const { item, reservations } = itemData;
-                        
+    
                         return (
                             <li key={item._id}>
                                 <div className="item-details">
-                                    {item?.photos?.length > 0 ? (
+                                    {item.photos && item.photos.length > 0 ? (
                                         <img
+                                            id="iranga-photo"
                                             src={item.photos[0]}
-                                            alt={item.title || "Item photo"}
+                                            alt={item.title || "Įrangos nuotrauka"}
                                             className="iranga-photo"
                                         />
                                     ) : (
                                         <div className="iranga-photo-placeholder">
                                             <svg
+                                                id="photo-placeholder"
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 24 24"
                                                 width="48"
@@ -205,57 +208,47 @@ const ManageReservations = () => {
                                             </svg>
                                         </div>
                                     )}
-                                    <h3>{item?.title || "Nežinomas pavadinimas"}</h3>
-                                    <p className="aprasymas"><strong>Aprašymas:</strong> {item?.description || "Nėra aprašymo"}</p>
-                                    <p><strong>Nuomos kaina per dieną:</strong> {item?.rentPricePerDay ? `${item.rentPricePerDay}€` : "Nenurodyta"}</p>
-                                    <p><strong>Dydis:</strong> {item?.size || "Nenurodyta"}</p>
-                                    <p><strong>Būklė:</strong> {item?.condition || "Nenurodyta"}</p>
-                                </div>
-    
-                                <div className="item-reservations">
-                                    <h4>Rezervacijos:</h4>
-                                    {reservations.map((reservation) => (
-                                        <div key={reservation._id} className="reservation-details">
-                                            <p><strong>Rezervacijos pradžia: </strong> 
-                                                {reservation.rentalPeriod?.from 
-                                                    ? new Date(reservation.rentalPeriod.from).toISOString().split('T')[0] 
-                                                    : "Nežinoma"}
-                                            </p>
-                                            <p><strong>Rezervacijos pabaiga: </strong> 
-                                                {reservation.rentalPeriod?.to 
-                                                    ? new Date(reservation.rentalPeriod.to).toISOString().split('T')[0] 
-                                                    : "Nežinoma"}
-                                            </p>
-                                            <p>
-                                                <strong>Rezervacijos statusas: <br /></strong>
-                                                <span className={`reservation-status ${reservation.reservationStatus?.toLowerCase()}`}>
-                                                    {reservation.reservationStatus || "Nenurodyta"}
-                                                </span>
-                                            </p>
-                                            <div className="reservation-actions">
-                                                <button
-                                                    onClick={() => handleDelete(reservation, item._id)}
-                                                    className="delete-btn"
-                                                >
-                                                    Ištrinti rezervaciją
-                                                </button>
-                                                <button
-                                                    onClick={() => handleStatusUpdate(reservation._id, 'Patvirtinta')}
-                                                    className="status-btn"
-                                                    disabled={reservation.reservationStatus === 'Patvirtinta'}
-                                                >
-                                                    Patvirtinti
-                                                </button>
-                                                <button
-                                                    onClick={() => handleStatusUpdate(reservation._id, 'Atmesta')}
-                                                    className="status-btn"
-                                                    disabled={reservation.reservationStatus === 'Atmesta'}
-                                                >
-                                                    Atmesti
-                                                </button>
-                                            </div>
+                                    <h4>{item.title || "Pavadinimas neprieinamas"}</h4>
+                                    <div className="iranga-content">
+                                        <div className="item-reservations">
+                                            <h4>Rezervacijos:</h4>
+                                            {reservations.map((reservation) => (
+                                                <div key={reservation._id} className="reservation-details">
+                                                    <p><strong>Rezervacijos ID:</strong> {reservation._id}</p>
+                                                    <p><strong>Rezervacijos pradžia: </strong>
+                                                        {reservation.rentalPeriod?.from
+                                                            ? new Date(reservation.rentalPeriod.from).toISOString().split('T')[0]
+                                                            : "Nežinoma"}
+                                                    </p>
+                                                    <p><strong>Rezervacijos pabaiga: </strong>
+                                                        {reservation.rentalPeriod?.to
+                                                            ? new Date(reservation.rentalPeriod.to).toISOString().split('T')[0]
+                                                            : "Nežinoma"}
+                                                    </p>
+                                                    <p className="reservation-status">
+                                                        <strong>Rezervacijos statusas: </strong>
+                                                        <select
+                                                            value={reservation.reservationStatus}
+                                                            onChange={(e) => handleStatusUpdate(reservation._id, e.target.value)}
+                                                            className={`status-select ${reservation.reservationStatus?.toLowerCase()}`}
+                                                        >
+                                                            <option value="Laukiama patvirtinimo">Laukia patvirtinimo</option>
+                                                            <option value="Patvirtinta">Patvirtinta</option>
+                                                            <option value="Atmesta">Atmesta</option>
+                                                        </select>
+                                                    </p>
+                                                    <div className="reservation-actions">
+                                                        <button
+                                                            onClick={() => handleDelete(reservation, item._id)}
+                                                            className="delete-btn"
+                                                        >
+                                                            Ištrinti rezervaciją
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
+                                    </div>
                                 </div>
                             </li>
                         );
@@ -265,7 +258,7 @@ const ManageReservations = () => {
                 <p className="nerasta">Rezervacijų nerasta.</p>
             )}
         </div>
-    );
+    )
 };
 
 export default ManageReservations;
