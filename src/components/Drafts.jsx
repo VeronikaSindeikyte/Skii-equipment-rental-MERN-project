@@ -1,4 +1,4 @@
-import "./componentsCSS/Drafts.css"
+import "./componentsCSS/Drafts.css";
 import React from 'react';
 
 const Drafts = ({ drafts = [], onDelete, onEdit }) => {
@@ -10,7 +10,31 @@ const Drafts = ({ drafts = [], onDelete, onEdit }) => {
             ) : (
                 <ul>
                     {drafts.map((draft, index) => (
-                        <li key={index}>
+                        <li className="one-draft" key={index}>
+                            <svg
+                                id="trashcan-icon"
+                                className="trashcan"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                     onDelete(index)
+                                }}
+                                stroke="currentColor"
+                                fill="currentColor"
+                                strokeWidth="0"
+                                viewBox="0 0 16 16"
+                                height="1.5em"
+                                width="1.5em"
+                                xmlns="http://www.w3.org/2000/svg"
+                                role="img"
+                                aria-label="Delete equipment"
+                            >
+                                <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"></path>
+                                <path
+                                    fillRule="evenodd"
+                                    d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                                    clipRule="evenodd"
+                                ></path>
+                            </svg>
                             {draft.photos && draft.photos.length > 0 ? (
                                 <img
                                     src={draft.photos[0]}
@@ -31,11 +55,28 @@ const Drafts = ({ drafts = [], onDelete, onEdit }) => {
                                     </svg>
                                 </div>
                             )}
-                            <strong>{draft.title || "Neužpildytas"}</strong> - {draft.description || "Nėra aprašymo"}
-                            <span> ({draft.rentPricePerDay ? `${draft.rentPricePerDay}€` : "Kaina neįvesta"})</span>
+                            <h4>{draft.title || "Nėra pavadinimo"}</h4>
+                            <div className="draft-content">
+                                <p>Kaina vienai parai: <span>{draft.rentPricePerDay ? `${draft.rentPricePerDay} €` : "Nenurodyta"}</span></p>
+                                <p>Kam skirta:
+                                    <span>
+                                        {draft.gender === "male" ? " Vyrams" :
+                                        draft.gender === "female" ? " Moterims" :
+                                        draft.gender === "unisex" ? " Unisex" : " Nenurodyta"}
+                                    </span>
+                                </p>
+                                <p>Dydis: <span>{draft.size || "Nenurodyta"}</span></p>
+                                <p>Būklė:
+                                    <span>
+                                        {draft.condition === "new" ? " Nauja" :
+                                        draft.condition === "used" ? " Naudota" :
+                                        draft.condition === "refurbished" ? " Atnaujinta" : " Nenurodyta"}
+                                    </span>
+                                </p>
+                                <p>Ar yra laisvų laikų: <span>{draft.available ? "Taip" : "Ne"}</span></p>
+                            </div>
                             <div className="draft-actions">
                                 <button onClick={() => onEdit(index)}>Redaguoti</button>
-                                <button onClick={() => onDelete(index)}>Pašalinti</button>
                             </div>
                         </li>
                     ))}
