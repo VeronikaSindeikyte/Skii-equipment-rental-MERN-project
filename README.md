@@ -86,7 +86,8 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 - **Admin Panel**:
   - Add, edit, or delete equipment.
 
-![image](https://github.com/user-attachments/assets/74201327-fea7-41a4-8885-35ecc1cf80e3)
+![image](https://github.com/user-attachments/assets/91dc6232-f87d-4026-a8b2-48b1ed4e8654)
+
 ![image](https://github.com/user-attachments/assets/919c5ca4-fdc3-4f42-986e-6848adf9f97a)
 
 
