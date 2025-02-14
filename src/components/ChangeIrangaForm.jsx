@@ -1,4 +1,4 @@
-import "./componentsCSS/ChangeIrangaForm.css"
+import "./componentsCSS/ChangeIrangaForm.css";
 import React from 'react';
 import { useState, useEffect } from "react";
 import { useIrangaContext } from "../hooks/useIrangaContext";
@@ -28,22 +28,36 @@ const ChangeIrangaForm = () => {
             setSize(selectedIranga.size);
             setCondition(selectedIranga.condition);
             setAvailable(selectedIranga.available);
+            setEmptyFields([]);
+            setError(null);
         }
     }, [selectedIranga]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         if (!user) {
             setError('Būtina prisijungti.');
             return;
         }
-    
+
         if (!selectedIranga) {
             setError('Pasirinkite įrangą, kurią norite redaguoti.');
             return;
         }
-    
+        
+        const empty = [];
+        if (!title.trim()) empty.push('title');
+        if (!description.trim()) empty.push('description');
+        if (!rentPricePerDay) empty.push('rentPricePerDay');
+        if (!size.trim()) empty.push('size');
+
+        if (empty.length > 0) {
+            setEmptyFields(empty);
+            setError('Prašome užpildyti visus laukelius');
+            return;
+        }
+
         const updatedEquipment = {
             title,
             description,
@@ -53,7 +67,7 @@ const ChangeIrangaForm = () => {
             condition,
             available,
         };
-    
+
         try {
             const response = await fetch(`/api/iranga/${selectedIranga._id}`, {
                 method: 'PATCH',
@@ -63,16 +77,17 @@ const ChangeIrangaForm = () => {
                     'Authorization': `Bearer ${user.token}`
                 }
             });
-    
+
             if (!response.ok) {
                 const json = await response.json();
                 throw new Error(json.error || 'Nepavyko atnaujinti įrangos.');
             }
-    
+
             const updatedIranga = await response.json();
-            
+
             dispatch({ type: 'UPDATE_IRANGA', payload: updatedIranga });
-    
+            setEmptyFields([]);
+            setError(null);
             alert('Įrangos informacija atnaujinta sėkmingai!');
         } catch (err) {
             setError(err.message);
@@ -86,15 +101,16 @@ const ChangeIrangaForm = () => {
     return (
         <div className="iranga-form-and-list">
             <form className="edit-form" onSubmit={handleSubmit}>
-            <h3>Atnaujinti įrangos informaciją:</h3>
-                <label htmlFor="equipment">Pasirinkti įrangą:</label>
+                <h3>Atnaujinti įrangos informaciją:</h3>
+                <label htmlFor="equipment">Pasirinkite įrangą:</label>
                 <select
-                id="equipment"
-                onChange={(e) => {
-                    const selected = irangos.find(i => i._id === e.target.value);
-                    setSelectedIranga(selected);}}
+                    id="equipment"
+                    onChange={(e) => {
+                        const selected = irangos.find(i => i._id === e.target.value);
+                        setSelectedIranga(selected);
+                    }}
                     value={selectedIranga ? selectedIranga._id : ""}
-                    >
+                >
                     <option value="">Pasirinkite įrangą </option>
                     {irangos.map(iranga => (
                         <option key={iranga._id} value={iranga._id}>
@@ -109,7 +125,12 @@ const ChangeIrangaForm = () => {
                         <input
                             id="title"
                             type="text"
-                            onChange={(e) => setTitle(e.target.value)}
+                            onChange={(e) => {
+                                setTitle(e.target.value);
+                                if (e.target.value.trim()) {
+                                    setEmptyFields(prev => prev.filter(field => field !== 'title'));
+                                }
+                            }}
                             value={title}
                             className={emptyFields.includes('title') ? 'error' : ''}
                         />
@@ -117,15 +138,26 @@ const ChangeIrangaForm = () => {
                         <label htmlFor="description">Aprašymas:</label>
                         <textarea
                             id="description"
-                            onChange={(e) => setDescription(e.target.value)}
+                            onChange={(e) => {
+                                setDescription(e.target.value);
+                                if (e.target.value.trim()) {
+                                    setEmptyFields(prev => prev.filter(field => field !== 'description'));
+                                }
+                            }}
                             value={description}
+                            className={emptyFields.includes('description') ? 'error' : ''}
                         ></textarea>
 
                         <label htmlFor="price">Nuomos kaina per dieną (EUR):</label>
                         <input
                             id="price"
                             type="number"
-                            onChange={(e) => setRentPricePerDay(e.target.value)}
+                            onChange={(e) => {
+                                setRentPricePerDay(e.target.value);
+                                if (e.target.value) {
+                                    setEmptyFields(prev => prev.filter(field => field !== 'rentPricePerDay'));
+                                }
+                            }}
                             value={rentPricePerDay}
                             className={emptyFields.includes('rentPricePerDay') ? 'error' : ''}
                         />
@@ -145,8 +177,14 @@ const ChangeIrangaForm = () => {
                         <input
                             id="size"
                             type="text"
-                            onChange={(e) => setSize(e.target.value)}
+                            onChange={(e) => {
+                                setSize(e.target.value);
+                                if (e.target.value.trim()) {
+                                    setEmptyFields(prev => prev.filter(field => field !== 'size'));
+                                }
+                            }}
                             value={size}
+                            className={emptyFields.includes('size') ? 'error' : ''}
                         />
 
                         <label htmlFor="condition">Būklė:</label>
@@ -160,39 +198,19 @@ const ChangeIrangaForm = () => {
                             <option value="refurbished">Atnaujinta</option>
                         </select>
 
-                        <div className="checkbox-container">
-                            <label className="checkbox-label" htmlFor="availability">Ar įranga laisva nuomai?</label>
-                            
-                            <label className="radio-label" htmlFor="availability">
-                                <input
-                                    id="availability"
-                                    type="radio"
-                                    name="availability"
-                                    value="true"
-                                    checked={available === true}
-                                    onChange={() => setAvailable(true)}
-                                />
-                                Taip
-                            </label>
-
-                            <label className="radio-label" htmlFor="availability">
-                                <input
-                                    id="availability"
-                                    type="radio"
-                                    name="availability"
-                                    value="false"
-                                    checked={available === false}
-                                    onChange={() => setAvailable(false)}
-                                />
-                                Ne
-                            </label>
-                        </div>
-
-                        <button type="submit">Atnaujinti įrangą</button>
+                        <label htmlFor="availabilty">Ar įranga laisva nuomai:</label>
+                        <select
+                            id="availability"
+                            onChange={(e) => setAvailable(e.target.value === 'true')}
+                            value={available.toString()}
+                        >
+                            <option value="true">Taip</option>
+                            <option value="false">Ne</option>
+                        </select>
+                        {error && <div className="error">{error}</div>}
+                        <button className="change-iranga-btn" type="submit">Atnaujinti įrangą</button>
                     </>
                 )}
-
-                {error && <div className="error">{error}</div>}
             </form>
         </div>
     );
