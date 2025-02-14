@@ -73,7 +73,8 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 - **Making a Reservation**: Select a date range and confirm your rental.
 
-![image](https://github.com/user-attachments/assets/a3891588-daa1-4161-aab1-c638f48b218a)
+![image](https://github.com/user-attachments/assets/d001de7f-2bb7-4047-ad6a-830300089030)
+
 
 
 - **Managing Reservations**:
