@@ -101,7 +101,7 @@ const ManageUsers = () => {
 
     return (
         <div className="manage-all-users">
-            <h2>Visų vartotojų sąrašas:</h2>
+            <h2>Vartotojų sąrašas:</h2>
 
             {usersData.length === 0 ? (
                 <p>Vartotojų nerasta.</p>
@@ -109,8 +109,8 @@ const ManageUsers = () => {
                 <div className="users-list">
                     {usersData.map((userData) => (
                         <div key={userData._id} className="user-section">
-                            <h3><strong>Vartotojas: </strong> {userData.email}</h3>
-                            <p><strong>Rolė: </strong> {userData.role}</p>
+                            <h3>Vartotojas: <strong>{userData.email}</strong></h3>
+                            <p>Rolė: <strong> {userData.role}</strong></p>
                             <div className="user-actions">
                                 <div className="change-role">
                                 <label htmlFor="select">Keisti vartotojo rolę: </label>
@@ -122,10 +122,10 @@ const ManageUsers = () => {
                                     <option value="admin">Admin</option>
                                 </select>
                                 </div>
-                                <button onClick={() => navigate(`/ManageReservations/${userData._id}`)}>
-                                    Peržiūrėti vartotojo rezervacijas
+                                <button className="check-reservation-btn" onClick={() => navigate(`/ManageReservations/${userData._id}`)}>
+                                    Peržiūrėti rezervacijas
                                 </button>
-                                <button onClick={() => handleDeleteUser(userData._id)}>
+                                <button className="delete-user-btn" onClick={() => handleDeleteUser(userData._id)}>
                                     Ištrinti vartotoją
                                 </button>
                             </div>
