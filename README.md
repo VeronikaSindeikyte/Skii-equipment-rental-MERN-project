@@ -102,9 +102,7 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 ![image](https://github.com/user-attachments/assets/feb88ed6-5076-486c-8043-d3d1f9d6f92c)
 
-  - Change reservation status, date range or delete reservation entirely.
 
-![image](https://github.com/user-attachments/assets/d74e4f0b-0394-4634-b174-0fe92899b103)
 
 
 ## Technologies Used
