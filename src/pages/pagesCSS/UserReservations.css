@@ -10,87 +10,28 @@
     color: black;
 }
 
-.reservation-list {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
+#last {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.397);
+}
+
+.edit-btn {
     align-items: center;
-    text-align: center;
-    margin: 0;
-    gap: 20px;
-}
-
-.one-item-all-reservations {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.user-reservations h2 {
-    color: white;
-}
-
-.user-reservations h2 {
-    font-size: 17px;
-    text-transform: uppercase;
-    margin: 0;
-}
-
-.reservation-list {
-    text-align: left;
-    width: 100%;
-    padding: 20px;
-}
-
-.reservation-box {
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.reservation-box h3 {
-    font-size: 25px;
+    margin: 10px;
+    text-decoration: none;
+    background-color: rgba(193, 136, 89, 0.664);
     color: black;
+    font-size: 14px;
+    border-radius: 50px;
+    width: 80%;
+    border-color: rgba(0, 0, 0, 0.411);
 }
 
-#item-details {
-    font-size: 12px;
-    border: none;
-    box-shadow: none;
-    padding: 10px;
+.edit-btn:hover {
+    cursor: pointer;
+    border-radius: 50px; 
+    background-color: rgba(185, 131, 86, 0.664); 
 }
 
-.reservation-actions button {
-    color: black;
-}
-
-.reservation-dates {
-    display: flex;
-    flex-direction: column;
-}
-
-.reservation-container {
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background: #f9f9f9;
-    font-size: 12px;
-}
-
-.delete-btn, .update-btn {
-    width: 70%;
-    font-size: 15px;
+.reservation-details p:last-child {
+    margin-bottom: 10px;
 }

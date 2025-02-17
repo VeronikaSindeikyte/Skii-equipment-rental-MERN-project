@@ -177,12 +177,12 @@ const ManageReservations = () => {
             <h2>Rezervacijos</h2>
             <h3>Vartotojas: <strong>{userData.user.email}</strong></h3>
             {updateError && <p className="error">{updateError}</p>}
-    
+
             {uniqueItemReservations.length ? (
                 <ul className="all-reservations">
                     {uniqueItemReservations.map((itemData) => {
                         const { item, reservations } = itemData;
-    
+
                         return (
                             <li key={item._id}>
                                 <div className="item-details">
@@ -232,19 +232,19 @@ const ManageReservations = () => {
                                                             onChange={(e) => handleStatusUpdate(reservation._id, e.target.value)}
                                                             className={`status-select ${reservation.reservationStatus?.toLowerCase()}`}
                                                         >
-                                                            <option value="Laukiama patvirtinimo">Laukia patvirtinimo</option>
-                                                            <option value="Patvirtinta">Patvirtinta</option>
-                                                            <option value="Atmesta">Atmesta</option>
+                                                            <option className="laukia" value="Laukia patvirtinimo">Laukia patvirtinimo</option>
+                                                            <option className="patvirtinta" value="Patvirtinta">Patvirtinta</option>
+                                                            <option className="atmesta" value="Atmesta">Atmesta</option>
                                                         </select>
                                                     </p>
-                                                    <div className="reservation-actions">
-                                                        <button
-                                                            onClick={() => handleDelete(reservation, item._id)}
-                                                            className="delete-btn"
-                                                        >
-                                                            Ištrinti rezervaciją
-                                                        </button>
-                                                    </div>
+
+                                                    <button
+                                                        onClick={() => handleDelete(reservation, item._id)}
+                                                        className="delete-btn"
+                                                    >
+                                                        Ištrinti rezervaciją
+                                                    </button>
+
                                                 </div>
                                             ))}
                                         </div>
@@ -258,7 +258,7 @@ const ManageReservations = () => {
                 <p className="nerasta">Rezervacijų nerasta.</p>
             )}
         </div>
-    )
+    );
 };
 
 export default ManageReservations;
