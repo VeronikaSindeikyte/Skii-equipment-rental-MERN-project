@@ -13,7 +13,7 @@ import IrangaInformation from './pages/IrangaInformation';
 import UserReservations from './pages/UserReservations';
 import ManageUsers from './pages/ManageUsers';
 import ManageReservations from './pages/ManageReservations';
-import RootLayout from './layouts/rootLayout';
+import RootLayout from './layouts/RootLayout';
 import NotFound from './pages/NotFound';
 import ChangeDate from './pages/ChangeDate';
 
