@@ -211,7 +211,6 @@ const IrangaInformation = () => {
             minDate={new Date()}
             disabledDates={disabledDates}
             rangeColors={["rgba(193, 136, 89, 0.664)"]}
-            color={["#e74c3c"]}
           />
           <button onClick={handleReserve} className="rezervuoti">
             Rezervuoti

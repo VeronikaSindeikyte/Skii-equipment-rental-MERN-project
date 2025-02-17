@@ -1,0 +1,66 @@
+.rdrSelected, .rdrInRange, .rdrStartEdge, .rdrEndEdge {
+    background-color: rgba(193, 136, 89, 0.664) !important;
+}
+
+.error {
+    margin: 20px !important;
+    font-size: 16px;
+
+}
+
+.change-date-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 100px;
+    width: 100%;
+    color: black;
+    background: rgb(236, 232, 229);
+}
+
+.change-date-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: rgb(27, 38, 68);
+    width: 80%;
+    margin: 40px;
+    margin-bottom: 20px;
+}
+
+.change-date-header h2 {
+    font-weight: 700;
+    width: 80%;
+    text-align: center;
+    font-size: clamp(20px, 4vw, 30px);
+    margin: 0;
+}
+
+.svarbu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    width: 80%;
+}
+
+.svarbu p {
+    font-weight: 400;
+    font-size: 16px;
+    margin: 0;
+    font-size: clamp(14px, 2vw, 16px);
+    margin: 10px;
+}
+
+.Patvirtinta span {
+    color: green;
+}
+
+.Atmesta span {
+    color: red;
+}

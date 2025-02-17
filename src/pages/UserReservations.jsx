@@ -67,9 +67,9 @@ const UserReservations = () => {
     }
   };
 
-  if (loading) { return <p>Ieškoma vartotojo rezervacijų...</p>; }
+  if (loading) { return <p className="ieskoma">Ieškoma vartotojo rezervacijų...</p>; }
   if (error) { return <p className="error">{error}</p>; }
-  if (!userData?.reservations?.length) { return <p>Rezervacijų nerasta.</p>; }
+  if (!userData?.reservations?.length) { return <p className="nerasta">Jūs neturite rezervuotos įrangos. <p>Norėdami rezervuoti, spauskite: <button onClick={() => navigate("/")} className="grizti">Grįžti</button></p></p>; }
 
   return (
     <div className="user-reservations">
@@ -143,8 +143,12 @@ const UserReservations = () => {
                           }).replace(/\./g, ' ')
                           : "Nežinoma"}
                       </p>
-                      <p><strong>Rezervacijos būsena:</strong>{' '}
-                        {reservation?.reservationStatus || 'Informacija neprieinama'}
+                      <p className={
+                          reservation?.reservationStatus === "Patvirtinta" ? "Patvirtinta" :
+                          reservation?.reservationStatus === "Atmesta" ? "Atmesta" :
+                          reservation?.reservationStatus === "Laukia patvirtinimo" ? "Laukia" : ""
+                          }>
+                        <strong>Rezervacijos būsena:</strong>{' '} <span>{reservation.reservationStatus}</span> 
                       </p>
                     </div>
                     <button
@@ -171,7 +175,7 @@ const UserReservations = () => {
           ))}
         </ul>
       ) : (
-        <p className="nerasta">Rezervacijų nerasta.</p>
+        <p className="nerasta">Jūs neturite rezervuotos įrangos.</p>
       )}
     </div>
   );

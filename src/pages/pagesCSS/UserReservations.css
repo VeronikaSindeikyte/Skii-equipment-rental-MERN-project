@@ -35,3 +35,28 @@
 .reservation-details p:last-child {
     margin-bottom: 10px;
 }
+
+.ieskoma, .nerasta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 100px;
+    padding: 50px 50px;
+    background: rgb(236, 232, 229);
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.397);
+    color: rgb(50, 59, 85) !important;
+    width: 80%;
+    font-weight: 600;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.nerasta button {
+    text-decoration: none;
+    color: white;
+    width: 200px;
+    font-size: 14px !important;
+}

@@ -92,7 +92,7 @@ const ManageUsers = () => {
     
 
     if (loading) {
-        return <p>Loading users...</p>;
+        return <p className="ieskoma">Kraunama vartotojų informacija...</p>;
     }
 
     if (error) {
