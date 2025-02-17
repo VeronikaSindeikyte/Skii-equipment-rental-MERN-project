@@ -68,7 +68,8 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 - **Browsing Equipment**: View available ski equipment.
 
-![image](https://github.com/user-attachments/assets/1f1df4f1-9dc9-488a-aee1-d584241fcf6b)
+![image](https://github.com/user-attachments/assets/d86e0082-b6b0-4ccc-a5dd-397b0e662ad2)
+
 
 
 - **Making a Reservation**: Select a date range and confirm your rental.
