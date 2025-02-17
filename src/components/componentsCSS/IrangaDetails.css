@@ -10,7 +10,7 @@
     height: 550px;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    margin: 20px;
+    margin: 10px;
     background-color: white;
     overflow: hidden;
     transition: box-shadow 0.3s ease;
@@ -159,5 +159,5 @@
 .iranga-details:hover .details-button {
     top: 200px;
     opacity: 1;
-    background-color: rgba(19, 24, 37, 0.692);
+    background-color: rgba(50, 59, 85, 0.712);
 }

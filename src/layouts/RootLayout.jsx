@@ -19,32 +19,34 @@ const RootLayout = () => {
                 <Outlet />
             </main>
             <footer className='footer'>
-             <h2>Apie mus</h2>
-                <div className='footer-text'>
-                    <p>
-                        Mes esame įmonė, siekianti suteikti geriausias paslaugas savo klientams.
-                        Susisiekite su mumis dėl bet kokių klausimų ar pasiūlymų.
-                    </p>
-                </div>
+                <h2>Apie mus</h2>
+                <div className='footer-content'>
+                    <div className='footer-text'>
+                        <p>
+                            Mes esame įmonė, siekianti suteikti geriausias paslaugas savo klientams.
+                            Susisiekite su mumis dėl bet kokių klausimų ar pasiūlymų.
+                        </p>
+                    </div>
 
-                <div className='footer-form'>
-                    <h3>Prisijunkite prie mūsų naujienlaiškio: </h3>
-                    <form onSubmit={handleSubscribe}>
-                        <input
-                            type="email"
-                            placeholder="Įveskite savo el. paštą"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                        <button type="submit">
-                            Prenumeruoti
-                        </button>
-                    </form>
+                    <div className='footer-form'>
+                        <h3>Prisijunkite prie mūsų naujienlaiškio: </h3>
+                        <form onSubmit={handleSubscribe}>
+                            <input
+                                className='footer-input'
+                                type="email"
+                                placeholder="Įveskite savo el. paštą"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                            />
+                            <button type="submit">
+                                Prenumeruoti
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <p>&copy; 2025 Visos teisės saugomos.</p>
             </footer>
-
+            <p className='copy'>&copy; 2025 Visos teisės saugomos.</p>
         </div>
     );
 };
