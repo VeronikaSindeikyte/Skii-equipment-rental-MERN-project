@@ -2,7 +2,6 @@
 .root-layout {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
     text-align: center;
     min-height: 100vh;
@@ -16,6 +15,7 @@
     align-items: center;
     box-shadow: inset 5px 5px 15px 3px rgba(16, 30, 54, 0.979);
     padding-bottom: 100px;
+    flex-grow: 1;
 }
 
 /* ---------------- Footer Styling ------------------------- */
@@ -32,8 +32,6 @@
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.397);
     color: rgb(50, 59, 85);
     font-weight: 600;
-    /* background: rgb(193,136,89);
-    background: linear-gradient(180deg, rgba(163, 114, 107, 0.432) 0%, rgba(32, 75, 139, 0.63) 70%); */
 }
 
 .footer h2 {

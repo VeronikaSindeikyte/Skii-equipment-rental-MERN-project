@@ -1,43 +1,40 @@
-import { deleteReservation, getAllReservations, updateReservation,getUserReservations, deleteUserReservation, updateReservationStatus, getReservationById } from '../controllers/controller.js';
+import * as controller from '../controllers/reservationController.js';
 import express from 'express';
-import { reserveIranga } from '../controllers/controller.js';  
 import requireAuth from '../middleware/requireAuth.js'
 
 const router = express.Router();
 router.use(requireAuth)
 
-// ------- USER/ADMIN ------- 
-
-// POST - rezervuoti iranga
-router.post('/reserve', reserveIranga);
-
-// PATCH - atnaujinti vienos rezervacijos laika
-router.patch('/update/:reservationId', updateReservation);
 
 
-// ------- USER Routes ------- 
+// ------- USER RESERVATION ROUTES ------- 
 
-// GET - paimti visas rezervacijas
-router.get('/user', getAllReservations);
+// GET - paimti visas rezervacijas (user)
+router.get('/user', controller.getAllReservations);
 
-// GET - paimti vieną userio rezervaciją
-router.get('/user/:reservationId', getReservationById);
+// GET - paimti vieną userio rezervaciją (user)
+router.get('/user/:reservationId', controller.getReservationById);
 
-// DELETE - istrinti viena rezervacija is user puses
-router.delete('/user/delete', deleteReservation)
+// DELETE - istrinti viena rezervacija (user)
+router.delete('/user/delete', controller.deleteReservation)
+
+// PATCH - atnaujinti vienos rezervacijos laika (user)
+router.patch('/update/:reservationId', controller.updateReservation);
 
 
-// ------- ADMIN Routes ------- 
+// ------- ADMIN RESERVATION ROUTES ------- 
 
-// GET - paimti vieno userio rezervacijas per admin paskyra
-router.get('/admin/:id', getUserReservations)
+// GET - paimti viena iranga pagal rezervacijos ID (admin)
+router.get('/reservation/:reservationId', controller.getItemByReservationId);
+
+// GET - paimti vieno userio rezervacijas (admin)
+router.get('/admin/:id', controller.getUserReservations)
 
 // PATCH - pakeisti rezervacijos statusa (admin)
-router.patch('/admin/updateStatus/:id', updateReservationStatus)
+router.patch('/admin/updateStatus/:id', controller.updateReservationStatus)
 
-// DELETE - istrinti viena rezervacija is admin puses
-router.delete('/admin/delete', deleteUserReservation)
-
+// DELETE - istrinti viena rezervacija (admin)
+router.delete('/admin/delete', controller.deleteUserReservation)
 
 
 export default router;

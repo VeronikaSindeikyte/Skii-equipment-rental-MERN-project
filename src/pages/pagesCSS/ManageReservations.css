@@ -97,6 +97,7 @@
     width: 100%;
     max-width: fit-content;
     padding: 0;
+    padding-bottom: 10px;
 }
 
 .item-details h4 {
@@ -134,13 +135,22 @@
     font-size: 20px;
 }
 
+.reservation-status {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.363) !important;
+}
+
 /* ---- reservation action buttons ---- */
 
 .status-select {
     border-radius: 10px;
     font-size: 14px;
     width: 40%;
-    border: 1px solid black;
+    margin: 3px;
 }
 
 .patvirtinta {
@@ -157,6 +167,8 @@
 
 .delete-btn {
     align-items: center;
+    bottom: 5px;
+    left: 40px;
     background-color: rgb(214, 168, 168);
     font-size: 14px;
     border-radius: 50px;

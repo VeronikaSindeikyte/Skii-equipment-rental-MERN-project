@@ -80,7 +80,7 @@ const UserReservations = () => {
         <ul className="all-reservations">
           {userData.reservations.map((reservation) => (
             <li key={reservation._id}>
-              <div className="item-details">
+              <div className="user-item-details">
                 {reservation.item.photos && reservation.item.photos.length > 0 ? (
                   <img
                     id="iranga-photo"
@@ -164,7 +164,7 @@ const UserReservations = () => {
                           handleDelete(reservation.reservationId);
                         }
                       }}
-                      className="delete-btn"
+                      className="delete-btn-from-user"
                     >
                       Atšaukti rezervaciją
                     </button>

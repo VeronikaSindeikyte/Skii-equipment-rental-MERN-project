@@ -1,7 +1,6 @@
 import express from 'express'
-import * as controller from "../controllers/controller.js"
+import * as controller from "../controllers/irangaController.js"
 import requireAuth from '../middleware/requireAuth.js'
-import { reserveIranga } from '../controllers/controller.js'
 
 const router = express.Router()
 
@@ -14,7 +13,7 @@ router.get('/:id', controller.getOneEquiptment)
 router.use(requireAuth)
 
 // POST - rezervuoti įrangą
-router.post('/reserve', reserveIranga);
+router.post('/reserve', controller.reserveIranga);
 
 // POST - sukurti naują įrangą
 router.post('/', controller.createEquipment)
@@ -24,5 +23,6 @@ router.patch('/:id', controller.updateEquipment)
 
 // DELETE - ištrinti vieną įrangą
 router.delete('/:id', controller.deleteEquipment)
+
 
 export default router

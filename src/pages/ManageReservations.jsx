@@ -1,7 +1,7 @@
 import "./pagesCSS/ManageReservations.css";
 import React from 'react';
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuthContext } from "../hooks/useAuthContext";
 
@@ -12,6 +12,7 @@ const ManageReservations = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [updateError, setUpdateError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserReservations = async () => {
@@ -52,15 +53,15 @@ const ManageReservations = () => {
             setUpdateError("Authentication required.");
             return;
         }
-    
+
         if (!reservationId || !itemId) {
             setUpdateError("Reservation ID or Item ID not found.");
             return;
         }
-    
+
         const confirmDelete = window.confirm("Ar tikrai norite ištrinti šią rezervaciją?");
         if (!confirmDelete) return;
-    
+
         try {
             await axios.delete("/api/reservations/admin/delete", {
                 headers: {
@@ -71,11 +72,11 @@ const ManageReservations = () => {
                     reservationId: reservationId
                 }
             });
-    
+
             const updatedResponse = await axios.get(`/api/reservations/admin/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
-    
+
             setUserData(updatedResponse.data);
             setUpdateError(null);
         } catch (err) {
@@ -125,7 +126,7 @@ const ManageReservations = () => {
     }
 
     const seenReservationIds = new Set();
-    
+
     const allReservations = userData.user.reservations.flatMap(reservation => {
         const item = reservation.item;
         return item.reservations
@@ -141,7 +142,7 @@ const ManageReservations = () => {
             .map(res => ({
                 ...res,
                 item: item,
-                uniqueKey: `${res._id}-${item._id}` 
+                uniqueKey: `${res._id}-${item._id}`
             }));
     });
 
@@ -181,7 +182,7 @@ const ManageReservations = () => {
                                 <h4>{reservation.item.title || "Pavadinimas neprieinamas"}</h4>
                                 <div className="iranga-content">
                                     <div className="reservation-details">
-                                        <p><strong>Rezervacijos ID:</strong> {reservation._id}</p>
+                                        <p><strong>ID:</strong> {reservation._id}</p>
                                         <p><strong>Rezervacijos pradžia: </strong>
                                             {reservation.rentalPeriod?.from
                                                 ? new Date(reservation.rentalPeriod.from).toISOString().split('T')[0]
@@ -204,7 +205,12 @@ const ManageReservations = () => {
                                                 <option className="atmesta" value="Atmesta">Atmesta</option>
                                             </select>
                                         </p>
-
+                                        <button
+                                            onClick={() => navigate(`/reservations/${reservation._id}`)}
+                                            className="edit-btn"
+                                        >
+                                            Keisti rezervacijos laiką
+                                        </button>
                                         <button
                                             onClick={() => handleDelete(reservation._id, reservation.item._id)}
                                             className="delete-btn"

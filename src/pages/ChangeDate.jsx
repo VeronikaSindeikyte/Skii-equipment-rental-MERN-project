@@ -18,7 +18,6 @@ const ChangeDate = () => {
     const [rentalPeriod, setRentalPeriod] = useState([]);
     const { id } = useParams();
 
-
     useEffect(() => {
         if (user && user.token) {
             fetchReservationAndBlockedDates();
@@ -33,6 +32,13 @@ const ChangeDate = () => {
         }
 
         try {
+            console.log("Fetching reservation with ID:", id);
+
+            if (!id) {
+                setUpdateError("Reservation ID is missing");
+                return;
+            }
+
             const reservationResponse = await fetch(`/api/reservations/user/${id}`, {
                 method: "GET",
                 headers: {
@@ -42,19 +48,30 @@ const ChangeDate = () => {
             });
 
             if (!reservationResponse.ok) {
+                const errorData = await reservationResponse.json().catch(() => ({}));
+                console.error("Response status:", reservationResponse.status);
+                console.error("Error data:", errorData);
+
                 if (reservationResponse.status === 401) {
                     throw new Error("Unauthorized - Please log in again");
+                } else if (reservationResponse.status === 404) {
+                    throw new Error("Reservation not found");
                 }
-                throw new Error("Failed to fetch reservation");
+                throw new Error(`Failed to fetch reservation: ${errorData.error || 'Unknown error'}`);
             }
 
             const reservationData = await reservationResponse.json();
-            setCurrentReservation(reservationData);
+            console.log("Received reservation data:", reservationData);
 
+            if (!reservationData.reservation) {
+                throw new Error("Invalid reservation data received");
+            }
+
+            setCurrentReservation(reservationData);
 
             const status = reservationData.reservation.reservationStatus;
 
-            if (status !== "Laukia patvirtinimo") {
+            if (status !== "Laukia patvirtinimo" && user.role !== 'admin') {
                 const message = status === "Patvirtinta"
                     ? "Rezervacija jau patvirtinta, todėl jos laiko keisti nebegalite"
                     : "Rezervacija atmesta, todėl jos laiko keisti nebegalite";
@@ -84,21 +101,31 @@ const ChangeDate = () => {
                 color: "#2ecc71"
             }]);
 
-
-            const itemId = reservationData.reservation.item._id;
-            const reservationsResponse = await fetch(`/api/iranga/${itemId}`, {
+            const itemResponse = await fetch(`/api/iranga`, {
                 method: "GET",
-                headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.token}` },
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.token}`
+                },
             });
 
-            if (!reservationsResponse.ok) throw new Error("Failed to fetch item reservations");
+            if (!itemResponse.ok) {
+                throw new Error("Failed to fetch items");
+            }
 
-            const itemData = await reservationsResponse.json();
-            const reservations = itemData.reservations;
+            const itemsData = await itemResponse.json();
+
+            const item = itemsData.find(item =>
+                item.reservations.some(res => res._id === id)
+            );
+
+            if (!item) {
+                throw new Error("Item not found");
+            }
 
             const bookedDates = [];
-            reservations.forEach((res) => {
-                if (res._id === reservationData.reservation._id) return;
+            item.reservations.forEach((res) => {
+                if (res._id === id) return;
 
                 const start = new Date(res.rentalPeriod.from);
                 const end = new Date(res.rentalPeriod.to);
@@ -120,12 +147,15 @@ const ChangeDate = () => {
     };
 
     const handleUpdateReservation = async () => {
+
         if (!user || !user.token) {
-            setUpdateError("Please log in to update your reservation.");
+            console.error("Error: User is not logged in");
+            setUpdateError("Please log in to update the reservation.");
             return;
         }
 
         if (!rentalPeriod || !rentalPeriod[0]?.startDate || !rentalPeriod[0]?.endDate) {
+            console.error("Error: No rental period selected");
             setUpdateError("Prašome pasirinkti rezervacijos laikotarpį");
             return;
         }
@@ -134,6 +164,11 @@ const ChangeDate = () => {
         localStartDate.setHours(12, 0, 0, 0);
         const localEndDate = new Date(rentalPeriod[0].endDate);
         localEndDate.setHours(12, 0, 0, 0);
+
+        console.log("Sending request to update reservation:", {
+            reservationId: id,
+            rentalPeriod: { from: localStartDate.toISOString(), to: localEndDate.toISOString() }
+        });
 
         try {
             const response = await fetch(`/api/reservations/update/${id}`, {
@@ -152,28 +187,27 @@ const ChangeDate = () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
+                console.error("Error updating reservation:", errorData);
                 throw new Error(errorData.error || 'Failed to update reservation');
             }
 
             const updatedData = await response.json();
+            console.log("Reservation successfully updated:", updatedData);
 
             setCurrentReservation(prev => ({
                 ...prev,
                 reservation: {
                     ...prev.reservation,
-                    rentalPeriod: {
-                        from: localStartDate.toISOString(),
-                        to: localEndDate.toISOString()
-                    }
+                    rentalPeriod: updatedData.updatedReservation.rentalPeriod
                 }
             }));
 
-            setUpdateSuccess("Rezervacijos laikas sėkmingai atnaujintas!");
+            alert("Rezervacijos laikas sėkmingai atnaujintas!");
             setTimeout(() => setUpdateSuccess(""), 3000);
             fetchReservationAndBlockedDates();
 
         } catch (error) {
-            console.error('Error updating reservation:', error);
+            console.error("Fetch request failed:", error);
             setUpdateError(error.message || "Įvyko klaida atnaujinant rezervaciją");
         }
     };
@@ -185,15 +219,6 @@ const ChangeDate = () => {
             day: "2-digit",
         });
     };
-
-    const calculateTotalPrice = () => {
-        const days = calculateDays(
-            rentalPeriod[0].startDate,
-            rentalPeriod[0].endDate
-        );
-        return (days * iranga.rentPricePerDay).toFixed(2);
-    };
-
 
     return (
         <div className="change-date-page">
@@ -246,10 +271,10 @@ const ChangeDate = () => {
                             </p>
                             <p className={
                                 currentReservation?.reservation?.reservationStatus === "Patvirtinta" ? "Patvirtinta" :
-                                currentReservation?.reservation?.reservationStatus === "Atmesta" ? "Atmesta" :
-                                currentReservation?.reservation?.reservationStatus === "Laukia patvirtinimo" ? "Laukia" : ""
+                                    currentReservation?.reservation?.reservationStatus === "Atmesta" ? "Atmesta" :
+                                        currentReservation?.reservation?.reservationStatus === "Laukia patvirtinimo" ? "Laukia" : ""
                             }>
-                               Rezervacijos statusas: <span>{currentReservation.reservation.reservationStatus}</span> 
+                                Rezervacijos statusas: <span>{currentReservation.reservation.reservationStatus}</span>
                             </p>
                         </div>
                     </div>
@@ -276,13 +301,20 @@ const ChangeDate = () => {
                         <button
                             className="rezervuoti"
                             onClick={handleUpdateReservation}
-                            disabled={currentReservation?.reservation?.reservationStatus !== "Laukia patvirtinimo"}
                         >
                             Išsaugoti pakeitimus
                         </button>
                     </div>
                     {updateSuccess && (<div>{updateSuccess}</div>)}
-                    <button onClick={() => navigate("/UserReservations")} className="grizti">Grįžti</button>
+
+                    <button
+                        onClick={() => {
+                                navigate(user.role === "admin" ? `/ManageReservations/${String(currentReservation.reservation.user)}` : "/UserReservations");
+                        }}
+                        className="grizti"
+                    >
+                        Grįžti
+                    </button>
                 </div>
             ) : (<p>Kraunama...</p>)}
         </div>
