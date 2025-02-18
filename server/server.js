@@ -17,7 +17,6 @@ app.use(cors({
     credentials: true
   }));
 
-  // Update your port
 const PORT = process.env.PORT || 4001;
 
 app.use(express.json())
@@ -37,6 +36,8 @@ app.use('/api/reservations', reservationRoutes)
 // connect to DB
 mongoose.connect(process.env.URI)
     .then(() => {
-        app.listen(process.env.PORT, () => {console.log('listening on port', process.env.PORT)})
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
     })
     .catch((err) => console.log(err))
