@@ -12,7 +12,14 @@ const app = express()
 
 
 // middleware (viskas kas vyksta serverio puseje. Seka cia yra svarbi, todel naudojame next() funkciją, kuri nurodo, kad middleware vykdytų toliau esamas funkcijas)
-app.use(cors());
+app.use(cors({
+    origin: ['https://skii-equipment-rental-project-4kekl17qb.vercel.app', 'http://localhost:4001'],
+    credentials: true
+  }));
+
+  // Update your port
+const PORT = process.env.PORT || 4001;
+
 app.use(express.json())
 app.use((req, res, next) => {
     console.log(req.path, req.method)
