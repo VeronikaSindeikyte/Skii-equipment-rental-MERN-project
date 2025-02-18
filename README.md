@@ -68,20 +68,23 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 - **Browsing Equipment**: View available ski equipment.
 
-![image](https://github.com/user-attachments/assets/1f1df4f1-9dc9-488a-aee1-d584241fcf6b)
+![image](https://github.com/user-attachments/assets/d86e0082-b6b0-4ccc-a5dd-397b0e662ad2)
+
 
 
 - **Making a Reservation**: Select a date range and confirm your rental.
 
 ![image](https://github.com/user-attachments/assets/d001de7f-2bb7-4047-ad6a-830300089030)
 
-
-
 - **Managing Reservations**:
   - Users can modify or cancel their reservations.
-  - Admins can adjust rental periods, change statuses, or delete reservations.
+ 
+![image](https://github.com/user-attachments/assets/8bb37b54-49d0-42f0-98c3-762251923857)
 
-![image](https://github.com/user-attachments/assets/105a3337-4566-4d9d-bf34-6a4187398754)
+ - Users can change reservation time (which is preselected in the calendar) if reservation is not yet approved by admin.
+
+![image](https://github.com/user-attachments/assets/6d8c0d94-941c-4dc3-9783-84bcbf7e7205)
+
 
 - **Admin Panel**:
   - Add, edit, or delete equipment.
@@ -90,17 +93,16 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 ![image](https://github.com/user-attachments/assets/919c5ca4-fdc3-4f42-986e-6848adf9f97a)
 
-
   - Manage drafts before adding equipment to the database.
 
 ![image](https://github.com/user-attachments/assets/5a835254-d2f3-4c5b-a50f-63db8a4d345d)
 
-
   - Change user roles and view user reservations.
 
-![image](https://github.com/user-attachments/assets/2d4494a5-9f82-45b8-bcf5-7193597bf799)
+![image](https://github.com/user-attachments/assets/a7ba0300-bb6b-4125-a515-a4ddaf83cdea)
 
-![image](https://github.com/user-attachments/assets/feb88ed6-5076-486c-8043-d3d1f9d6f92c)
+
+![image](https://github.com/user-attachments/assets/a7fecf71-aba3-474b-92e3-91337ba9f552)
 
 
 
