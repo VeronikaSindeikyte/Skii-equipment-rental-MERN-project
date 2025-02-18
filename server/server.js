@@ -13,7 +13,7 @@ const app = express()
 
 // middleware (viskas kas vyksta serverio puseje. Seka cia yra svarbi, todel naudojame next() funkciją, kuri nurodo, kad middleware vykdytų toliau esamas funkcijas)
 app.use(cors({
-    origin: ['https://skii-equipment-rental-project-4kekl17qb.vercel.app', 'http://localhost:4001'],
+    origin: ['https://skii-equipment-rental-project.vercel.app', 'http://localhost:4001'],
     credentials: true
   }));
 
@@ -40,4 +40,4 @@ mongoose.connect(process.env.URI)
             console.log(`Server is running on port ${PORT}`);
         });
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.log('MongoDB connection error:', err))
