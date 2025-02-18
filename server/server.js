@@ -23,7 +23,7 @@ app.use(cors({
   }));
 
 const PORT = process.env.PORT || 4001;
-const API_BASE_URL = "https://skii-equipment-rental-mern-project.onrender.com";
+
 
 app.use(express.json())
 app.use((req, res, next) => {
@@ -32,14 +32,9 @@ app.use((req, res, next) => {
 })
 
 // routes
-// app.use('/api/iranga', irangaRoutes)
-// app.use('/api/user', userRoutes)
-// app.use('/api/reservations', reservationRoutes)
-
-// deployment routes
-app.use(`${API_BASE_URL}/api/iranga`, irangaRoutes)
-app.use(`${API_BASE_URL}/api/user`, userRoutes)
-app.use(`${API_BASE_URL}/api/reservations`, reservationRoutes)
+app.use('/api/iranga', irangaRoutes)
+app.use('/api/user', userRoutes)
+app.use('/api/reservations', reservationRoutes)
 
 
 // connect to DB

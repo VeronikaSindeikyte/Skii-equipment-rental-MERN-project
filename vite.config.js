@@ -20,19 +20,10 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: process.env.NODE_ENV === 'production'
-          ? 'https://skii-equipment-rental-mern-project.onrender.com'
-          : 'http://localhost:4001',
+        target: 'http://localhost:4001',
         changeOrigin: true,
         secure: false,
       },
     },
-  },
-  define: {
-    'process.env.API_BASE_URL': JSON.stringify(
-      process.env.NODE_ENV === 'production'
-        ? 'https://skii-equipment-rental-mern-project.onrender.com'
-        : 'http://localhost:4001'
-    ),
   },
 });
