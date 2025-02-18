@@ -13,11 +13,17 @@ const app = express()
 
 // middleware (viskas kas vyksta serverio puseje. Seka cia yra svarbi, todel naudojame next() funkciją, kuri nurodo, kad middleware vykdytų toliau esamas funkcijas)
 app.use(cors({
-    origin: ['https://skii-equipment-rental-project.vercel.app', 'http://localhost:4001'],
+    origin: [
+      'https://skii-equipment-rental-project.vercel.app',
+      'https://skii-equipment-rental-pr-git-f13e68-veronikas-projects-81793833.vercel.app',
+      'https://skii-equipment-rental-project-mfsbswxto.vercel.app',
+      'http://localhost:4001'
+    ],
     credentials: true
   }));
 
 const PORT = process.env.PORT || 4001;
+const API_BASE_URL = "https://skii-equipment-rental-mern-project.onrender.com";
 
 app.use(express.json())
 app.use((req, res, next) => {
@@ -26,11 +32,14 @@ app.use((req, res, next) => {
 })
 
 // routes
-app.use('/api/iranga', irangaRoutes)
-app.use('/api/user', userRoutes)
-app.use('/api/reservations', reservationRoutes)
+// app.use('/api/iranga', irangaRoutes)
+// app.use('/api/user', userRoutes)
+// app.use('/api/reservations', reservationRoutes)
 
-
+// deployment routes
+app.use(`${API_BASE_URL}/api/iranga`, irangaRoutes)
+app.use(`${API_BASE_URL}/api/user`, userRoutes)
+app.use(`${API_BASE_URL}/api/reservations`, reservationRoutes)
 
 
 // connect to DB
