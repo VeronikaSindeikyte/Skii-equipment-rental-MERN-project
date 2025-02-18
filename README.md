@@ -76,8 +76,6 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 ![image](https://github.com/user-attachments/assets/d001de7f-2bb7-4047-ad6a-830300089030)
 
-
-
 - **Managing Reservations**:
   - Users can modify or cancel their reservations.
  
@@ -90,27 +88,21 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 - **Admin Panel**:
   - Add, edit, or delete equipment.
-  -  - Admins can change statuses, or delete reservations.
 
 ![image](https://github.com/user-attachments/assets/91dc6232-f87d-4026-a8b2-48b1ed4e8654)
 
 ![image](https://github.com/user-attachments/assets/919c5ca4-fdc3-4f42-986e-6848adf9f97a)
 
-![image](https://github.com/user-attachments/assets/a7fecf71-aba3-474b-92e3-91337ba9f552)
-
-
-
   - Manage drafts before adding equipment to the database.
 
 ![image](https://github.com/user-attachments/assets/5a835254-d2f3-4c5b-a50f-63db8a4d345d)
-
 
   - Change user roles and view user reservations.
 
 ![image](https://github.com/user-attachments/assets/a7ba0300-bb6b-4125-a515-a4ddaf83cdea)
 
 
-![image](https://github.com/user-attachments/assets/feb88ed6-5076-486c-8043-d3d1f9d6f92c)
+![image](https://github.com/user-attachments/assets/a7fecf71-aba3-474b-92e3-91337ba9f552)
 
 
 
