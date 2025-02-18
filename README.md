@@ -80,16 +80,24 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
 - **Managing Reservations**:
   - Users can modify or cancel their reservations.
-  - Admins can adjust rental periods, change statuses, or delete reservations.
+ 
+![image](https://github.com/user-attachments/assets/8bb37b54-49d0-42f0-98c3-762251923857)
 
-![image](https://github.com/user-attachments/assets/105a3337-4566-4d9d-bf34-6a4187398754)
+ - Users can change reservation time (which is preselected in the calendar) if reservation is not yet approved by admin.
+
+![image](https://github.com/user-attachments/assets/6d8c0d94-941c-4dc3-9783-84bcbf7e7205)
+
 
 - **Admin Panel**:
   - Add, edit, or delete equipment.
+  -  - Admins can change statuses, or delete reservations.
 
 ![image](https://github.com/user-attachments/assets/91dc6232-f87d-4026-a8b2-48b1ed4e8654)
 
 ![image](https://github.com/user-attachments/assets/919c5ca4-fdc3-4f42-986e-6848adf9f97a)
+
+![image](https://github.com/user-attachments/assets/a7fecf71-aba3-474b-92e3-91337ba9f552)
+
 
 
   - Manage drafts before adding equipment to the database.
@@ -99,7 +107,8 @@ After installation, open the app in your browser at `http://localhost:5173/`.
 
   - Change user roles and view user reservations.
 
-![image](https://github.com/user-attachments/assets/2d4494a5-9f82-45b8-bcf5-7193597bf799)
+![image](https://github.com/user-attachments/assets/a7ba0300-bb6b-4125-a515-a4ddaf83cdea)
+
 
 ![image](https://github.com/user-attachments/assets/feb88ed6-5076-486c-8043-d3d1f9d6f92c)
 
