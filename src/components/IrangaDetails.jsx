@@ -35,7 +35,7 @@ const IrangaDetails = ({ iranga }) => {
     return (
         <div
             className="iranga-details"
-            onClick={() => navigate(`${API_BASE_URL}/iranga/${iranga._id}`)}
+            onClick={() => navigate(`/iranga/${iranga._id}`)}
         >
             {user && user.role === "admin" && (
                 <svg
