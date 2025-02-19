@@ -4,7 +4,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 80%;
 }
+
 .drafts {
     display: flex;
     flex-direction: column;
@@ -139,4 +141,8 @@
         min-height: 120px;
         padding: 15px;
     }
+}
+
+.one-drafts {
+    font-weight: 600;
 }

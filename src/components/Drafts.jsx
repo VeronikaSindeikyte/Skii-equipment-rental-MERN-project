@@ -6,7 +6,7 @@ const Drafts = ({ drafts = [], onDelete, onEdit }) => {
         <div className="drafts">
             <h3>Juodraščiai</h3>
             {drafts.length === 0 ? (
-                <p>Jūs neturite </p>
+                <p className="no-drafts">Juodraščių nėra.</p>
             ) : (
                 <ul>
                     {drafts.map((draft, index) => (
