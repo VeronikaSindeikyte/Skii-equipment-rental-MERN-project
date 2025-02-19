@@ -20,16 +20,17 @@ const IrangaInformation = () => {
   const [error, setError] = useState(null);
   const [disabledDates, setDisabledDates] = useState([]);
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
 
   const fetchIrangaAndReservations = async () => {
     try {
-      const irangaResponse = await fetch(`/api/iranga/${id}`);
+      const irangaResponse = await fetch(`${API_BASE_URL}/api/iranga/${id}`);
       if (!irangaResponse.ok) throw new Error("Failed to fetch iranga data");
       const irangaData = await irangaResponse.json();
       setIranga(irangaData);
 
       // Paimamos visos rezervacijos is DB
-      const reservationsResponse = await fetch(`/api/iranga/${id}`);
+      const reservationsResponse = await fetch(`${API_BASE_URL}/api/iranga/${id}`);
       if (!reservationsResponse.ok)
         throw new Error("Failed to fetch reservations");
       const itemData = await reservationsResponse.json();
@@ -75,7 +76,7 @@ const IrangaInformation = () => {
     };
 
     try {
-      const response = await fetch(`/api/iranga/reserve`, {
+      const response = await fetch(`${API_BASE_URL}/api/iranga/reserve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

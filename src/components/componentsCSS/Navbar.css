@@ -12,6 +12,7 @@ header {
     align-items: center;
     text-align: center;
     margin: 20px;
+    
 }
 
 .navbar-header {
@@ -38,6 +39,7 @@ header {
     .name-and-logo {
         display: flex;
         flex-direction: column;
+        justify-content: center;
     }
 }
 
@@ -121,6 +123,12 @@ header {
 }
 
 @media (max-width: 850px) {
+    .navbar-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .nav-links {
         display: none;
     }
