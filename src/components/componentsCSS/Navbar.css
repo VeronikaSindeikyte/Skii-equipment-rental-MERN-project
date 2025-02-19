@@ -206,7 +206,7 @@ header {
 
 .dropdown-item {
     display: block;
-    padding: 10px 15px;
+    padding: 5px 10px;
     text-decoration: none;
     transition: ease 0.3s;
     white-space: nowrap;
