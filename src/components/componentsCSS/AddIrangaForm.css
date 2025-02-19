@@ -1,5 +1,4 @@
 /* -------- ADD IRANGA FORM -------- */
-
 .iranga-form-and-list {
     display: flex;
     flex-direction: column;
@@ -7,8 +6,14 @@
     align-items: center;
     padding: 20px;
     width: 60%;
-
 }
+
+@media screen and (max-width: 850px) {
+    .iranga-form-and-list {
+        width: 100%;
+    }
+}
+
 .create {
     display: flex;
     flex-direction: column;
