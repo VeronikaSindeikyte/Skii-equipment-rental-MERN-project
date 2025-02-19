@@ -14,6 +14,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
+    max-width: 700px;
     padding: 20px;
     text-align: center;
     border-radius: 10px; 
