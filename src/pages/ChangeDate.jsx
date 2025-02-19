@@ -259,9 +259,11 @@ const ChangeDate = () => {
                         <p className="aprasymas">{currentReservation.reservation.item.description}</p>
                         <p><strong>Rezervacijos informacija:</strong></p>
                         <div className="rezervacijos-info">
-                            <p>
-                                Rezervacijos ID: <span>{currentReservation.reservation.reservationId}</span>
-                            </p>
+                            {user?.role === 'admin' && (
+                                <p>
+                                    Rezervacijos ID: <span>{currentReservation.reservation.reservationId}</span>
+                                </p>
+                            )}
                             <p>
                                 Rezervacijos pradžia:{" "}
                                 <span>{formatDate(currentReservation.reservation.rentalPeriod.from)}</span>
@@ -310,7 +312,7 @@ const ChangeDate = () => {
 
                     <button
                         onClick={() => {
-                                navigate(user.role === "admin" ? `/ManageReservations/${String(currentReservation.reservation.user)}` : "/UserReservations");
+                            navigate(user.role === "admin" ? `/ManageReservations/${String(currentReservation.reservation.user)}` : "/UserReservations");
                         }}
                         className="grizti"
                     >
