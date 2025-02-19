@@ -12,6 +12,7 @@
     background: rgb(236, 232, 229);
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.397);
     padding-bottom: 40px;
+    margin-top: 100px;
 }
 
 .iranga-form-and-list h3 {
@@ -24,7 +25,7 @@
 }
 
 #description {
-    height: 300px;
+    height: fit-content;
 }
 
 .change-iranga-btn {
