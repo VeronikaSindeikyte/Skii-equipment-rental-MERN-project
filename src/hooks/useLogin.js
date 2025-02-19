@@ -40,11 +40,7 @@ export const useLogin = () => {
     const [isLoading, setIsLoading] = useState(null)
     const {dispatch} = useAuthContext()
     const API_BASE_URL = import.meta.env.VITE_API_URL;
-    console.log('Attempting login with:', {
-        url: `${API_BASE_URL}/api/user/login`,
-        email,
-        password: '****' // Don't log actual password
-    })
+    console.log('Attempting login with:', `${API_BASE_URL}/api/user/login`)
 
     const login = async (email, password) => {
         setIsLoading(true)
