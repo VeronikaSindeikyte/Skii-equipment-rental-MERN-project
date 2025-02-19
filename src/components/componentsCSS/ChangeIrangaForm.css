@@ -16,9 +16,11 @@
 }
 
 .iranga-form-and-list h3 {
-    font-size: 40px;
-    margin: 0 auto;
-    margin-bottom: 10px;
+    font-weight: 700;
+    width: 80%;
+    text-align: center;
+    font-size: clamp(20px, 4vw, 30px);
+    margin: 20px;
     color: rgb(50, 59, 85);
 }
 

@@ -51,11 +51,12 @@
 
 
 .user-reservations h2 {
-    margin: 0 auto;
-    margin-bottom: 10px;
     color: rgb(50, 59, 85);
-    font-size: 30px;
     font-weight: 700;
+    width: 80%;
+    text-align: center;
+    font-size: clamp(20px, 4vw, 30px);
+    margin: 20px;
 }
 
 .user-reservations h3 {
