@@ -27,6 +27,7 @@ const IrangaForm = () => {
     const { user } = useAuthContext();
     const location = useLocation();
     const draftsRef = useRef(null);
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const savedDrafts = JSON.parse(localStorage.getItem("drafts")) || [];
@@ -115,7 +116,7 @@ const IrangaForm = () => {
 
         try {
             setUploading(true);
-            const response = await axios.post('/api/iranga', irangaData, {
+            const response = await axios.post(`${API_BASE_URL}/api/iranga`, irangaData, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${user.token}`

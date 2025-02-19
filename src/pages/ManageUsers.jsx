@@ -11,6 +11,7 @@ const ManageUsers = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchAllUsers = async () => {
@@ -21,7 +22,7 @@ const ManageUsers = () => {
             }
 
             try {
-                const response = await axios.get("/api/user/users", {
+                const response = await axios.get(`${API_BASE_URL}/api/user/users`, {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -52,7 +53,7 @@ const ManageUsers = () => {
         }
 
         try {
-            await axios.delete(`/api/user/${userId}`, {
+            await axios.delete(`${API_BASE_URL}/api/user/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`,
                 },
@@ -72,7 +73,7 @@ const ManageUsers = () => {
         }
         try {
             const response = await axios.patch(
-                `/api/user/${userId}`,
+                `${API_BASE_URL}/api/user/${userId}`,
                 { role: newRole },
                 {
                     headers: {

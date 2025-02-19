@@ -7,7 +7,6 @@ import { useAuthContext } from "../hooks/useAuthContext";
 const ChangeIrangaForm = () => {
     const { irangos, dispatch } = useIrangaContext();
     const { user } = useAuthContext();
-
     const [selectedIranga, setSelectedIranga] = useState(null);
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -18,6 +17,7 @@ const ChangeIrangaForm = () => {
     const [available, setAvailable] = useState(true);
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         if (selectedIranga) {
@@ -69,7 +69,7 @@ const ChangeIrangaForm = () => {
         };
 
         try {
-            const response = await fetch(`/api/iranga/${selectedIranga._id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/iranga/${selectedIranga._id}`, {
                 method: 'PATCH',
                 body: JSON.stringify(updatedEquipment),
                 headers: {

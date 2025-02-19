@@ -13,6 +13,7 @@ const ManageReservations = () => {
     const [error, setError] = useState(null);
     const [updateError, setUpdateError] = useState(null);
     const navigate = useNavigate();
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         const fetchUserReservations = async () => {
@@ -23,7 +24,7 @@ const ManageReservations = () => {
             }
 
             try {
-                const response = await axios.get(`/api/reservations/admin/${id}`, {
+                const response = await axios.get(`${API_BASE_URL}/api/reservations/admin/${id}`, {
                     headers: {
                         Authorization: `Bearer ${user.token}`,
                     },
@@ -63,7 +64,7 @@ const ManageReservations = () => {
         if (!confirmDelete) return;
 
         try {
-            await axios.delete("/api/reservations/admin/delete", {
+            await axios.delete(`${API_BASE_URL}/api/reservations/admin/delete`, {
                 headers: {
                     Authorization: `Bearer ${user.token}`
                 },
@@ -73,7 +74,7 @@ const ManageReservations = () => {
                 }
             });
 
-            const updatedResponse = await axios.get(`/api/reservations/admin/${id}`, {
+            const updatedResponse = await axios.get(`${API_BASE_URL}/api/reservations/admin/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` }
             });
 
@@ -99,14 +100,14 @@ const ManageReservations = () => {
 
         try {
             await axios.patch(
-                `/api/reservations/admin/updateStatus/${reservationId}`,
+                `${API_BASE_URL}/api/reservations/admin/updateStatus/${reservationId}`,
                 { reservationStatus: newStatus },
                 {
                     headers: { Authorization: `Bearer ${user.token}` },
                 }
             );
 
-            const updatedResponse = await axios.get(`/api/reservations/admin/${id}`, {
+            const updatedResponse = await axios.get(`${API_BASE_URL}/api/reservations/admin/${id}`, {
                 headers: { Authorization: `Bearer ${user.token}` },
             });
 
