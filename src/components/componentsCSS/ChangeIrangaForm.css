@@ -5,12 +5,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80%;
+    width: 100%;
     padding: 20px;
     text-align: center;
     border-radius: 10px; 
     background: rgb(236, 232, 229);
-    margin: 100px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.397);
     padding-bottom: 40px;
 }

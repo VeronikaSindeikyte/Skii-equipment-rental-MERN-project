@@ -192,6 +192,8 @@ header {
 
 .dropdown-menu p {
     color: rgba(0, 0, 0, 0.63);
+    margin: 0;
+    padding: 5px 10px;
 }
 
 .dropdown-menu:after {
