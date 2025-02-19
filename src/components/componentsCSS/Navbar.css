@@ -3,6 +3,10 @@ header {
     width: 100%;
     background-color: rgb(68, 77, 102);
     padding: 5px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbar-container {
