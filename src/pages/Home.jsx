@@ -12,6 +12,7 @@ const Home = () => {
     const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [activeFilters, setActiveFilters] = useState([]);
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         if (!user) {
@@ -20,7 +21,7 @@ const Home = () => {
         }
 
         const fetchIrangas = async () => {
-            const response = await fetch('/api/iranga', {
+            const response = await fetch(`${API_BASE_URL}/api/iranga`, {
                 headers: {
                     'Authorization': user ? `Bearer ${user.token}` : '',
                 },

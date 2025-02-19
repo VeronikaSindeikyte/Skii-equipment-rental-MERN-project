@@ -10,7 +10,6 @@ dotenv.config()
 // create express app
 const app = express()
 
-
 // middleware (viskas kas vyksta serverio puseje. Seka cia yra svarbi, todel naudojame next() funkciją, kuri nurodo, kad middleware vykdytų toliau esamas funkcijas)
 app.use(cors({
     origin: [
@@ -30,7 +29,6 @@ app.use(cors({
 });
 
 const PORT = process.env.PORT || 4001;
-
 
 app.use(express.json())
 app.use((req, res, next) => {
