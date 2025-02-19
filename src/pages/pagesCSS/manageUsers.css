@@ -10,12 +10,17 @@
     border-radius: 10px;
     background: rgb(236, 232, 229);
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.397);
+    margin: 0;
+    margin-top: 100px;
 }
 
 .manage-all-users h2 {
-    font-size: 40px;
-    margin: 0 auto 10px auto;
     color: rgb(50, 59, 85);
+    font-weight: 700;
+    width: 80%;
+    text-align: center;
+    font-size: clamp(20px, 4vw, 30px);
+    margin: 20px;
 }
 
 .users-list {
@@ -29,9 +34,8 @@
     width: 100%;
     max-width: 1200px; 
     list-style-type: none;
-    margin: 0 auto; 
+    margin: 0 auto;
     gap: 10px;
-    padding: 16px;
 }
 
 @media (max-width: 1450px) {
@@ -47,7 +51,6 @@
         grid-template-columns: minmax(250px, 1fr);
         max-width: 400px; 
         gap: 10px;
-        padding: 16px;
     }
 
     .manage-all-users {
