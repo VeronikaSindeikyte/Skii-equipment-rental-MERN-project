@@ -8,6 +8,7 @@ const IrangaDetails = ({ iranga }) => {
     const { dispatch } = useIrangaContext();
     const { user } = useAuthContext();
     const navigate = useNavigate();
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     const handleClick = async (e) => {
         e.stopPropagation();
@@ -17,7 +18,7 @@ const IrangaDetails = ({ iranga }) => {
             return;
         }
 
-        const response = await fetch("/api/iranga/" + iranga._id, {
+        const response = await fetch(`${API_BASE_URL}/api/iranga/` + iranga._id, {
             method: "DELETE",
             headers: { Authorization: `Bearer ${user.token}` },
         });
@@ -34,7 +35,7 @@ const IrangaDetails = ({ iranga }) => {
     return (
         <div
             className="iranga-details"
-            onClick={() => navigate(`/iranga/${iranga._id}`)}
+            onClick={() => navigate(`${API_BASE_URL}/iranga/${iranga._id}`)}
         >
             {user && user.role === "admin" && (
                 <svg
@@ -86,7 +87,7 @@ const IrangaDetails = ({ iranga }) => {
                 </div>
             )}
             <div className="iranga-details-buttons">
-                <Link to={`/iranga/${iranga._id}`} className="details-button">
+                <Link to={`${API_BASE_URL}/iranga/${iranga._id}`} className="details-button">
                     Rezervuoti
                 </Link>
             </div>
