@@ -14,7 +14,6 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 700px;
     padding: 20px;
     text-align: center;
     border-radius: 10px; 
@@ -42,7 +41,8 @@ select {
     align-items: center;
     text-align: center;
     font-family: "Inknut Antiqua", serif;
-    width: 50%; 
+    width: 80%;
+    max-width: 300px;
     padding: 3px 0;
     margin-bottom: 15px;
     border: 1px solid #ced4da; 
