@@ -87,7 +87,7 @@ const IrangaDetails = ({ iranga }) => {
                 </div>
             )}
             <div className="iranga-details-buttons">
-                <Link to={`${API_BASE_URL}/iranga/${iranga._id}`} className="details-button">
+                <Link to={`/iranga/${iranga._id}`} className="details-button">
                     Rezervuoti
                 </Link>
             </div>
