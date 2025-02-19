@@ -17,6 +17,7 @@ const ChangeDate = () => {
     const [disabledDates, setDisabledDates] = useState([]);
     const [rentalPeriod, setRentalPeriod] = useState([]);
     const { id } = useParams();
+    const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         if (user && user.token) {
@@ -39,7 +40,7 @@ const ChangeDate = () => {
                 return;
             }
 
-            const reservationResponse = await fetch(`/api/reservations/user/${id}`, {
+            const reservationResponse = await fetch(`${API_BASE_URL}/api/reservations/user/${id}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -101,7 +102,7 @@ const ChangeDate = () => {
                 color: "#2ecc71"
             }]);
 
-            const itemResponse = await fetch(`/api/iranga`, {
+            const itemResponse = await fetch(`${API_BASE_URL}/api/iranga`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -171,7 +172,7 @@ const ChangeDate = () => {
         });
 
         try {
-            const response = await fetch(`/api/reservations/update/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/reservations/update/${id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
