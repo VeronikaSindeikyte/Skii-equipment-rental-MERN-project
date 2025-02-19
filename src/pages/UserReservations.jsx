@@ -12,6 +12,7 @@ const UserReservations = () => {
   const [error, setError] = useState(null);
   const [updateError, setUpdateError] = useState(null);
   const navigate = useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchUserReservations = async () => {
@@ -22,7 +23,7 @@ const UserReservations = () => {
       }
 
       try {
-        const response = await axios.get("/api/reservations/user", {
+        const response = await axios.get(`${API_BASE_URL}/api/reservations/user`, {
           headers: { Authorization: `Bearer ${user.token}` },
         });
 
@@ -47,13 +48,13 @@ const UserReservations = () => {
     }
 
     try {
-      const response = await axios.delete(`/api/reservations/user/delete?reservationId=${reservationId}`, {
+      const response = await axios.delete(`${API_BASE_URL}/api/reservations/user/delete?reservationId=${reservationId}`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 
       console.log("Reservation deleted:", response.data);
 
-      const userResponse = await axios.get("/api/reservations/user", {
+      const userResponse = await axios.get(`${API_BASE_URL}/api/reservations/user`, {
         headers: { Authorization: `Bearer ${user.token}` },
       });
 
