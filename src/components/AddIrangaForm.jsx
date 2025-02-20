@@ -18,7 +18,8 @@ const IrangaForm = () => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [uploading, setUploading] = useState(false);
-    const [updateSuccess, setUpdateSuccess] = useState("");
+    const [draftSuccess, setDraftSuccess] = useState(false);
+    const [equipmentSuccess, setEquipmentSuccess] = useState(false);
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
     const [drafts, setDrafts] = useState([]);
@@ -127,8 +128,8 @@ const IrangaForm = () => {
 
             console.log("Server response:", response.data);
             alert('Nauja įranga pridėta sėkmingai!');
-            setUpdateSuccess("Įranga sėkmingai pridėta į įrangos sąrašą!");
-            setTimeout(() => setUpdateSuccess(""), 3000);
+            setEquipmentSuccess(true);
+            setTimeout(() => setEquipmentSuccess(false), 3000);
 
             if (response.data) {
                 if (editingDraftIndex !== null) {
@@ -171,8 +172,8 @@ const IrangaForm = () => {
         localStorage.setItem("drafts", JSON.stringify(updatedDrafts));
         resetForm();
         alert('Įranga pridėta į juodraščius!');
-        setUpdateSuccess("Įranga sėkmingai pridėta į juodraščius!");
-        setTimeout(() => setUpdateSuccess(""), 3000);
+        setDraftSuccess(true);
+        setTimeout(() => setDraftSuccess(false), 3000);
     };
 
     const handleDeleteDraft = (index) => {
@@ -307,11 +308,12 @@ const IrangaForm = () => {
                     <button className="add-draft-btn" type="button" onClick={handleSaveDraft}>
                         {editingDraftIndex !== null ? 'Atnaujinti juodraštį' : 'Pridėti į juodraštį'}
                     </button>
-                    {updateSuccess && <p className="success-message">Įranga pridėta į juodraščius!</p>}
+                    {draftSuccess && <p className="success-message">Įranga pridėta į juodraščius!</p>}
+
                     <button className="add-iranga-btn" type="submit" disabled={uploading}>
                         {uploading ? 'Nuotrauka įkeliama...' : 'Pridėti įrangą'}
                     </button>
-                    {updateSuccess && <p className="success-message">Įranga pridėta į įrangos sąrašą!</p>}
+                    {equipmentSuccess && <p className="success-message">Įranga pridėta į įrangos sąrašą!</p>}
                 </div>
                 {editingDraftIndex !== null && <button type="button" className="cancel-draft-edit" onClick={resetForm}>Atšaukti redagavimą</button>}
 
