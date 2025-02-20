@@ -204,6 +204,7 @@ const ChangeDate = () => {
             }));
 
             alert("Rezervacijos laikas sėkmingai atnaujintas!");
+            setUpdateSuccess("Rezervacijos laikas sėkmingai atnaujintas!")
             setTimeout(() => setUpdateSuccess(""), 3000);
             fetchReservationAndBlockedDates();
 

@@ -64,3 +64,8 @@
 .Atmesta span {
     color: red;
 }
+
+.grizti {
+    max-width: 80% !important;
+    margin-top: 30px !important;
+}
