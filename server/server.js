@@ -14,6 +14,7 @@ const app = express()
 app.use(cors({
     origin: [
       'https://skii-equipment-rental-project.vercel.app',
+      'https://skii-equipment-rent.vercel.app',
       'https://skii-equipment-rental-pr-git-f13e68-veronikas-projects-81793833.vercel.app',
       'https://skii-equipment-rental-project-mfsbswxto.vercel.app',
       'http://localhost:4001'
