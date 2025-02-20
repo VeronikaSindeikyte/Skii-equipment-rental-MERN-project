@@ -307,19 +307,18 @@ const ChangeDate = () => {
                         >
                             Išsaugoti pakeitimus
                         </button>
+                        {updateSuccess && <p className="success-message">Rezervacijos laikas sėkmingai pakeistas!</p>}
                     </div>
-                    {updateSuccess && (<div>{updateSuccess}</div>)}
-
-                    <button
-                        onClick={() => {
-                            navigate(user.role === "admin" ? `/ManageReservations/${String(currentReservation.reservation.user)}` : "/UserReservations");
-                        }}
-                        className="grizti"
-                    >
-                        Grįžti
-                    </button>
                 </div>
             ) : (<p>Kraunama...</p>)}
+            <button
+                onClick={() => {
+                    navigate(user.role === "admin" ? `/ManageReservations/${String(currentReservation.reservation.user)}` : "/UserReservations");
+                }}
+                className="grizti"
+            >
+                Grįžti
+            </button>
         </div>
     );
 };
