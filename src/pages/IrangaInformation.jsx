@@ -17,6 +17,7 @@ const IrangaInformation = () => {
     },
   ]);
   const { user } = useAuthContext();
+  const [updateSuccess, setUpdateSuccess] = useState("");
   const [error, setError] = useState(null);
   const [disabledDates, setDisabledDates] = useState([]);
   const navigate = useNavigate();
@@ -108,6 +109,8 @@ const IrangaInformation = () => {
       await fetchIrangaAndReservations();
 
       alert("Įranga sėkmingai rezervuota!");
+      setUpdateSuccess("Įranga sėkmingai rezervuota!")
+      setTimeout(() => setUpdateSuccess(""), 3000);
     } catch (error) {
       setError(error.message);
     }
@@ -216,6 +219,7 @@ const IrangaInformation = () => {
           <button onClick={handleReserve} className="rezervuoti">
             Rezervuoti
           </button>
+          {updateSuccess && <p className="success-message">Įranga sėkmingai rezervuota!</p>}
         </div>
         {error && <p className="error">{error}</p>}
           <button onClick={() => navigate("/")} className="grizti">
