@@ -84,7 +84,7 @@ select:focus {
     width: 50%; 
 }
 
-/*  --- add iranga, add draft, cancel editing buttons --- */
+/*  --- add iranga, add draft, cancel editing buttons  --- */
 
 .add-draft-or-iranga-btns {
     display: flex;
