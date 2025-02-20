@@ -15,6 +15,7 @@ const ChangeIrangaForm = () => {
     const [size, setSize] = useState('');
     const [condition, setCondition] = useState('new');
     const [available, setAvailable] = useState(true);
+    const [updateSuccess, setUpdateSuccess] = useState("");
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
     const API_BASE_URL = import.meta.env.VITE_API_URL;
@@ -89,6 +90,8 @@ const ChangeIrangaForm = () => {
             setEmptyFields([]);
             setError(null);
             alert('Įrangos informacija atnaujinta sėkmingai!');
+            setUpdateSuccess("Įrangos informacija atnaujinta!")
+            setTimeout(() => setUpdateSuccess(""), 3000);
         } catch (err) {
             setError(err.message);
         }
@@ -209,6 +212,7 @@ const ChangeIrangaForm = () => {
                         </select>
                         {error && <div className="error">{error}</div>}
                         <button className="change-iranga-btn" type="submit">Atnaujinti įrangą</button>
+                        {updateSuccess && <p className="success-message">Įrangos informacija atnaujinta!</p>}
                     </>
                 )}
             </form>
