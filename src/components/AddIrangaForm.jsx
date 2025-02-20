@@ -18,6 +18,7 @@ const IrangaForm = () => {
     const [file, setFile] = useState(null);
     const [preview, setPreview] = useState(null);
     const [uploading, setUploading] = useState(false);
+    const [updateSuccess, setUpdateSuccess] = useState("");
     const [error, setError] = useState(null);
     const [emptyFields, setEmptyFields] = useState([]);
     const [drafts, setDrafts] = useState([]);
@@ -27,6 +28,7 @@ const IrangaForm = () => {
     const { user } = useAuthContext();
     const location = useLocation();
     const draftsRef = useRef(null);
+
     const API_BASE_URL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -125,6 +127,8 @@ const IrangaForm = () => {
 
             console.log("Server response:", response.data);
             alert('Nauja įranga pridėta sėkmingai!');
+            setUpdateSuccess("Įranga sėkmingai pridėta į įrangos sąrašą!");
+            setTimeout(() => setUpdateSuccess(""), 3000);
 
             if (response.data) {
                 if (editingDraftIndex !== null) {
@@ -167,6 +171,8 @@ const IrangaForm = () => {
         localStorage.setItem("drafts", JSON.stringify(updatedDrafts));
         resetForm();
         alert('Įranga pridėta į juodraščius!');
+        setUpdateSuccess("Įranga sėkmingai pridėta į juodraščius!");
+        setTimeout(() => setUpdateSuccess(""), 3000);
     };
 
     const handleDeleteDraft = (index) => {
@@ -301,9 +307,11 @@ const IrangaForm = () => {
                     <button className="add-draft-btn" type="button" onClick={handleSaveDraft}>
                         {editingDraftIndex !== null ? 'Atnaujinti juodraštį' : 'Pridėti į juodraštį'}
                     </button>
+                    {updateSuccess && <p className="success-message">Įranga pridėta į juodraščius!</p>}
                     <button className="add-iranga-btn" type="submit" disabled={uploading}>
                         {uploading ? 'Nuotrauka įkeliama...' : 'Pridėti įrangą'}
                     </button>
+                    {updateSuccess && <p className="success-message">Įranga pridėta į įrangos sąrašą!</p>}
                 </div>
                 {editingDraftIndex !== null && <button type="button" className="cancel-draft-edit" onClick={resetForm}>Atšaukti redagavimą</button>}
 
