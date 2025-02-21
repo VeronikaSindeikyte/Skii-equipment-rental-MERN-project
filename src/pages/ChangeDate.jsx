@@ -259,12 +259,10 @@ const ChangeDate = () => {
                         <h2>{currentReservation.reservation.item.title}</h2>
                         <p className="aprasymas">{currentReservation.reservation.item.description}</p>
                         <p><strong>Rezervacijos informacija:</strong></p>
-                        <div className="rezervacijos-info">
-                            {user?.role === 'admin' && (
-                                <p>
-                                    Rezervacijos ID: <span>{currentReservation.reservation.reservationId}</span>
-                                </p>
-                            )}
+                        <div className="rezervacijos-info">     
+                            <p>
+                                Rezervacijos ID: <span>{currentReservation.reservation.reservationId}</span>
+                            </p>
                             <p>
                                 Rezervacijos pradžia:{" "}
                                 <span>{formatDate(currentReservation.reservation.rentalPeriod.from)}</span>
