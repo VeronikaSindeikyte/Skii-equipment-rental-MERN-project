@@ -58,7 +58,7 @@
 }
 
 .reservation-status-span {
-    width: 100%;
+    max-width: 200px;
 }
 
 .Patvirtinta span {
