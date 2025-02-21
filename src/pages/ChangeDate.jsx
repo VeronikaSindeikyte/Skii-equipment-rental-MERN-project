@@ -277,7 +277,7 @@ const ChangeDate = () => {
                                     currentReservation?.reservation?.reservationStatus === "Atmesta" ? "Atmesta" :
                                         currentReservation?.reservation?.reservationStatus === "Laukia patvirtinimo" ? "Laukia" : ""
                             }>
-                                Rezervacijos statusas: <span>{currentReservation.reservation.reservationStatus}</span>
+                                Rezervacijos statusas: <span className="reservation-status-span">{currentReservation.reservation.reservationStatus}</span>
                             </p>
                         </div>
                     </div>
