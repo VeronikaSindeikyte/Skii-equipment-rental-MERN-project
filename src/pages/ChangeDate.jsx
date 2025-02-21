@@ -262,7 +262,7 @@ const ChangeDate = () => {
                         <div className="rezervacijos-info">     
                             <p>
                                 Rezervacijos ID:{" "}
-                                <span>{currentReservation.reservation.reservationId}</span>
+                                <span>{currentReservation.reservation._id}</span>
                             </p>
                             <p>
                                 Rezervacijos pradžia:{" "}
